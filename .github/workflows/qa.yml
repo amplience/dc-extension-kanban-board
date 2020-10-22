@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: QA Build
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ main, release/**, feature/** ]
+  pull_request:
+    branches: [ main, release/**, feature/** ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v2
+      with:
+        path: |
+          node_modules
+          */*/node_modules
+        key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+    - name: Use Node.js 12.19.0
+      uses: actions/setup-node@v2
+      with:
+        node-version: 12.19.0
+
+    - name: Yarn Install
+      run: yarn install --frozen-lockfile
+    
+    - name: Build 
+      run: yarn run build
+      
+    - name: Test
+      run: yarn run test
+
+    - 
