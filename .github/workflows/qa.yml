@@ -34,9 +34,6 @@ jobs:
     
     - name: Build 
       run: yarn run build
-      
-    - name: Test
-      run: yarn run test
 
     - name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
