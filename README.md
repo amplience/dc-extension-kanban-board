@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# dc-extension-kanban-board
-=======
 # dc-extension-kanban-board
 
 # New Project
@@ -32,4 +29,3 @@ Your app is ready to be deployed!
 ### Q: What about Eject?
 
 No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
->>>>>>> b10b2a359b14c6c9c2255b6e1c450d12cda19b93
