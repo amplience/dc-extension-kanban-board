@@ -25,7 +25,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
     - name: Use Node.js 12.19.0
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v1
       with:
         node-version: 12.19.0
 
