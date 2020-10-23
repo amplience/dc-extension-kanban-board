@@ -23,7 +23,7 @@ module.exports = {
     /* ... */
   },
   buildOptions: {
-    /* ... */
+    baseUrl: "./",
   },
   proxy: {
     /* ... */
