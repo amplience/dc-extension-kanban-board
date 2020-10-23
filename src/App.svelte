@@ -1,75 +1,49 @@
 <script>
-  import { onMount } from 'svelte';
-  let count: number = 0;
-  onMount(() => {
-    const interval = setInterval(() => count++, 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  });
+  import Columns from './components/Columns.svelte';
+  const statuses = [
+    { label: 'Hello', color: 'red' },
+    { label: 'There', color: 'pink' },
+    { label: 'You', color: 'orange' },
+    { label: 'Lovely', color: 'purple' },
+    { label: 'Person', color: 'blue' },
+  ];
+  const contentItems = [
+    {
+      label: 'Hero Banner',
+      contentType: 'Banner',
+      modified: new Date('2020/01/01'),
+    },
+    {
+      label: 'Final summer design',
+      contentType: 'Hero',
+      modified: new Date('2020/02/01'),
+    },
+    {
+      label: 'An example of something great',
+      contentType: 'Carousel',
+      modified: new Date('2020/03/01'),
+    },
+    {
+      label: 'First lawnmower',
+      contentType: 'Slide',
+      modified: new Date('2020/04/04'),
+    },
+  ];
 </script>
 
 <style lang="scss">
-  :global(body) {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .App {
-    text-align: center;
-  }
-  .App {
-    code {
-      background: green;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-  }
-  .App p {
-    margin: 0.4rem;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-  .App-header {
-    background-color: #f9f6f6;
-    color: #333;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
+  :global(body, html) {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
-  .App-link {
-    color: #ff3e00;
-  }
-  .App-logo {
-    height: 36vmin;
-    pointer-events: none;
-    margin-bottom: 3rem;
-    animation: App-logo-spin infinite 1.6s ease-in-out alternate;
-  }
-  @keyframes App-logo-spin {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.06);
-    }
+  :global(*) {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
   }
 </style>
 
-<div class="App">
-  <header class="App-header">
-    <img src="/logo.svg" class="App-logo" alt="logo" />
-    <p>Edit <code>src/App.svelte</code> and save to reload.</p>
-    <p>Page has been open for <code>{count}</code> seconds.</p>
-    <p>
-      <a
-        class="App-link"
-        href="https://svelte.dev"
-        target="_blank"
-        rel="noopener noreferrer">
-        Learn Svelte
-      </a>
-    </p>
-  </header>
-</div>
+<Columns {statuses} {contentItems} />
