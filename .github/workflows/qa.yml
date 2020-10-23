@@ -46,4 +46,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
         SOURCE_DIR: build
-        DEST_DIR: '${{ env.GITHUB_REF_SLUG }}-${{ env.github.run_number }}'
+        DEST_DIR: '${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }}'
