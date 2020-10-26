@@ -33,9 +33,11 @@
   .col {
     box-sizing: border-box;
     background: #eee;
+    overflow-y: hidden;
 
     .content-item-wrap {
-      height: 100%;
+      overflow-y: auto;
+      height: calc(100% - 110px);
     }
   }
 </style>

@@ -173,12 +173,11 @@
   function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
     const statusIndex = statuses.findIndex((status) => status.id == statusId);
     statuses[statusIndex].contentItems = e.detail.items;
-    console.log('CONSIDER:', e.detail.items);
   }
   function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
     const statusIndex = statuses.findIndex((status) => status.id == statusId);
     statuses[statusIndex].contentItems = e.detail.items;
-    console.log('FINALIZE:', e.detail.items);
+    console.log('Update DC via management SDK...');
   }
 
   onMount(() => {
