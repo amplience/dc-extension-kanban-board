@@ -50,7 +50,7 @@
   {#each statuses as status (status.id)}
     <div class="col">
       <Chip color={status.color} label={status.label} />
-      <Count total={200} count={20} />
+      <Count total={200} count={status.contentItems.length} />
       <div
         class="content-item-wrap"
         use:dndzone={{ items: status.contentItems, type: 'content-items' }}
