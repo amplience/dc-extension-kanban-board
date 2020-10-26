@@ -37,7 +37,7 @@
 
     .content-item-wrap {
       overflow-y: auto;
-      height: calc(100% - 110px);
+      height: calc(100% - 90px);
     }
   }
 </style>
