@@ -5121,6 +5121,11 @@ svelte-check@^1.0.0:
     vscode-languageserver-types "3.15.1"
     vscode-uri "2.1.2"
 
+svelte-dnd-action@^0.6.18:
+  version "0.6.18"
+  resolved "https://registry.yarnpkg.com/svelte-dnd-action/-/svelte-dnd-action-0.6.18.tgz#bd9883c72446d6024a700c3ff5971371a99e7d40"
+  integrity sha512-Mu6kgv7F+SDo9w5a521LkmenMnxvSMQ9pJEQ8AD+3LoPWAS5iIxgMqAfo/UCEvgcD+BPD9p+TZyNhtd3Jc+/bw==
+
 svelte-hmr@^0.11.2-1:
   version "0.11.2-1"
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.11.2-1.tgz#ce1b481a2489697ccf7aa405bccae1421ce80011"

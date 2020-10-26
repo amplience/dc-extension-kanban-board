@@ -18,12 +18,14 @@ module.exports = {
   ],
   installOptions: {
     /* ... */
+    sourceMap: true
   },
   devOptions: {
     /* ... */
   },
   buildOptions: {
     baseUrl: "./",
+    sourceMaps: true
   },
   proxy: {
     /* ... */
