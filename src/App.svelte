@@ -6,35 +6,28 @@
   import type { StatusWithContentItemCollection } from './services/data/content-items';
   import { toDcQueryStr } from './utils';
 
-  let client;
-  let loadedStatuses: any = [];
+  let dcClient: DcClient;
   let hydratedStatuses: any = [];
   
   function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
     );
-    console.log(statusIndex);
     hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
   }
   function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
     );
-    console.log(statusIndex);
     hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
-    console.log('Update DC via management SDK...');
+    contentItems.updateWorkflowStatus(dcClient, e.detail.info.id, statusId);
   }
-
-
-  let fetchHydratedContentItemsPromise: Promise<
-    StatusWithContentItemCollection[]
-  >;
 
   onMount(async () => {
     try {
-      const {dcClient, statuses, hubId, contentRepositoryId, folderId} = await init({debug: true})
-      loadedStatuses = [...statuses];
+      const client = await init({debug: true})
+      const {statuses, hubId, contentRepositoryId, folderId} = client;
+      dcClient = client.dcClient
       hydratedStatuses = await contentItems.fetchHydrated(
         dcClient,
         hubId,
