@@ -22,7 +22,6 @@
   }
 
   function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
-    debugger;
     // const statusIndex = boardStatuses.findIndex(
     //   (status: any) => status.id == statusId
     // );
@@ -34,7 +33,6 @@
     // );
     // statuses[statusIndex].contentItems.items = e.detail.items;
     // console.log('Update DC via management SDK...');
-    debugger;
   }
 
   let fetchHydratedStatuesWithContentItemsPromise: Promise<
