@@ -2,17 +2,19 @@
   import Chip from './Chip.svelte';
   import Card from './Card.svelte';
   import Count from './Count.svelte';
-  interface status {
-    color: string;
-    label: string;
-  }
   interface contentItem {
     label: string;
     contentType: string;
     modified: Date;
   }
+  interface status {
+    id: string;
+    color: string;
+    label: string;
+    contentItems: contentItem[]
+  }
   export let statuses: Array<status> = [];
-  export let contentItems: Array<contentItem> = [];
+  console.log(statuses)
 </script>
 
 <style lang="scss">
@@ -40,7 +42,7 @@
     <div class="col">
       <Chip color={status.color} label={status.label} />
       <Count total={200} count={20} />
-      {#each contentItems as contentItem}
+      {#each status.contentItems._embedded['content-items'] as contentItem}
         <Card
           title={contentItem.label}
           subtitle={contentItem.contentType}

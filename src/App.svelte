@@ -1,34 +1,54 @@
 <script>
+  import { onMount } from 'svelte';
+  import { init } from 'dc-extensions-sdk';
+  import { contentItems } from './services/data';
   import Columns from './components/Columns.svelte';
-  const statuses = [
-    { label: 'Hello', color: 'red' },
-    { label: 'There', color: 'pink' },
-    { label: 'You', color: 'orange' },
-    { label: 'Lovely', color: 'purple' },
-    { label: 'Person', color: 'blue' },
-  ];
-  const contentItems = [
-    {
-      label: 'Hero Banner',
-      contentType: 'Banner',
-      modified: new Date('2020/01/01'),
-    },
-    {
-      label: 'Final summer design',
-      contentType: 'Hero',
-      modified: new Date('2020/02/01'),
-    },
-    {
-      label: 'An example of something great',
-      contentType: 'Carousel',
-      modified: new Date('2020/03/01'),
-    },
-    {
-      label: 'First lawnmower',
-      contentType: 'Slide',
-      modified: new Date('2020/04/04'),
-    },
-  ];
+  import { DcClient } from './services/dc-client';
+  interface contentItem {
+    label: string;
+    contentType: string;
+    modified: Date;
+  }
+  interface status {
+    id: string;
+    color: string;
+    label: string;
+    contentItems: contentItem[];
+  }
+  interface ExtensionInstallationParams {
+    repositoryId?: string | undefined;
+    statuses: string[];
+  }
+  interface ExtensionParams {
+    hubId?: string | undefined;
+    installation: ExtensionInstallationParams;
+  }
+
+  let fetchHydratedStatuesWithContentItemsPromise;
+  onMount(async () => {
+    try {
+      const sdk = await init({ debug: true });
+      const {
+        hubId,
+        installation: { repositoryId, statuses = [] },
+      } = sdk.params as ExtensionParams;
+      if (!hubId) {
+        throw new Error('Hub id required');
+      }
+      if (!repositoryId) {
+        throw new Error('Repository id required');
+      }
+      const dcClient = new DcClient(sdk.client);
+      fetchHydratedStatuesWithContentItemsPromise = contentItems.fetchHydratedStatuesWithContentItems(
+        dcClient,
+        hubId,
+        statuses,
+        { query: `status:"ACTIVE"contentRepositoryId:${repositoryId}` }
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  });
 </script>
 
 <style lang="scss">
@@ -46,4 +66,8 @@
   }
 </style>
 
-<Columns {statuses} {contentItems} />
+{#await fetchHydratedStatuesWithContentItemsPromise}
+  loading...
+{:then data}
+  <Columns statuses={data} />
+{/await}

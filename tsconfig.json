@@ -1,5 +1,9 @@
 {
-  "include": ["src", "types"],
+  "include": [
+    "src",
+    "types",
+    "src/utils/queryString.ts"
+  ],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
