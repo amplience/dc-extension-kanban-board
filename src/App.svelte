@@ -5,6 +5,8 @@
   import Columns from './components/Columns.svelte';
   import { DcClient } from './services/dc-client';
   import type { StatusWithContentItemCollection } from './services/data/content-items';
+  let loadedStatuses: any = [];
+  let hydratedStatuses: any = [];
   interface contentItem {
     label: string;
     contentType: string;
@@ -22,17 +24,19 @@
   }
 
   function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
-    // const statusIndex = boardStatuses.findIndex(
-    //   (status: any) => status.id == statusId
-    // );
-    // boardStatuses[statusIndex].contentItems.items;
+    const statusIndex = hydratedStatuses.findIndex(
+      (status: any) => status.id == statusId
+    );
+    console.log(statusIndex);
+    hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
   }
   function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
-    // const statusIndex = statuses.findIndex(
-    //   (status: any) => status.id == statusId
-    // );
-    // statuses[statusIndex].contentItems.items = e.detail.items;
-    // console.log('Update DC via management SDK...');
+    const statusIndex = hydratedStatuses.findIndex(
+      (status: any) => status.id == statusId
+    );
+    console.log(statusIndex);
+    hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
+    console.log('Update DC via management SDK...');
   }
 
   let fetchHydratedStatuesWithContentItemsPromise: Promise<
@@ -53,7 +57,8 @@
         throw new Error('Repository id required');
       }
       const dcClient = new DcClient(sdk.client);
-      fetchHydratedStatuesWithContentItemsPromise = contentItems.fetchHydratedStatuesWithContentItems(
+      loadedStatuses = [...statuses];
+      hydratedStatuses = await contentItems.fetchHydratedStatuesWithContentItems(
         dcClient,
         hubId,
         statuses,
@@ -80,8 +85,8 @@
   }
 </style>
 
-{#await fetchHydratedStatuesWithContentItemsPromise}
+{#if hydratedStatuses.length === 0}
   loading...
-{:then statuses}
-  <Columns {statuses} {handleConsider} {handleFinalize} />
-{/await}
+{:else}
+  <Columns statuses={hydratedStatuses} {handleConsider} {handleFinalize} />
+{/if}
