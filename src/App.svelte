@@ -5,11 +5,6 @@
   import Columns from './components/Columns.svelte';
   import { DcClient } from './services/dc-client';
   import type { StatusWithContentItemCollection } from './services/data/content-items';
-  interface contentItem {
-    label: string;
-    contentType: string;
-    modified: Date;
-  }
 
   interface ExtensionParams {
     hubId?: string | undefined;

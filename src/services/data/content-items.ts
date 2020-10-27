@@ -1,10 +1,8 @@
-import { HttpResponse } from 'dc-extensions-sdk';
 import type { DcClient } from '../dc-client';
 import type { Status } from './workflow-states';
 import { workflowStates } from '../data';
 import ContentItem from '../models/content-item';
 import PromisePool from '@supercharge/promise-pool';
-import { isObject } from 'src/utils';
 
 const FACETS_DEFAULT_PARAMS = {
   page: 0,
