@@ -6,6 +6,7 @@
   import { DcClient } from './services/dc-client';
   import type { StatusWithContentItemCollection } from './services/data/content-items';
   let hydratedStatuses: any = [];
+  let dcClient: DcClient;
 
   interface ExtensionParams {
     hubId?: string | undefined;
@@ -21,16 +22,15 @@
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
     );
-    console.log(statusIndex);
     hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
   }
   function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
     );
-    console.log(statusIndex);
     hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
-    console.log('Update DC via management SDK...');
+    debugger;
+    contentItems.updateWorkflowStatus(dcClient, e.detail.info.id, statusId);
   }
 
   onMount(async () => {
@@ -46,7 +46,7 @@
       if (!repositoryId) {
         throw new Error('Repository id required');
       }
-      const dcClient = new DcClient(sdk.client);
+      dcClient = new DcClient(sdk.client);
       hydratedStatuses = await contentItems.fetchHydratedStatuesWithContentItems(
         dcClient,
         hubId,

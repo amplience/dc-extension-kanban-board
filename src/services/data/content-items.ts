@@ -99,6 +99,19 @@ export async function fetchHydratedStatuesWithContentItems(
   return result;
 }
 
+export function updateWorkflowStatus(
+  dcClient: DcClient,
+  contentItemId: string,
+  workflowStatusId: string
+) {
+  console.log(
+    'in updateworkflowstatus',
+    dcClient,
+    contentItemId,
+    workflowStatusId
+  );
+}
+
 function findContentItemCollectionForStatus(
   collections: ContentItemCollection[],
   statusId: string
