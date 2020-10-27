@@ -9,12 +9,6 @@
     contentType: string;
     modified: Date;
   }
-  interface status {
-    id: string;
-    color: string;
-    label: string;
-    contentItems: contentItem[];
-  }
   interface ExtensionInstallationParams {
     repositoryId?: string | undefined;
     statuses: string[];
@@ -24,7 +18,19 @@
     installation: ExtensionInstallationParams;
   }
 
-  let fetchHydratedStatuesWithContentItemsPromise;
+  let statuses:any = [];
+
+  function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
+    const statusIndex = statuses.findIndex((status:any) => status.id == statusId);
+    statuses[statusIndex].contentItems = e.detail.items;
+  }
+  function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
+    const statusIndex = statuses.findIndex((status:any) => status.id == statusId);
+    statuses[statusIndex].contentItems = e.detail.items;
+    console.log('Update DC via management SDK...');
+  }
+
+  let fetchHydratedStatuesWithContentItemsPromise:any;
   onMount(async () => {
     try {
       const sdk = await init({ debug: true });
@@ -68,6 +74,6 @@
 
 {#await fetchHydratedStatuesWithContentItemsPromise}
   loading...
-{:then data}
-  <Columns statuses={data} />
+{:then statuses}
+  <Columns {statuses} {handleConsider} {handleFinalize}  />
 {/await}
