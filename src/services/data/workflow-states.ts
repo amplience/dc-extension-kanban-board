@@ -1,6 +1,6 @@
 import type { DcClient } from '../dc-client';
-
-interface Status {
+ 
+export interface Status {
   id: string;
   label?: string;
   color?: string;

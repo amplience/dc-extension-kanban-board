@@ -4,33 +4,43 @@
   import { contentItems } from './services/data';
   import Columns from './components/Columns.svelte';
   import { DcClient } from './services/dc-client';
+  import type { StatusWithContentItemCollection } from './services/data/content-items';
   interface contentItem {
     label: string;
     contentType: string;
     modified: Date;
   }
-  interface ExtensionInstallationParams {
-    repositoryId?: string | undefined;
-    statuses: string[];
-  }
+
   interface ExtensionParams {
     hubId?: string | undefined;
     installation: ExtensionInstallationParams;
   }
 
-  let statuses:any = [];
+  interface ExtensionInstallationParams {
+    repositoryId?: string | undefined;
+    statuses: string[];
+  }
 
   function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
-    const statusIndex = statuses.findIndex((status:any) => status.id == statusId);
-    statuses[statusIndex].contentItems = e.detail.items;
+    debugger;
+    // const statusIndex = boardStatuses.findIndex(
+    //   (status: any) => status.id == statusId
+    // );
+    // boardStatuses[statusIndex].contentItems.items;
   }
   function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
-    const statusIndex = statuses.findIndex((status:any) => status.id == statusId);
-    statuses[statusIndex].contentItems = e.detail.items;
-    console.log('Update DC via management SDK...');
+    // const statusIndex = statuses.findIndex(
+    //   (status: any) => status.id == statusId
+    // );
+    // statuses[statusIndex].contentItems.items = e.detail.items;
+    // console.log('Update DC via management SDK...');
+    debugger;
   }
 
-  let fetchHydratedStatuesWithContentItemsPromise:any;
+  let fetchHydratedStatuesWithContentItemsPromise: Promise<
+    StatusWithContentItemCollection[]
+  >;
+
   onMount(async () => {
     try {
       const sdk = await init({ debug: true });
@@ -49,7 +59,7 @@
         dcClient,
         hubId,
         statuses,
-        { query: `status:"ACTIVE"contentRepositoryId:${repositoryId}` }
+        { query: `status:"ACTIVE"contentRepositoryId:"${repositoryId}"` }
       );
     } catch (e) {
       console.error(e);
@@ -75,5 +85,5 @@
 {#await fetchHydratedStatuesWithContentItemsPromise}
   loading...
 {:then statuses}
-  <Columns {statuses} {handleConsider} {handleFinalize}  />
+  <Columns {statuses} {handleConsider} {handleFinalize} />
 {/await}
