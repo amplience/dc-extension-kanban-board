@@ -24,6 +24,21 @@ export class DcClient {
     return await this.client.request(config);
   }
 
+  async patch(
+    path: string,
+    data: Record<string, unknown>,
+    params: Record<string, unknown>
+  ): Promise<HttpResponse> {
+    const config: HttpRequest = {
+      method: HttpMethod.PATCH,
+      url: `${FAKE_DC_SERVICE}${path}${toQueryStr(params)}`,
+    };
+    if (data) {
+      config.data = data;
+    }
+    return await this.client.request(config);
+  }
+
   async get(
     path: string,
     params: Record<string, unknown>

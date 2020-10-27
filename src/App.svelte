@@ -6,6 +6,7 @@
   import type { StatusWithContentItemCollection } from './services/data/content-items';
   import { toDcQueryStr } from './utils';
   import type { DcClient } from './services/dc-client';
+  import type ContentItem from './services/models/content-item';
 
   let dcClient: DcClient;
   let hydratedStatuses: any = [];
@@ -21,8 +22,11 @@
       (status: any) => status.id == statusId
     );
     hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
-    if (e.detail.info.trigger === 'droppedIntoAnother') {
-      contentItems.updateWorkflowStatus(dcClient, e.detail.info.id, statusId);
+    if (e.detail.info.trigger !== 'droppedIntoAnother') {
+      const droppedItem: ContentItem = e.detail.items.filter(
+        (item) => item.id === e.detail.info.id
+      )[0] as ContentItem;
+      contentItems.updateWorkflowStatus(dcClient, droppedItem, statusId);
     }
   }
 
@@ -30,10 +34,10 @@
     try {
       const client = await init({ debug: true });
       const { statuses, hubId, contentRepositoryId, folderId } = client;
-      dcClient = client.dcClient;
+      dcClient = client.dcClient as DcClient;
       hydratedStatuses = await contentItems.fetchHydrated(
         dcClient,
-        hubId,
+        hubId as string,
         statuses,
         {
           query: toDcQueryStr({

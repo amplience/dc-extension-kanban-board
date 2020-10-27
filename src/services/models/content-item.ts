@@ -3,10 +3,12 @@ export default class ContentItem {
   public contentType: string;
   public modified: string;
   public id: string;
-  constructor({ label, schema, lastModifiedDate, id }: any = {}) {
+  public version: number;
+  constructor({ label, schema, lastModifiedDate, id, version }: any = {}) {
     this.label = label;
     this.contentType = schema;
     this.modified = new Date(lastModifiedDate).toLocaleDateString();
     this.id = id;
+    this.version = version;
   }
 }
