@@ -29,8 +29,9 @@
       (status: any) => status.id == statusId
     );
     hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
-    debugger;
-    contentItems.updateWorkflowStatus(dcClient, e.detail.info.id, statusId);
+    if (e.detail.info.trigger === 'droppedIntoAnother') {
+      contentItems.updateWorkflowStatus(dcClient, e.detail.info.id, statusId);
+    }
   }
 
   onMount(async () => {
