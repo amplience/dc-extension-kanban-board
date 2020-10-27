@@ -1,23 +1,15 @@
 <script>
   import { onMount } from 'svelte';
-  import { init } from 'dc-extensions-sdk';
   import { contentItems } from './services/data';
   import Columns from './components/Columns.svelte';
-  import { DcClient } from './services/dc-client';
+  import { init } from './services/dc-extension-client';
   import type { StatusWithContentItemCollection } from './services/data/content-items';
+  import { toDcQueryStr } from './utils';
+
+  let client;
   let loadedStatuses: any = [];
   let hydratedStatuses: any = [];
   
-  interface ExtensionParams {
-    hubId?: string | undefined;
-    installation: ExtensionInstallationParams;
-  }
-
-  interface ExtensionInstallationParams {
-    repositoryId?: string | undefined;
-    statuses: string[];
-  }
-
   function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
@@ -34,30 +26,26 @@
     console.log('Update DC via management SDK...');
   }
 
-  let fetchHydratedStatuesWithContentItemsPromise: Promise<
+
+  let fetchHydratedContentItemsPromise: Promise<
     StatusWithContentItemCollection[]
   >;
 
   onMount(async () => {
     try {
-      const sdk = await init({ debug: true });
-      const {
-        hubId,
-        installation: { repositoryId, statuses = [] },
-      } = sdk.params as ExtensionParams;
-      if (!hubId) {
-        throw new Error('Hub id required');
-      }
-      if (!repositoryId) {
-        throw new Error('Repository id required');
-      }
-      const dcClient = new DcClient(sdk.client);
+      const {dcClient, statuses, hubId, contentRepositoryId, folderId} = await init({debug: true})
       loadedStatuses = [...statuses];
-      hydratedStatuses = await contentItems.fetchHydratedStatuesWithContentItems(
+      hydratedStatuses = await contentItems.fetchHydrated(
         dcClient,
         hubId,
         statuses,
-        { query: `status:"ACTIVE"contentRepositoryId:"${repositoryId}"` }
+        { 
+          query: toDcQueryStr({
+            status: 'ACTIVE',
+            contentRepositoryId,
+            folderId
+          })
+        }
       );
     } catch (e) {
       console.error(e);

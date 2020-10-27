@@ -74,7 +74,7 @@ export async function fetchForStatus(
   }
 }
 
-export async function fetchHydratedStatuesWithContentItems(
+export async function fetchHydrated(
   dcClient: DcClient,
   hubId: string,
   statuses: string[],
