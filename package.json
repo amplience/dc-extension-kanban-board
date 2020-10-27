@@ -9,6 +9,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@supercharge/promise-pool": "^1.5.0",
+    "dc-extensions-sdk": "github:amplience/dc-extensions-sdk#feature/CMP-7270",
     "svelte": "^3.24.0"
   },
   "devDependencies": {

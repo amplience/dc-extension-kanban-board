@@ -10,14 +10,18 @@ module.exports = {
     '@snowpack/plugin-sass',
     [
       '@snowpack/plugin-run-script',
-      {cmd: 'svelte-check --output human', watch: '$1 --watch', output: 'stream'},
+      {
+        cmd: 'svelte-check --output human',
+        watch: '$1 --watch',
+        output: 'stream',
+      },
     ],
   ],
   install: [
     /* ... */
   ],
   installOptions: {
-    /* ... */
+    polyfillNode: true,
     sourceMap: true
   },
   devOptions: {

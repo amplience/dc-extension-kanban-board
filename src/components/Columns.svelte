@@ -3,21 +3,10 @@
   import Card from './Card.svelte';
   import Count from './Count.svelte';
   import { dndzone } from 'svelte-dnd-action';
-  interface status {
-    color: string;
-    label: string;
-    id: string;
-    contentItems: contentItem[];
-  }
-  interface contentItem {
-    label: string;
-    contentType: string;
-    modified: Date;
-    id: string;
-  }
-  export let statuses: Array<status> = [];
+  import type { StatusWithContentItemCollection } from '../services/data/content-items';
   export let handleConsider: any;
   export let handleFinalize: any;
+  export let statuses: Array<StatusWithContentItemCollection> = [];
 </script>
 
 <style lang="scss">
@@ -50,17 +39,17 @@
   {#each statuses as status (status.id)}
     <div class="col">
       <Chip color={status.color} label={status.label} />
-      <Count total={200} count={status.contentItems.length} />
+      <Count total={200} count={status.contentItems.items.length} />
       <div
         class="content-item-wrap"
-        use:dndzone={{ items: status.contentItems, type: 'content-items' }}
+        use:dndzone={{ items: status.contentItems.items, type: 'content-items' }}
         on:consider={(e) => handleConsider(status.id, e)}
         on:finalize={(e) => handleFinalize(status.id, e)}>
-        {#each status.contentItems as contentItem (contentItem.id)}
+        {#each status.contentItems.items as contentItem (contentItem.id)}
           <Card
             title={contentItem.label}
             subtitle={contentItem.contentType}
-            footer="Last changed {contentItem.modified.toLocaleDateString()} {contentItem.modified.toLocaleTimeString()}" />
+            footer="Last changed {contentItem.modified}" />
         {/each}
       </div>
     </div>

@@ -1,187 +1,69 @@
 <script>
-  import Columns from './components/Columns.svelte';
   import { onMount } from 'svelte';
-  let statuses: any[] = [];
-  let statusesTemplate = [
-    {
-      label: 'Hello',
-      color: 'red',
-      contentItems: [
-        {
-          label: 'Hero Banner',
-          contentType: 'Banner',
-          modified: new Date('2020/01/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'Final summer design',
-          contentType: 'Hero',
-          modified: new Date('2020/02/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'An example of something great',
-          contentType: 'Carousel',
-          modified: new Date('2020/03/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'First lawnmower',
-          contentType: 'Slide',
-          modified: new Date('2020/04/04'),
-          id: createUUID(),
-        },
-      ],
-      id: createUUID(),
-    },
-    {
-      label: 'There',
-      color: 'pink',
-      contentItems: [
-        {
-          label: 'Hero Banner',
-          contentType: 'Banner',
-          modified: new Date('2020/01/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'Final summer design',
-          contentType: 'Hero',
-          modified: new Date('2020/02/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'An example of something great',
-          contentType: 'Carousel',
-          modified: new Date('2020/03/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'First lawnmower',
-          contentType: 'Slide',
-          modified: new Date('2020/04/04'),
-          id: createUUID(),
-        },
-      ],
-      id: createUUID(),
-    },
-    {
-      label: 'You',
-      color: 'orange',
-      contentItems: [
-        {
-          label: 'Hero Banner',
-          contentType: 'Banner',
-          modified: new Date('2020/01/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'Final summer design',
-          contentType: 'Hero',
-          modified: new Date('2020/02/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'An example of something great',
-          contentType: 'Carousel',
-          modified: new Date('2020/03/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'First lawnmower',
-          contentType: 'Slide',
-          modified: new Date('2020/04/04'),
-          id: createUUID(),
-        },
-      ],
-      id: createUUID(),
-    },
-    {
-      label: 'Lovely',
-      color: 'purple',
-      contentItems: [
-        {
-          label: 'Hero Banner',
-          contentType: 'Banner',
-          modified: new Date('2020/01/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'Final summer design',
-          contentType: 'Hero',
-          modified: new Date('2020/02/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'An example of something great',
-          contentType: 'Carousel',
-          modified: new Date('2020/03/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'First lawnmower',
-          contentType: 'Slide',
-          modified: new Date('2020/04/04'),
-          id: createUUID(),
-        },
-      ],
-      id: createUUID(),
-    },
-    {
-      label: 'Person',
-      color: 'blue',
-      contentItems: [
-        {
-          label: 'Hero Banner',
-          contentType: 'Banner',
-          modified: new Date('2020/01/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'Final summer design',
-          contentType: 'Hero',
-          modified: new Date('2020/02/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'An example of something great',
-          contentType: 'Carousel',
-          modified: new Date('2020/03/01'),
-          id: createUUID(),
-        },
-        {
-          label: 'First lawnmower',
-          contentType: 'Slide',
-          modified: new Date('2020/04/04'),
-          id: createUUID(),
-        },
-      ],
-      id: createUUID(),
-    },
-  ];
+  import { init } from 'dc-extensions-sdk';
+  import { contentItems } from './services/data';
+  import Columns from './components/Columns.svelte';
+  import { DcClient } from './services/dc-client';
+  import type { StatusWithContentItemCollection } from './services/data/content-items';
+  interface contentItem {
+    label: string;
+    contentType: string;
+    modified: Date;
+  }
 
-  function createUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (
-      c
-    ) {
-      var r = (Math.random() * 16) | 0,
-        v = c == 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
+  interface ExtensionParams {
+    hubId?: string | undefined;
+    installation: ExtensionInstallationParams;
+  }
+
+  interface ExtensionInstallationParams {
+    repositoryId?: string | undefined;
+    statuses: string[];
   }
 
   function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
-    const statusIndex = statuses.findIndex((status) => status.id == statusId);
-    statuses[statusIndex].contentItems = e.detail.items;
+    debugger;
+    // const statusIndex = boardStatuses.findIndex(
+    //   (status: any) => status.id == statusId
+    // );
+    // boardStatuses[statusIndex].contentItems.items;
   }
   function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
-    const statusIndex = statuses.findIndex((status) => status.id == statusId);
-    statuses[statusIndex].contentItems = e.detail.items;
-    console.log('Update DC via management SDK...');
+    // const statusIndex = statuses.findIndex(
+    //   (status: any) => status.id == statusId
+    // );
+    // statuses[statusIndex].contentItems.items = e.detail.items;
+    // console.log('Update DC via management SDK...');
+    debugger;
   }
 
-  onMount(() => {
-    statuses = [...statusesTemplate];
+  let fetchHydratedStatuesWithContentItemsPromise: Promise<
+    StatusWithContentItemCollection[]
+  >;
+
+  onMount(async () => {
+    try {
+      const sdk = await init({ debug: true });
+      const {
+        hubId,
+        installation: { repositoryId, statuses = [] },
+      } = sdk.params as ExtensionParams;
+      if (!hubId) {
+        throw new Error('Hub id required');
+      }
+      if (!repositoryId) {
+        throw new Error('Repository id required');
+      }
+      const dcClient = new DcClient(sdk.client);
+      fetchHydratedStatuesWithContentItemsPromise = contentItems.fetchHydratedStatuesWithContentItems(
+        dcClient,
+        hubId,
+        statuses,
+        { query: `status:"ACTIVE"contentRepositoryId:"${repositoryId}"` }
+      );
+    } catch (e) {
+      console.error(e);
+    }
   });
 </script>
 
@@ -200,4 +82,8 @@
   }
 </style>
 
-<Columns {statuses} {handleConsider} {handleFinalize} />
+{#await fetchHydratedStatuesWithContentItemsPromise}
+  loading...
+{:then statuses}
+  <Columns {statuses} {handleConsider} {handleFinalize} />
+{/await}
