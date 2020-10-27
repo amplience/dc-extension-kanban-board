@@ -5,9 +5,8 @@
   import Columns from './components/Columns.svelte';
   import { DcClient } from './services/dc-client';
   import type { StatusWithContentItemCollection } from './services/data/content-items';
-  let loadedStatuses: any = [];
   let hydratedStatuses: any = [];
-  
+
   interface ExtensionParams {
     hubId?: string | undefined;
     installation: ExtensionInstallationParams;
@@ -34,10 +33,6 @@
     console.log('Update DC via management SDK...');
   }
 
-  let fetchHydratedStatuesWithContentItemsPromise: Promise<
-    StatusWithContentItemCollection[]
-  >;
-
   onMount(async () => {
     try {
       const sdk = await init({ debug: true });
@@ -52,7 +47,6 @@
         throw new Error('Repository id required');
       }
       const dcClient = new DcClient(sdk.client);
-      loadedStatuses = [...statuses];
       hydratedStatuses = await contentItems.fetchHydratedStatuesWithContentItems(
         dcClient,
         hubId,
