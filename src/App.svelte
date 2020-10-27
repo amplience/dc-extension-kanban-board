@@ -4,17 +4,8 @@
   import { contentItems } from './services/data';
   import Columns from './components/Columns.svelte';
   import { DcClient } from './services/dc-client';
-  interface contentItem {
-    label: string;
-    contentType: string;
-    modified: Date;
-  }
-  interface status {
-    id: string;
-    color: string;
-    label: string;
-    contentItems: contentItem[];
-  }
+  import type { StatusWithContentItemCollection } from './services/data/content-items';
+ 
   interface ExtensionInstallationParams {
     repositoryId?: string | undefined;
     statuses: string[];
@@ -24,7 +15,8 @@
     installation: ExtensionInstallationParams;
   }
 
-  let fetchHydratedStatuesWithContentItemsPromise;
+  let fetchHydratedStatuesWithContentItemsPromise: Promise<StatusWithContentItemCollection[]>;
+  
   onMount(async () => {
     try {
       const sdk = await init({ debug: true });
@@ -43,7 +35,7 @@
         dcClient,
         hubId,
         statuses,
-        { query: `status:"ACTIVE"contentRepositoryId:${repositoryId}` }
+        { query: `status:"ACTIVE"contentRepositoryId:"${repositoryId}"` }
       );
     } catch (e) {
       console.error(e);
