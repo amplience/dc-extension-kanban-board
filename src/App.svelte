@@ -16,10 +16,10 @@
   }
 
   let fetchHydratedStatuesWithContentItemsPromise: Promise<StatusWithContentItemCollection[]>;
-  
+
   onMount(async () => {
     try {
-      const sdk = await init({ debug: true });
+      const sdk = await init({ debug: true }); 
       const {
         hubId,
         installation: { repositoryId, statuses = [] },

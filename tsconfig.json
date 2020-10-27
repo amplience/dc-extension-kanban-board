@@ -2,7 +2,7 @@
   "include": [
     "src",
     "types",
-    "src/utils/queryString.ts"
+    "src/utils/toQueryStr.ts"
   ],
   "compilerOptions": {
     "module": "esnext",
