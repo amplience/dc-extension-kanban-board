@@ -1,22 +1,14 @@
 <script>
   import { onMount } from 'svelte';
-  import { init } from 'dc-extensions-sdk';
   import { contentItems } from './services/data';
   import Columns from './components/Columns.svelte';
-  import { DcClient } from './services/dc-client';
+  import { init } from './services/dc-extension-client';
   import type { StatusWithContentItemCollection } from './services/data/content-items';
-  let hydratedStatuses: any = [];
+  import { toDcQueryStr } from './utils';
+  import type { DcClient } from './services/dc-client';
+
   let dcClient: DcClient;
-
-  interface ExtensionParams {
-    hubId?: string | undefined;
-    installation: ExtensionInstallationParams;
-  }
-
-  interface ExtensionInstallationParams {
-    repositoryId?: string | undefined;
-    statuses: string[];
-  }
+  let hydratedStatuses: any = [];
 
   function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
     const statusIndex = hydratedStatuses.findIndex(
@@ -36,23 +28,20 @@
 
   onMount(async () => {
     try {
-      const sdk = await init({ debug: true });
-      const {
-        hubId,
-        installation: { repositoryId, statuses = [] },
-      } = sdk.params as ExtensionParams;
-      if (!hubId) {
-        throw new Error('Hub id required');
-      }
-      if (!repositoryId) {
-        throw new Error('Repository id required');
-      }
-      dcClient = new DcClient(sdk.client);
-      hydratedStatuses = await contentItems.fetchHydratedStatuesWithContentItems(
+      const client = await init({ debug: true });
+      const { statuses, hubId, contentRepositoryId, folderId } = client;
+      dcClient = client.dcClient;
+      hydratedStatuses = await contentItems.fetchHydrated(
         dcClient,
         hubId,
         statuses,
-        { query: `status:"ACTIVE"contentRepositoryId:"${repositoryId}"` }
+        {
+          query: toDcQueryStr({
+            status: 'ACTIVE',
+            contentRepositoryId,
+            folderId,
+          }),
+        }
       );
     } catch (e) {
       console.error(e);
