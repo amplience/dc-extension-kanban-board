@@ -19,7 +19,7 @@ export interface ContentItemCollection {
 
 export interface StatusWithContentItemCollection extends Status {
   contentItems: ContentItemCollection;
-} 
+}
 
 export type StatusesWithContentItemCollection = StatusWithContentItemCollection[];
 
@@ -48,17 +48,23 @@ export async function fetchForStatus(
     const { data } = await client.post(
       `/hubs/${hubId}/content-items/facet`,
       {
-        facetAs: 'ENUM',
-        field: 'workflow.state',
-        filter: { type: 'IN', values: [statusId] },
-        name: 'workflow.state',
+        fields: [
+          {
+            facetAs: 'ENUM',
+            field: 'workflow.state',
+            filter: { type: 'IN', values: [statusId] },
+            name: 'workflow.state',
+          },
+        ],
         returnEntities: true,
       },
       { ...FACETS_DEFAULT_PARAMS, ...params }
     );
     return {
       statusId,
-      items: data?._embedded['content-items'].map(item => new ContentItem(item)) || [],
+      items:
+        data?._embedded['content-items'].map((item) => new ContentItem(item)) ||
+        [],
       page: data?.page || {},
     };
   } catch (error) {
@@ -81,7 +87,7 @@ export async function fetchHydratedStatuesWithContentItems(
     fetchForStatuses(dcClient, hubId, statuses, params),
   ]);
 
-  return hydratedStatuses.map((status: Status) => {
+  const result = hydratedStatuses.map((status: Status) => {
     return {
       ...status,
       contentItems: findContentItemCollectionForStatus(
@@ -90,6 +96,9 @@ export async function fetchHydratedStatuesWithContentItems(
       ),
     } as StatusWithContentItemCollection;
   });
+  console.log(result);
+
+  return result;
 }
 
 function findContentItemCollectionForStatus(
