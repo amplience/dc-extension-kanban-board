@@ -1,5 +1,5 @@
 import type { DcClient } from '../dc-client';
- 
+
 export interface Status {
   id: string;
   label?: string;
@@ -21,7 +21,7 @@ export async function fetchAndHydrate(
       return {
         id: found.id,
         label: found.label,
-        color: found.color
+        color: found.color,
       };
     }
     return { id };

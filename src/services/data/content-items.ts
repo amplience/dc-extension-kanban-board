@@ -4,6 +4,7 @@ import type { Status } from './workflow-states';
 import { workflowStates } from '../data';
 import ContentItem from '../models/content-item';
 import PromisePool from '@supercharge/promise-pool';
+import { isObject } from 'src/utils';
 
 const FACETS_DEFAULT_PARAMS = {
   page: 0,
@@ -42,7 +43,7 @@ export async function fetchForStatus(
   client: DcClient,
   hubId: string,
   statusId: string,
-  params: Record<string, unknown>
+  params: Record<string, any>
 ): Promise<ContentItemCollection> {
   try {
     const { data } = await client.post(
@@ -60,12 +61,11 @@ export async function fetchForStatus(
       },
       { ...FACETS_DEFAULT_PARAMS, ...params }
     );
+
     return {
       statusId,
-      items:
-        data?._embedded['content-items'].map((item) => new ContentItem(item)) ||
-        [],
-      page: data?.page || {},
+      items: mapContentItems(data),
+      page: getPagination(data),
     };
   } catch (error) {
     return {
@@ -114,4 +114,16 @@ function findContentItemCollectionForStatus(
       page: {},
     }
   );
+}
+
+function mapContentItems(data: any) {
+  return (
+    data?._embedded?.['content-items'].map(
+      (item: any) => new ContentItem(item)
+    ) || []
+  );
+}
+
+function getPagination(data: any) {
+  return data?.page || {};
 }
