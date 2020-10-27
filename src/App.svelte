@@ -5,6 +5,7 @@
   import { init } from './services/dc-extension-client';
   import type { StatusWithContentItemCollection } from './services/data/content-items';
   import { toDcQueryStr } from './utils';
+  import type { DcClient } from './services/dc-client';
 
   let dcClient: DcClient;
   let hydratedStatuses: any = [];
