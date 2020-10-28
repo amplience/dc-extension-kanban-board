@@ -3,7 +3,6 @@
   import { contentItems } from './services/data';
   import Columns from './components/Columns.svelte';
   import { init } from './services/dc-extension-client';
-  import type { StatusWithContentItemCollection } from './services/data/content-items';
   import { toDcQueryStr } from './utils';
   import type { DcClient } from './services/dc-client';
 
@@ -30,7 +29,9 @@
     try {
       const client = await init({ debug: true });
       const { statuses, hubId, contentRepositoryId, folderId } = client;
-      dcClient = client.dcClient;
+      if(client.dcClient) {
+        dcClient = client.dcClient;
+      }
       hydratedStatuses = await contentItems.fetchHydrated(
         dcClient,
         hubId,
@@ -57,10 +58,11 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    background: #fff;
   }
   :global(*) {
     font-family: 'Roboto', sans-serif;
-    font-weight: 500;
+    font-weight: 400;
   }
 </style>
 

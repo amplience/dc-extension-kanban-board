@@ -1,8 +1,9 @@
 import type { DcClient } from '../dc-client';
-import type { Status } from './workflow-states';
-import { workflowStates } from '../data';
+import type Status from '../models/status';
 import ContentItem from '../models/content-item';
+import { workflowStates } from '../data';
 import PromisePool from '@supercharge/promise-pool';
+import type { InstallationParamsStatus } from '../dc-extension-client';
 
 const FACETS_DEFAULT_PARAMS = {
   page: 0,
@@ -25,14 +26,14 @@ export type StatusesWithContentItemCollection = StatusWithContentItemCollection[
 export async function fetchForStatuses(
   client: DcClient,
   hubId: string,
-  statuses: string[],
+  statuses: Status[],
   params: Record<string, any>
 ): Promise<ContentItemCollection[]> {
   const { results } = await PromisePool.withConcurrency(5)
     .for(statuses)
     .process(
-      async (statusId: string) =>
-        await fetchForStatus(client, hubId, statusId, params)
+      async (status: Status) =>
+        await fetchForStatus(client, hubId, status, params)
     );
   return results;
 }
@@ -40,34 +41,27 @@ export async function fetchForStatuses(
 export async function fetchForStatus(
   client: DcClient,
   hubId: string,
-  statusId: string,
+  status: Status,
   params: Record<string, any>
 ): Promise<ContentItemCollection> {
   try {
     const { data } = await client.post(
       `/hubs/${hubId}/content-items/facet`,
       {
-        fields: [
-          {
-            facetAs: 'ENUM',
-            field: 'workflow.state',
-            filter: { type: 'IN', values: [statusId] },
-            name: 'workflow.state',
-          },
-        ],
+        fields: status.facets,
         returnEntities: true,
       },
       { ...FACETS_DEFAULT_PARAMS, ...params }
     );
 
     return {
-      statusId,
+      statusId: status.id,
       items: mapContentItems(data),
       page: getPagination(data),
     };
   } catch (error) {
     return {
-      statusId,
+      statusId: status.id,
       items: [],
       page: {},
     };
@@ -77,13 +71,20 @@ export async function fetchForStatus(
 export async function fetchHydrated(
   dcClient: DcClient,
   hubId: string,
-  statuses: string[],
+  statuses: InstallationParamsStatus[],
   params: Record<string, unknown>
 ): Promise<StatusWithContentItemCollection[]> {
-  const [hydratedStatuses, contentItemsByStatus] = await Promise.all([
-    workflowStates.fetchAndHydrate(dcClient, hubId, statuses),
-    fetchForStatuses(dcClient, hubId, statuses, params),
-  ]);
+  const hydratedStatuses = await workflowStates.fetchAndHydrate(
+    dcClient,
+    hubId,
+    statuses
+  );
+  const contentItemsByStatus = await fetchForStatuses(
+    dcClient,
+    hubId,
+    hydratedStatuses,
+    params
+  );
 
   const result = hydratedStatuses.map((status: Status) => {
     return {

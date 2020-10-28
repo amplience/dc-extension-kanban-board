@@ -1,11 +1,16 @@
 import { SDK, Options } from 'dc-extensions-sdk';
 import { DcClient } from './dc-client';
 
+export interface InstallationParamsStatus {
+  id: string;
+  [key: string]: any;
+}
+
 export class DcExtensionClient {
   public hubId?: string | undefined;
   public contentRepositoryId?: string | undefined;
   public folderId?: string | undefined;
-  public statuses: string[] = [];
+  public statuses: InstallationParamsStatus[] = [];
   public dcClient: DcClient | undefined;
 
   async init(options: Options): Promise<void> {
@@ -25,7 +30,7 @@ export class DcExtensionClient {
     this.hubId = hubId;
     this.contentRepositoryId = repositoryId;
     this.folderId = folderId;
-    this.statuses = statuses;
+    this.statuses = getUniqueStatuses(statuses);
     this.dcClient = new DcClient(sdk.client);
   }
 }
@@ -34,4 +39,18 @@ export async function init(options: any): Promise<DcExtensionClient> {
   const client = new DcExtensionClient();
   await client.init(options);
   return client;
+}
+
+interface StatusesMap {
+  [key: string]: InstallationParamsStatus;
+}
+
+function getUniqueStatuses(
+  statuses: InstallationParamsStatus[]
+): InstallationParamsStatus[] {
+  const statusesMap: StatusesMap = {};
+  statuses.forEach((status: InstallationParamsStatus) => {
+    statusesMap[status.id] = status;
+  });
+  return Object.values(statusesMap);
 }
