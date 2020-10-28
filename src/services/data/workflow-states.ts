@@ -20,6 +20,10 @@ export async function fetchAndHydrate(
       return new Status(foundStatus || { id });
     })
     .filter((status: Status) => status.hydrated);
-  getLastStatus(hydratedStatuses).addDateFacetField();
+
+  const lastStatus = getLastStatus(hydratedStatuses);
+  if (lastStatus) {
+    lastStatus.addDateFacetField();
+  }
   return hydratedStatuses;
 }
