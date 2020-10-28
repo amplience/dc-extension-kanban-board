@@ -14,7 +14,7 @@
     box-sizing: border-box;
     display: grid;
     grid-template-rows: 1fr;
-    grid-gap: 0.5em;
+    grid-gap: 8px;
     height: 100%;
     width: 100%;
     padding: 0.5em;
