@@ -26,11 +26,38 @@ export class DcClient {
 
   async get(
     path: string,
-    params: Record<string, unknown>
+    params: Record<string, unknown> = {}
   ): Promise<HttpResponse> {
     return await this.client.request({
       method: HttpMethod.GET,
       url: `${FAKE_DC_SERVICE}${path}${toQueryStr(params)}`,
     });
+  }
+
+  async getAll(rel, url, options = { params: {} }) {
+    options.params = { ...options.params, size: 100 };
+    const recursivePagingHandler = async ({
+      data: { page, _embedded, _links },
+    }: any) => {
+      if (!_embedded.rel) {
+        return { data: [], page };
+      }
+
+      const results = { data: _embedded[rel], page };
+      const next = _links.next;
+
+      if (!next) {
+        return results;
+      }
+
+      const nextResults = await this.get(next.href);
+      recursivePagingHandler(nextResults);
+      return await Promise.all([results, nextResults]).then((pages) => {
+        const data = [...pages[0].data, ...pages[1].data];
+        return { data, page: pages[1].page };
+      });
+    };
+    const nextResults = await this.get(url, options);
+    return recursivePagingHandler(nextResults);
   }
 }
