@@ -100,17 +100,20 @@ export async function fetchHydrated(
   return result;
 }
 
-export function updateWorkflowStatus(
-  dcClient: DcClient,
-  contentItemId: string,
+export async function updateWorkflowStatus(
+  client: DcClient,
+  contentItem: ContentItem,
   workflowStatusId: string
-) {
-  console.log(
-    'in updateworkflowstatus',
-    dcClient,
-    contentItemId,
-    workflowStatusId
+): Promise<ContentItem> {
+  const { data } = await client.patch(
+    `/content-items/${contentItem.id}/workflow`,
+    {
+      version: contentItem.version,
+      state: workflowStatusId,
+    },
+    {}
   );
+  return new ContentItem(data);
 }
 
 function findContentItemCollectionForStatus(

@@ -5,23 +5,39 @@
   import { init } from './services/dc-extension-client';
   import { toDcQueryStr } from './utils';
   import type { DcClient } from './services/dc-client';
+  import type ContentItem from './services/models/content-item';
 
   let dcClient: DcClient;
   let hydratedStatuses: any = [];
 
-  function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
+  function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
     );
     hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
   }
-  function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
+  async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
+    const listItems: ContentItem[] = e.detail.items as ContentItem[];
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
     );
-    hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
-    if (e.detail.info.trigger === 'droppedIntoAnother') {
-      contentItems.updateWorkflowStatus(dcClient, e.detail.info.id, statusId);
+    if (e.detail.info.trigger !== 'droppedIntoAnother') {
+      const droppedItem: ContentItem = listItems.filter(
+        (item) => item.id === e.detail.info.id
+      )[0] as ContentItem;
+      const response: ContentItem = await contentItems.updateWorkflowStatus(
+        dcClient,
+        droppedItem,
+        statusId
+      );
+      droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
+      hydratedStatuses[statusIndex].contentItems.items = listItems.sort(
+        (a: ContentItem, b: ContentItem): number => {
+          const aTicks = new Date(a['lastModifiedDate']).getTime();
+          const bTicks = new Date(b['lastModifiedDate']).getTime();
+          return bTicks - aTicks;
+        }
+      );
     }
   }
 
@@ -29,12 +45,10 @@
     try {
       const client = await init({ debug: true });
       const { statuses, hubId, contentRepositoryId, folderId } = client;
-      if(client.dcClient) {
-        dcClient = client.dcClient;
-      }
+      dcClient = client.dcClient as DcClient;
       hydratedStatuses = await contentItems.fetchHydrated(
         dcClient,
-        hubId,
+        hubId as string,
         statuses,
         {
           query: toDcQueryStr({
