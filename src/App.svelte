@@ -3,7 +3,6 @@
   import { contentItems } from './services/data';
   import Columns from './components/Columns.svelte';
   import { init } from './services/dc-extension-client';
-  import type { StatusWithContentItemCollection } from './services/data/content-items';
   import { toDcQueryStr } from './utils';
   import type { DcClient } from './services/dc-client';
   import type ContentItem from './services/models/content-item';
@@ -11,22 +10,34 @@
   let dcClient: DcClient;
   let hydratedStatuses: any = [];
 
-  function handleConsider(statusId: any, e: CustomEvent<DndEvent>) {
+  function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
     );
     hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
   }
-  function handleFinalize(statusId: any, e: CustomEvent<DndEvent>) {
+  async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
+    const listItems: ContentItem[] = e.detail.items as ContentItem[];
     const statusIndex = hydratedStatuses.findIndex(
       (status: any) => status.id == statusId
     );
-    hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
     if (e.detail.info.trigger !== 'droppedIntoAnother') {
-      const droppedItem: ContentItem = e.detail.items.filter(
+      const droppedItem: ContentItem = listItems.filter(
         (item) => item.id === e.detail.info.id
       )[0] as ContentItem;
-      contentItems.updateWorkflowStatus(dcClient, droppedItem, statusId);
+      const response: ContentItem = await contentItems.updateWorkflowStatus(
+        dcClient,
+        droppedItem,
+        statusId
+      );
+      droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
+      hydratedStatuses[statusIndex].contentItems.items = listItems.sort(
+        (a: ContentItem, b: ContentItem): number => {
+          const aTicks = new Date(a['lastModifiedDate']).getTime();
+          const bTicks = new Date(b['lastModifiedDate']).getTime();
+          return bTicks - aTicks;
+        }
+      );
     }
   }
 

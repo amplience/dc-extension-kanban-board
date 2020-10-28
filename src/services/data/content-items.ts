@@ -3,6 +3,7 @@ import type { Status } from './workflow-states';
 import { workflowStates } from '../data';
 import ContentItem from '../models/content-item';
 import PromisePool from '@supercharge/promise-pool';
+import type { HttpResponse } from 'dc-extensions-sdk';
 
 const FACETS_DEFAULT_PARAMS = {
   page: 0,
@@ -103,21 +104,16 @@ export async function updateWorkflowStatus(
   client: DcClient,
   contentItem: ContentItem,
   workflowStatusId: string
-) {
-  try {
-    const { data } = await client.patch(
-      `/content-items/${contentItem.id}/workflow`,
-      {
-        version: contentItem.version,
-        state: workflowStatusId,
-      },
-      {}
-    );
-
-    return data;
-  } catch (error) {
-    return {};
-  }
+): Promise<ContentItem> {
+  const { data } = await client.patch(
+    `/content-items/${contentItem.id}/workflow`,
+    {
+      version: contentItem.version,
+      state: workflowStatusId,
+    },
+    {}
+  );
+  return new ContentItem(data);
 }
 
 function findContentItemCollectionForStatus(
