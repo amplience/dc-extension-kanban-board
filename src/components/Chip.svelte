@@ -5,13 +5,18 @@
 
 <style lang="scss">
   .chip {
+    width: 120px;
+    margin: 0 2px 0 10px;
+    font-size: 13px;
     box-sizing: border-box;
-    border-radius: 1em;
+    border-radius: 9px;
     color: white;
     padding: 0.15em 0.5em;
     display: inline-block;
     margin: 0.5em;
-    width: auto;
+    text-align: center;
+    height: 24px;
+    line-height: 24px;
   }
 </style>
 
