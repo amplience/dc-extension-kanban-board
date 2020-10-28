@@ -27,6 +27,9 @@
     .content-item-wrap {
       overflow-y: auto;
       height: calc(100% - 90px);
+      &:focus {
+        outline: none;
+      }
     }
   }
 </style>
@@ -44,7 +47,7 @@
         count={status.contentItems.items.length} />
       <div
         class="content-item-wrap"
-        use:dndzone={{ items: status.contentItems.items, type: 'content-items' }}
+        use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' } }}
         on:consider={(e) => handleConsider(status.id, e)}
         on:finalize={(e) => handleFinalize(status.id, e)}>
         {#each status.contentItems.items as contentItem (contentItem.id)}
