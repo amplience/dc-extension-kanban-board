@@ -1,12 +1,14 @@
+import type { ContentTypeLookup } from '../data/content-types';
+
 export default class ContentItem {
   public label: string;
-  public contentType: string;
+  public schema: string;
   public id: string;
   public version: number;
   public lastModifiedDate: string;
   constructor({ label, schema, lastModifiedDate, id, version }: any = {}) {
     this.label = label;
-    this.contentType = schema;
+    this.schema = schema;
     this.id = id;
     this.version = version;
     this.lastModifiedDate = lastModifiedDate;

@@ -3,10 +3,12 @@
   import Card from './Card.svelte';
   import Count from './Count.svelte';
   import { dndzone } from 'svelte-dnd-action';
-  import type { StatusWithContentItemCollection } from '../services/data/content-items';
+  import type { StatusWithContentItemCollection } from '../services/data/workflow-states';
+  import type { ContentTypeLookup } from '../services/data/content-types';
   export let handleConsider: any;
   export let handleFinalize: any;
   export let statuses: Array<StatusWithContentItemCollection> = [];
+  export let contentTypeLookup: ContentTypeLookup = Object.create(null);
 </script>
 
 <style lang="scss">
@@ -41,7 +43,10 @@
     .trim()}">
   {#each statuses as status (status.id)}
     <div class="col">
-      <Chip color={status.color} label={status.label} />
+      <Chip
+        backgroundColor={status.backgroundColor}
+        color={status.color}
+        label={status.label} />
       <Count
         total={status.contentItems.page.totalElements}
         count={status.contentItems.items.length} />
@@ -53,7 +58,7 @@
         {#each status.contentItems.items as contentItem (contentItem.id)}
           <Card
             title={contentItem.label}
-            subtitle={contentItem.contentType}
+            subtitle={contentTypeLookup[contentItem.schema].label}
             footer="Last changed {contentItem.modified}" />
         {/each}
       </div>

@@ -1,4 +1,5 @@
 <script>
+  export let backgroundColor: string = '';
   export let color: string = '';
   export let label: string = '';
 </script>
@@ -20,4 +21,6 @@
   }
 </style>
 
-<div class="chip" style="background-color: {color}">{label}</div>
+<div class="chip" style="background-color: {backgroundColor}; color: {color}">
+  {label}
+</div>

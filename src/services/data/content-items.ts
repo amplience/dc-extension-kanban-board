@@ -1,9 +1,9 @@
 import type { DcClient } from '../dc-client';
 import type Status from '../models/status';
 import ContentItem from '../models/content-item';
-import { workflowStates } from '../data';
 import PromisePool from '@supercharge/promise-pool';
-import type { InstallationParamsStatus } from '../dc-extension-client';
+import type { DcExtensionClient } from '../dc-extension-client';
+import { toDcQueryStr } from '../../utils';
 
 const FACETS_DEFAULT_PARAMS = {
   page: 0,
@@ -17,41 +17,41 @@ export interface ContentItemCollection {
   items: ContentItem[] | [];
 }
 
-export interface StatusWithContentItemCollection extends Status {
-  contentItems: ContentItemCollection;
-}
-
-export type StatusesWithContentItemCollection = StatusWithContentItemCollection[];
-
 export async function fetchForStatuses(
-  client: DcClient,
-  hubId: string,
+  client: DcExtensionClient,
   statuses: Status[],
   params: Record<string, any>
 ): Promise<ContentItemCollection[]> {
   const { results } = await PromisePool.withConcurrency(5)
     .for(statuses)
     .process(
-      async (status: Status) =>
-        await fetchForStatus(client, hubId, status, params)
+      async (status: Status) => await fetchForStatus(client, status, params)
     );
   return results;
 }
 
 export async function fetchForStatus(
-  client: DcClient,
-  hubId: string,
+  client: DcExtensionClient,
   status: Status,
   params: Record<string, any>
 ): Promise<ContentItemCollection> {
   try {
-    const { data } = await client.post(
+    const { dcClient, hubId, folderId, contentRepositoryId } = client;
+    const { data } = await dcClient.post(
       `/hubs/${hubId}/content-items/facet`,
       {
         fields: status.facets,
         returnEntities: true,
       },
-      { ...FACETS_DEFAULT_PARAMS, ...params }
+      {
+        ...FACETS_DEFAULT_PARAMS,
+        ...params,
+        query: toDcQueryStr({
+          status: 'ACTIVE',
+          contentRepositoryId,
+          folderId,
+        }),
+      }
     );
 
     return {
@@ -68,38 +68,6 @@ export async function fetchForStatus(
   }
 }
 
-export async function fetchHydrated(
-  dcClient: DcClient,
-  hubId: string,
-  statuses: InstallationParamsStatus[],
-  params: Record<string, unknown>
-): Promise<StatusWithContentItemCollection[]> {
-  const hydratedStatuses = await workflowStates.fetchAndHydrate(
-    dcClient,
-    hubId,
-    statuses
-  );
-  const contentItemsByStatus = await fetchForStatuses(
-    dcClient,
-    hubId,
-    hydratedStatuses,
-    params
-  );
-
-  const result = hydratedStatuses.map((status: Status) => {
-    return {
-      ...status,
-      contentItems: findContentItemCollectionForStatus(
-        contentItemsByStatus,
-        status.id
-      ),
-    } as StatusWithContentItemCollection;
-  });
-  console.log(result);
-
-  return result;
-}
-
 export async function updateWorkflowStatus(
   client: DcClient,
   contentItem: ContentItem,
@@ -114,21 +82,6 @@ export async function updateWorkflowStatus(
     {}
   );
   return new ContentItem(data);
-}
-
-function findContentItemCollectionForStatus(
-  collections: ContentItemCollection[],
-  statusId: string
-): ContentItemCollection {
-  return (
-    collections.find(
-      (collection: ContentItemCollection) => collection.statusId === statusId
-    ) || {
-      statusId,
-      items: [],
-      page: {},
-    }
-  );
 }
 
 function mapContentItems(data: any) {

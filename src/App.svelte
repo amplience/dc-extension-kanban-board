@@ -1,24 +1,34 @@
 <script>
   import { onMount } from 'svelte';
-  import { contentItems } from './services/data';
+  import {
+    contentRepositories,
+    contentItems,
+    contentTypes,
+    workflowStates,
+  } from './services/data';
+  import Toolbar from './components/Toolbar.svelte';
   import Columns from './components/Columns.svelte';
+  import Header from './components/Header.svelte';
   import { DcExtensionClient, init } from './services/dc-extension-client';
-  import { toDcQueryStr } from './utils';
-  import type { DcClient } from './services/dc-client';
   import type ContentItem from './services/models/content-item';
+  import type { StatusWithContentItemCollection } from './services/data/workflow-states';
+  import type { ContentTypeLookup } from './services/data/content-types';
 
-  let hydratedStatuses: any = [];
-  let sdkClient: DcExtensionClient;
+  let client: DcExtensionClient;
+  let statuses: Array<StatusWithContentItemCollection> = [];
+  let contentTypeLookup: ContentTypeLookup = {};
+  let contentItemsCount: number;
+  let contentItemsPath: string;
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
-    const statusIndex = hydratedStatuses.findIndex(
+    const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
-    hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
+    statuses[statusIndex].contentItems.items = e.detail.items;
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
     const listItems: ContentItem[] = e.detail.items as ContentItem[];
-    const statusIndex = hydratedStatuses.findIndex(
+    const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
     if (e.detail.info.trigger !== 'droppedIntoAnother') {
@@ -26,53 +36,38 @@
         (item) => item.id === e.detail.info.id
       )[0] as ContentItem;
       const response: ContentItem = await contentItems.updateWorkflowStatus(
-        sdkClient.dcClient as DcClient,
+        client.dcClient,
         droppedItem,
         statusId
       );
+      droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
+      statuses[statusIndex].contentItems.items = listItems.sort(
+        (a: ContentItem, b: ContentItem): number => {
+          const aTicks = new Date(a['lastModifiedDate']).getTime();
+          const bTicks = new Date(b['lastModifiedDate']).getTime();
+          return bTicks - aTicks;
+        }
+      );
       window.setTimeout(async () => {
-        await loadHydratedStatuses(
-          sdkClient.dcClient as DcClient,
-          sdkClient.statuses,
-          sdkClient.hubId as string,
-          sdkClient.contentRepositoryId as string,
-          sdkClient.folderId as string
-        );
+        await loadHydratedStatuses(client);
       }, 2000);
     }
   }
 
-  async function loadHydratedStatuses(
-    dcClient: DcClient,
-    statuses: any[],
-    hubId: string,
-    contentRepositoryId: string,
-    folderId: string
-  ) {
-    hydratedStatuses = await contentItems.fetchHydrated(
-      dcClient,
-      hubId as string,
-      statuses,
-      {
-        query: toDcQueryStr({
-          status: 'ACTIVE',
-          contentRepositoryId,
-          folderId,
-        }),
-      }
-    );
+  async function loadHydratedStatuses(client: any) {
+    statuses = await workflowStates.fetchAndHydrateWithContentItems(client);
   }
 
   onMount(async () => {
     try {
-      sdkClient = await init({ debug: true });
-      await loadHydratedStatuses(
-        sdkClient.dcClient as DcClient,
-        sdkClient.statuses,
-        sdkClient.hubId as string,
-        sdkClient.contentRepositoryId as string,
-        sdkClient.folderId as string
-      );
+      client = await init({ debug: true });
+      [contentItemsPath, statuses, contentTypeLookup] = await Promise.all([
+        contentRepositories.getContentItemPath(client),
+        workflowStates.fetchAndHydrateWithContentItems(client),
+        contentTypes.fetchAll(client),
+      ]);
+
+      contentItemsCount = workflowStates.getContentItemsCount(statuses);
     } catch (e) {
       console.error(e);
     }
@@ -93,10 +88,21 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
   }
+
+  section {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
 </style>
 
-{#if hydratedStatuses.length === 0}
-  loading...
-{:else}
-  <Columns statuses={hydratedStatuses} {handleConsider} {handleFinalize} />
-{/if}
+<section>
+  <Header {contentItemsCount} {contentItemsPath} />
+  <Toolbar />
+  {#if statuses.length === 0}
+    loading...
+  {:else}
+    <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} />
+  {/if}
+</section>
