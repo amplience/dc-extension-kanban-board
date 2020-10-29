@@ -17,7 +17,6 @@
 
 <div class="count">
   <span class="bold">{count}</span>
-  of
-  {total}
+  {#if count !== total}of {total}{/if}
   content items
 </div>

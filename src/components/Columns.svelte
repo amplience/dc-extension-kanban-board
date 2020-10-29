@@ -29,6 +29,9 @@
     .content-item-wrap {
       overflow-y: auto;
       height: calc(100% - 90px);
+      &:focus {
+        outline: none;
+      }
     }
   }
 </style>
@@ -40,11 +43,16 @@
     .trim()}">
   {#each statuses as status (status.id)}
     <div class="col">
-      <Chip  backgroundColor={status.backgroundColor} color={status.color} label={status.label} />
-      <Count total={200} count={status.contentItems.items.length} />
+      <Chip
+        backgroundColor={status.backgroundColor}
+        color={status.color}
+        label={status.label} />
+      <Count
+        total={status.contentItems.page.totalElements}
+        count={status.contentItems.page.elementsInCurrentPage} />
       <div
         class="content-item-wrap"
-        use:dndzone={{ items: status.contentItems.items, type: 'content-items' }}
+        use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' } }}
         on:consider={(e) => handleConsider(status.id, e)}
         on:finalize={(e) => handleFinalize(status.id, e)}>
         {#each status.contentItems.items as contentItem (contentItem.id)}

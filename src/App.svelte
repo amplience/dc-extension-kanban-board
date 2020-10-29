@@ -1,24 +1,54 @@
 <script>
   import { onMount } from 'svelte';
-  import {contentRepositories, contentItems, contentTypes, workflowStates} from './services/data';
+  import {
+    contentRepositories,
+    contentItems,
+    contentTypes,
+    workflowStates,
+  } from './services/data';
+  import { TRIGGERS } from 'svelte-dnd-action';
   import Toolbar from './components/Toolbar.svelte';
   import Columns from './components/Columns.svelte';
-  import Header from './components/Header.svelte';  
+  import Header from './components/Header.svelte';
   import Loader from './components/Loader.svelte';
   import Error from './components/Error.svelte';
   import { DcExtensionClient, init } from './services/dc-extension-client';
-  import type ContentItem from './services/models/content-item';
+  import ContentItem from './services/models/content-item';
   import type { StatusWithContentItemCollection } from './services/data/workflow-states';
   import type { ContentTypeLookup } from './services/data/content-types';
-
 
   let client: DcExtensionClient;
   let statuses: Array<StatusWithContentItemCollection> = [];
   let contentTypeLookup: ContentTypeLookup = {};
   let contentItemsCount: number;
   let contentItemsPath: string;
+  let fromStatusId: string;
+  let toStatusId: string;
   let loading: boolean = true;
   let error: string = '';
+
+  // reactive block required to wrangle status id content item is dragged from and status id item is
+  // being dragged to.
+  $: {
+    if (fromStatusId?.length && toStatusId?.length) {
+      const fromStatusIndex = statuses.findIndex(
+        (status: any) => status.id == fromStatusId
+      );
+      const toStatusIndex = statuses.findIndex(
+        (status: any) => status.id == toStatusId
+      );
+      if (fromStatusId !== toStatusId) {
+        statuses[fromStatusIndex].contentItems.page.totalElements--;
+        statuses[toStatusIndex].contentItems.page.totalElements++;
+        statuses[fromStatusIndex].contentItems.page.elementsInCurrentPage--;
+        statuses[toStatusIndex].contentItems.page.elementsInCurrentPage++;
+      }
+      fromStatusId = '';
+      toStatusId = '';
+    } else if (toStatusId?.length) {
+      toStatusId = '';
+    }
+  }
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
     const statusIndex = statuses.findIndex(
@@ -27,20 +57,24 @@
     statuses[statusIndex].contentItems.items = e.detail.items as ContentItem[];
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
-    const listItems: ContentItem[] = e.detail.items as ContentItem[];
-    const statusIndex = statuses.findIndex(
-      (status: any) => status.id == statusId
-    );
-    if (e.detail.info.trigger !== 'droppedIntoAnother') {
+    if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
+      const listItems: ContentItem[] = e.detail.items.map((item) => {
+        return new ContentItem(item);
+      });
+      const statusIndex = statuses.findIndex(
+        (status: any) => status.id == statusId
+      );
+      statuses[statusIndex].contentItems.items = listItems;
       const droppedItem: ContentItem = listItems.filter(
         (item) => item.id === e.detail.info.id
-      )[0] as ContentItem;
+      )[0];
       const response: ContentItem = await contentItems.updateWorkflowStatus(
         client.dcClient,
         droppedItem,
         statusId
       );
       droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
+
       statuses[statusIndex].contentItems.items = listItems.sort(
         (a: ContentItem, b: ContentItem): number => {
           const aTicks = new Date(a['lastModifiedDate']).getTime();
@@ -48,12 +82,14 @@
           return bTicks - aTicks;
         }
       );
+      toStatusId = statusId;
+    } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
+      fromStatusId = statusId;
     }
   }
-
   onMount(async () => {
     try {
-      const client = await init({ debug: true });
+      client = await init({ debug: true });
       [contentItemsPath, statuses, contentTypeLookup] = await Promise.all([
         contentRepositories.getContentItemPath(client),
         workflowStates.fetchAndHydrateWithContentItems(client),
@@ -79,7 +115,7 @@
     margin: 0;
     padding: 0;
     background: #fff;
-  } 
+  }
   :global(*) {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
@@ -89,17 +125,18 @@
     height: 100%;
     overflow: hidden;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
   }
 </style>
+
 <section>
   {#if loading}
-    <Loader/>
-  {:else if error} 
-    <Error reason="An error occured while loading: {error}"></Error>   
-  {:else}   
+    <Loader />
+  {:else if error}
+    <Error reason="An error occured while loading: {error}" />
+  {:else}
     <Header {contentItemsCount} {contentItemsPath} />
-    <Toolbar/>
-    <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} /> 
+    <Toolbar />
+    <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} />
   {/if}
 </section>

@@ -11,6 +11,10 @@
     padding: 10px 10px 20px 10px;
     border-radius: 3px;
     margin: 10px;
+
+    &:focus {
+      outline-color: #039be5;
+    }
   }
 
   .title {
