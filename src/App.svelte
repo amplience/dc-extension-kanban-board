@@ -3,17 +3,22 @@
   import {contentRepositories, contentItems, contentTypes, workflowStates} from './services/data';
   import Toolbar from './components/Toolbar.svelte';
   import Columns from './components/Columns.svelte';
-  import Header from './components/Header.svelte';
+  import Header from './components/Header.svelte';  
+  import Loader from './components/Loader.svelte';
+  import Error from './components/Error.svelte';
   import { DcExtensionClient, init } from './services/dc-extension-client';
   import type ContentItem from './services/models/content-item';
   import type { StatusWithContentItemCollection } from './services/data/workflow-states';
   import type { ContentTypeLookup } from './services/data/content-types';
+
 
   let client: DcExtensionClient;
   let statuses: Array<StatusWithContentItemCollection> = [];
   let contentTypeLookup: ContentTypeLookup = {};
   let contentItemsCount: number;
   let contentItemsPath: string;
+  let loading: boolean = true;
+  let error: string = '';
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
     const statusIndex = statuses.findIndex(
@@ -56,9 +61,11 @@
       ]);
 
       contentItemsCount = workflowStates.getContentItemsCount(statuses);
-
     } catch (e) {
+      error = e.message;
       console.error(e);
+    } finally {
+      loading = false;
     }
   });
 </script>
@@ -86,11 +93,13 @@
   }
 </style>
 <section>
-  <Header {contentItemsCount} {contentItemsPath} />
-  <Toolbar/>
-  {#if statuses.length === 0}
-    loading...
-  {:else} 
+  {#if loading}
+    <Loader/>
+  {:else if error} 
+    <Error reason="An error occured while loading: {error}"></Error>   
+  {:else}   
+    <Header {contentItemsCount} {contentItemsPath} />
+    <Toolbar/>
     <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} /> 
   {/if}
 </section>

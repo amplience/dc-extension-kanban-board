@@ -8,7 +8,7 @@ export interface ContentTypeLookup {
 
 export async function getContentItemPath(
   client: DcExtensionClient
-): Promise<PathPart[]> {
+): Promise<string> {
   const repository: any = await fetchRepository(client);
   const folders: any = await fetchFolders(client);
   if (folders) {
