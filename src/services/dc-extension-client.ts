@@ -7,11 +7,11 @@ export interface InstallationParamsStatus {
 }
 
 export class DcExtensionClient {
-  public hubId?: string | undefined;
+  public hubId!: string;
   public contentRepositoryId?: string | undefined;
   public folderId?: string | undefined;
   public statuses: InstallationParamsStatus[] = [];
-  public dcClient: DcClient | undefined;
+  public dcClient!: DcClient;
 
   async init(options: Options): Promise<void> {
     const sdk: SDK = await new SDK(options).init();

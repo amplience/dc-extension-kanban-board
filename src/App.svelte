@@ -1,24 +1,29 @@
 <script>
   import { onMount } from 'svelte';
-  import { contentItems } from './services/data';
+  import {contentRepositories, contentItems, contentTypes, workflowStates} from './services/data';
+  import Toolbar from './components/Toolbar.svelte';
   import Columns from './components/Columns.svelte';
-  import { init } from './services/dc-extension-client';
-  import { toDcQueryStr } from './utils';
-  import type { DcClient } from './services/dc-client';
+  import Header from './components/Header.svelte';
+  import { DcExtensionClient, init } from './services/dc-extension-client';
   import type ContentItem from './services/models/content-item';
+  import type { StatusWithContentItemCollection } from './services/data/workflow-states';
+  import type { ContentTypeLookup } from './services/data/content-types';
 
-  let dcClient: DcClient;
-  let hydratedStatuses: any = [];
+  let client: DcExtensionClient;
+  let statuses: Array<StatusWithContentItemCollection> = [];
+  let contentTypeLookup: ContentTypeLookup = {};
+  let contentItemsCount: number;
+  let contentItemsPath: string;
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
-    const statusIndex = hydratedStatuses.findIndex(
+    const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
-    hydratedStatuses[statusIndex].contentItems.items = e.detail.items;
+    statuses[statusIndex].contentItems.items = e.detail.items;
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
     const listItems: ContentItem[] = e.detail.items as ContentItem[];
-    const statusIndex = hydratedStatuses.findIndex(
+    const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
     if (e.detail.info.trigger !== 'droppedIntoAnother') {
@@ -26,12 +31,12 @@
         (item) => item.id === e.detail.info.id
       )[0] as ContentItem;
       const response: ContentItem = await contentItems.updateWorkflowStatus(
-        dcClient,
+        client.dcClient,
         droppedItem,
         statusId
       );
       droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
-      hydratedStatuses[statusIndex].contentItems.items = listItems.sort(
+      statuses[statusIndex].contentItems.items = listItems.sort(
         (a: ContentItem, b: ContentItem): number => {
           const aTicks = new Date(a['lastModifiedDate']).getTime();
           const bTicks = new Date(b['lastModifiedDate']).getTime();
@@ -44,20 +49,14 @@
   onMount(async () => {
     try {
       const client = await init({ debug: true });
-      const { statuses, hubId, contentRepositoryId, folderId } = client;
-      dcClient = client.dcClient as DcClient;
-      hydratedStatuses = await contentItems.fetchHydrated(
-        dcClient,
-        hubId as string,
-        statuses,
-        {
-          query: toDcQueryStr({
-            status: 'ACTIVE',
-            contentRepositoryId,
-            folderId,
-          }),
-        }
-      );
+      [contentItemsPath, statuses, contentTypeLookup] = await Promise.all([
+        contentRepositories.getContentItemPath(client),
+        workflowStates.fetchAndHydrateWithContentItems(client),
+        contentTypes.fetchAll(client),
+      ]);
+
+      contentItemsCount = workflowStates.getContentItemsCount(statuses);
+
     } catch (e) {
       console.error(e);
     }
@@ -73,15 +72,25 @@
     margin: 0;
     padding: 0;
     background: #fff;
-  }
+  } 
   :global(*) {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
   }
-</style>
 
-{#if hydratedStatuses.length === 0}
-  loading...
-{:else}
-  <Columns statuses={hydratedStatuses} {handleConsider} {handleFinalize} />
-{/if}
+  section {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column
+  }
+</style>
+<section>
+  <Header {contentItemsCount} {contentItemsPath} />
+  <Toolbar/>
+  {#if statuses.length === 0}
+    loading...
+  {:else} 
+    <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} /> 
+  {/if}
+</section>
