@@ -54,7 +54,7 @@
 </style>
 
 <div class="spinner-container">
-  {#each dots as dot, i}
+  {#each dots as _, i}
     <div class="spinner dot-{i}" />
   {/each}
 </div>

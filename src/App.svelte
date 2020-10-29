@@ -24,7 +24,7 @@
     const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
-    statuses[statusIndex].contentItems.items = e.detail.items;
+    statuses[statusIndex].contentItems.items = e.detail.items as ContentItem[];
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
     const listItems: ContentItem[] = e.detail.items as ContentItem[];

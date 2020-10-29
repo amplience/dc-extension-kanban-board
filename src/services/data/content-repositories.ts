@@ -1,10 +1,4 @@
-import { isObject } from 'src/utils';
 import type { DcExtensionClient } from '../dc-extension-client';
-import ContentType from '../models/content-type';
-
-export interface ContentTypeLookup {
-  [key: string]: ContentType;
-}
 
 export async function getContentItemPath(
   client: DcExtensionClient
@@ -89,7 +83,7 @@ class Path {
     this.parts.push(part);
   }
 
-  toString(delimiter: string = ' / ') {
+  toString(delimiter: string = ' / '): string {
     return this.parts.map(({ label }) => label).join(delimiter);
   }
 }
