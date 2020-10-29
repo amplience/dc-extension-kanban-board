@@ -6,11 +6,12 @@
     contentTypes,
     workflowStates,
   } from './services/data';
+  import { TRIGGERS } from 'svelte-dnd-action';
   import Toolbar from './components/Toolbar.svelte';
   import Columns from './components/Columns.svelte';
   import Header from './components/Header.svelte';
   import { DcExtensionClient, init } from './services/dc-extension-client';
-  import type ContentItem from './services/models/content-item';
+  import ContentItem from './services/models/content-item';
   import type { StatusWithContentItemCollection } from './services/data/workflow-states';
   import type { ContentTypeLookup } from './services/data/content-types';
 
@@ -19,22 +20,49 @@
   let contentTypeLookup: ContentTypeLookup = {};
   let contentItemsCount: number;
   let contentItemsPath: string;
+  let fromStatusId: string;
+  let toStatusId: string;
+
+  // reactive block required to wrangle status id content item is dragged from and status id item is
+  // being dragged to.
+  $: {
+    if (fromStatusId?.length && toStatusId?.length) {
+      const fromStatusIndex = statuses.findIndex(
+        (status: any) => status.id == fromStatusId
+      );
+      const toStatusIndex = statuses.findIndex(
+        (status: any) => status.id == toStatusId
+      );
+      if (fromStatusId !== toStatusId) {
+        statuses[fromStatusIndex].contentItems.page.totalElements--;
+        statuses[toStatusIndex].contentItems.page.totalElements++;
+      }
+      fromStatusId = '';
+      toStatusId = '';
+    } else if (toStatusId?.length) {
+      toStatusId = '';
+    }
+  }
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
     const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
-    statuses[statusIndex].contentItems.items = e.detail.items;
+    statuses[statusIndex].contentItems.items = e.detail.items.map((item) => {
+      return new ContentItem(item);
+    });
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
-    const listItems: ContentItem[] = e.detail.items as ContentItem[];
-    const statusIndex = statuses.findIndex(
-      (status: any) => status.id == statusId
-    );
-    if (e.detail.info.trigger !== 'droppedIntoAnother') {
-      const droppedItem: ContentItem = listItems.filter(
-        (item) => item.id === e.detail.info.id
-      )[0] as ContentItem;
+    const listItems: ContentItem[] = e.detail.items.map((item) => {
+      return new ContentItem(item);
+    });
+    if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
+      const statusIndex = statuses.findIndex(
+        (status: any) => status.id == statusId
+      );
+      const droppedItem: ContentItem = new ContentItem(
+        listItems.filter((item) => item.id === e.detail.info.id)
+      );
       const response: ContentItem = await contentItems.updateWorkflowStatus(
         client.dcClient,
         droppedItem,
@@ -48,16 +76,11 @@
           return bTicks - aTicks;
         }
       );
-      window.setTimeout(async () => {
-        await loadHydratedStatuses(client);
-      }, 2000);
+      toStatusId = statusId;
+    } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
+      fromStatusId = statusId;
     }
   }
-
-  async function loadHydratedStatuses(client: any) {
-    statuses = await workflowStates.fetchAndHydrateWithContentItems(client);
-  }
-
   onMount(async () => {
     try {
       client = await init({ debug: true });
