@@ -52,27 +52,26 @@
     const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
-    statuses[statusIndex].contentItems.items = e.detail.items.map((item) => {
-      return new ContentItem(item);
-    });
+    statuses[statusIndex].contentItems.items = e.detail.items as ContentItem[];
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
-    const listItems: ContentItem[] = e.detail.items.map((item) => {
-      return new ContentItem(item);
-    });
     if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
+      const listItems: ContentItem[] = e.detail.items.map((item) => {
+        return new ContentItem(item);
+      });
       const statusIndex = statuses.findIndex(
         (status: any) => status.id == statusId
       );
-      const droppedItem: ContentItem = new ContentItem(
-        listItems.filter((item) => item.id === e.detail.info.id)
-      );
+      const droppedItem: ContentItem = listItems.filter(
+        (item) => item.id === e.detail.info.id
+      )[0];
       const response: ContentItem = await contentItems.updateWorkflowStatus(
         client.dcClient,
         droppedItem,
         statusId
       );
       droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
+
       statuses[statusIndex].contentItems.items = listItems.sort(
         (a: ContentItem, b: ContentItem): number => {
           const aTicks = new Date(a['lastModifiedDate']).getTime();
