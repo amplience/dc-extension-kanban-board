@@ -1,5 +1,3 @@
-import type { ContentTypeLookup } from '../data/content-types';
-
 export default class ContentItem {
   public label: string;
   public schema: string;

@@ -50,3 +50,14 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: build
           DEST_DIR: '${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }}'
+
+      - name: Send Slack notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,ref,took
+          username: FTF
+          icon_emoji: ':mike-approves:'
+          text: 'Latest build: ${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }} https://dc-extension-kanban-board.s3-eu-west-1.amazonaws.com/${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }}'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
