@@ -58,6 +58,6 @@ jobs:
           fields: repo,message,commit,author,ref,took
           username: FTF
           icon_emoji: ':mike-approves:'
-          text: 'Latest build: ${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }} https://dc-extension-kanban-board.s3-eu-west-1.amazonaws.com/${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }}'
+          text: 'Latest build: ${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }} https://dc-extension-kanban-board.s3-eu-west-1.amazonaws.com/${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }}/index.html'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
