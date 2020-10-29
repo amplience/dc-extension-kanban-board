@@ -10,6 +10,8 @@
   import Toolbar from './components/Toolbar.svelte';
   import Columns from './components/Columns.svelte';
   import Header from './components/Header.svelte';
+  import Loader from './components/Loader.svelte';
+  import Error from './components/Error.svelte';
   import { DcExtensionClient, init } from './services/dc-extension-client';
   import ContentItem from './services/models/content-item';
   import type { StatusWithContentItemCollection } from './services/data/workflow-states';
@@ -22,6 +24,8 @@
   let contentItemsPath: string;
   let fromStatusId: string;
   let toStatusId: string;
+  let loading: boolean = true;
+  let error: string = '';
 
   // reactive block required to wrangle status id content item is dragged from and status id item is
   // being dragged to.
@@ -92,7 +96,10 @@
 
       contentItemsCount = workflowStates.getContentItemsCount(statuses);
     } catch (e) {
+      error = e.message;
       console.error(e);
+    } finally {
+      loading = false;
     }
   });
 </script>
@@ -121,11 +128,13 @@
 </style>
 
 <section>
-  <Header {contentItemsCount} {contentItemsPath} />
-  <Toolbar />
-  {#if statuses.length === 0}
-    loading...
+  {#if loading}
+    <Loader />
+  {:else if error}
+    <Error reason="An error occured while loading: {error}" />
   {:else}
+    <Header {contentItemsCount} {contentItemsPath} />
+    <Toolbar />
     <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} />
   {/if}
 </section>

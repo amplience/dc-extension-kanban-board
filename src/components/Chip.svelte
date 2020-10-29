@@ -1,4 +1,5 @@
 <script>
+  import Truncate from './Truncate.svelte';
   export let backgroundColor: string = '';
   export let color: string = '';
   export let label: string = '';
@@ -22,5 +23,5 @@
 </style>
 
 <div class="chip" style="background-color: {backgroundColor}; color: {color}">
-  {label}
+  <Truncate text={label} />
 </div>
