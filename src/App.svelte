@@ -40,6 +40,8 @@
       if (fromStatusId !== toStatusId) {
         statuses[fromStatusIndex].contentItems.page.totalElements--;
         statuses[toStatusIndex].contentItems.page.totalElements++;
+        statuses[fromStatusIndex].contentItems.page.elementsInCurrentPage--;
+        statuses[toStatusIndex].contentItems.page.elementsInCurrentPage++;
       }
       fromStatusId = '';
       toStatusId = '';

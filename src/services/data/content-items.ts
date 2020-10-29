@@ -93,5 +93,10 @@ function mapContentItems(data: any) {
 }
 
 function getPagination(data: any) {
-  return data?.page || {};
+  return (
+    {
+      ...data?.page,
+      elementsInCurrentPage: data?._embedded?.['content-items'].length,
+    } || {}
+  );
 }

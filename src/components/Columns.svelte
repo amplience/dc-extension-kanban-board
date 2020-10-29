@@ -49,7 +49,7 @@
         label={status.label} />
       <Count
         total={status.contentItems.page.totalElements}
-        count={status.contentItems.items.length} />
+        count={status.contentItems.page.elementsInCurrentPage} />
       <div
         class="content-item-wrap"
         use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' } }}
