@@ -62,6 +62,7 @@
       const statusIndex = statuses.findIndex(
         (status: any) => status.id == statusId
       );
+      statuses[statusIndex].contentItems.items = listItems;
       const droppedItem: ContentItem = listItems.filter(
         (item) => item.id === e.detail.info.id
       )[0];
