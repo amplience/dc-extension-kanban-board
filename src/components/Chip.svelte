@@ -19,9 +19,17 @@
     text-align: center;
     height: 24px;
     line-height: 24px;
+
+    &.light {
+      color: #fff;
+    }
+
+    &.dark {
+      color: #000;
+    }
   }
 </style>
 
-<div class="chip" style="background-color: {backgroundColor}; color: {color}">
+<div class="chip {color}" style="background-color: {backgroundColor}">
   <Truncate text={label} />
 </div>

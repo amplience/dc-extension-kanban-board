@@ -1,3 +1,6 @@
+import type { ContentItem } from 'dc-extensions-sdk';
+import type { ContentItemCollection } from '../data/content-items';
+
 interface FacetField {
   facetAs: string;
   field: string;
@@ -13,6 +16,7 @@ interface Preset {
   [key: string]: string;
 }
 
+const DATE_FACET_LAST_7_DAYS: string = 'lastModifiedDate:Last 7 days';
 const PRESETS: Preset = {
   'rgb(63,152,134)': LIGHT,
   'rgb(100,190,225)': DARK,
@@ -47,8 +51,15 @@ export default class Status {
   public color?: string;
   public backgroundColor?: string;
   public facets?: FacetField[];
+  private appliedFacets: string[] = [];
+  public contentItems!: ContentItemCollection;
   constructor({ id, label, color }: any = {}) {
     this.id = id;
+    this.contentItems = {
+      items: [],
+      page: {},
+      statusId: this.id,
+    };
     if (label && color) {
       this.hydrated = true;
       this.label = label;
@@ -56,26 +67,36 @@ export default class Status {
       this.color = PRESETS[color] || getContrastType(color);
       this.facets = [];
       this.addStatusFacetField(this.id);
+      this.appliedFacets = [];
     }
   }
 
+  get hasDateLast7DaysFacet() {
+    return this.appliedFacets.includes(DATE_FACET_LAST_7_DAYS);
+  }
+
   addStatusFacetField(id: string) {
-    this.facets?.push({
+    const facet = {
       facetAs: 'ENUM',
       field: 'workflow.state',
       filter: { type: 'IN', values: [id] },
       name: 'workflow.state',
-    });
+    };
+    this.appliedFacets.push(facet.name);
+    this.facets?.push(facet);
   }
 
   addDateFacetField() {
-    this.facets?.push({
+    const facet = {
       facetAs: 'DATE',
-      name: 'lastModifiedDate:Last 7 days',
+      name: DATE_FACET_LAST_7_DAYS,
       field: 'lastModifiedDate',
       range: { start: 'NOW', end: '-7:DAYS' },
       filter: { type: 'DATE', values: ['-7:DAYS,NOW'] },
-    });
+    };
+
+    this.appliedFacets.push(facet.name);
+    this.facets?.push(facet);
   }
 }
 
