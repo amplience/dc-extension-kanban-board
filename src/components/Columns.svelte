@@ -5,7 +5,7 @@
   import { dndzone } from 'svelte-dnd-action';
   import type { StatusWithContentItemCollection } from '../services/data/workflow-states';
   import type { ContentTypeLookup } from '../services/data/content-types';
-  import type { contentItems } from 'src/services/data';
+  import type { DcExtensionClient } from '../services/dc-extension-client';
   export let handleConsider: any;
   export let handleFinalize: any;
   export let client: DcExtensionClient;
