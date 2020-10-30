@@ -57,14 +57,14 @@
     statuses[statusIndex].contentItems.items = e.detail.items as ContentItem[];
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
+    const listItems: ContentItem[] = e.detail.items.map((item) => {
+      return new ContentItem(item);
+    });
+    const statusIndex = statuses.findIndex(
+      (status: any) => status.id == statusId
+    );
+    statuses[statusIndex].contentItems.items = listItems;
     if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
-      const listItems: ContentItem[] = e.detail.items.map((item) => {
-        return new ContentItem(item);
-      });
-      const statusIndex = statuses.findIndex(
-        (status: any) => status.id == statusId
-      );
-      statuses[statusIndex].contentItems.items = listItems;
       const droppedItem: ContentItem = listItems.filter(
         (item) => item.id === e.detail.info.id
       )[0];
