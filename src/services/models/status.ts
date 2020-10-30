@@ -31,13 +31,13 @@ const PRESETS: Preset = {
   'rgb(113,114,153)': LIGHT,
   'rgb(164,164,164)': LIGHT,
   'rgb(182,216,227)': DARK,
-  'rgb(210, 141, 136)': DARK,
-  'rgb(190, 220, 132)': DARK,
-  'rgb(242, 189, 87)': DARK,
-  'rgb(230, 228, 117)': DARK,
-  'rgb(110, 137, 151)': LIGHT,
-  'rgb(137, 162, 212)': DARK,
-  'rgb(201, 196, 212)': DARK,
+  'rgb(210,141,136)': DARK,
+  'rgb(190,220,132)': DARK,
+  'rgb(242,189,87)': DARK,
+  'rgb(230,228,117)': DARK,
+  'rgb(110,137,151)': LIGHT,
+  'rgb(137,162,212)': DARK,
+  'rgb(201,196,212)': DARK,
 };
 
 export default class Status {
