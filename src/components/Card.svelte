@@ -1,4 +1,5 @@
 <script>
+  export let target: string = '';
   export let title: string = '';
   export let subtitle: string = '';
   export let footer: string = '';
@@ -14,6 +15,10 @@
 
     &:focus {
       outline-color: #039be5;
+    }
+
+    a {
+      text-decoration: none;
     }
   }
 
@@ -31,7 +36,9 @@
 </style>
 
 <section class="card">
-  <h1 class="title">{title}</h1>
+  <a href={target} target="_top">
+    <h1 class="title">{title}</h1>
+  </a>
   <span class="subtitle">{subtitle}</span>
   <footer class="footer">{footer}</footer>
 </section>

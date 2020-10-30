@@ -5,13 +5,17 @@
 <style lang="scss">
   .error {
     height: 100%;
-    max-width: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
     color: #999;
+    .message {
+      max-width: 500px;
+    }
   }
 </style>
 
-<div class="error">{reason}</div>
+<div class="error">
+  <div class="message">{reason}</div>
+</div>

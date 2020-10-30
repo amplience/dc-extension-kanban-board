@@ -5,8 +5,10 @@
   import { dndzone } from 'svelte-dnd-action';
   import type { StatusWithContentItemCollection } from '../services/data/workflow-states';
   import type { ContentTypeLookup } from '../services/data/content-types';
+  import type { contentItems } from 'src/services/data';
   export let handleConsider: any;
   export let handleFinalize: any;
+  export let client: DcExtensionClient;
   export let statuses: Array<StatusWithContentItemCollection> = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
 </script>
@@ -57,6 +59,7 @@
         on:finalize={(e) => handleFinalize(status.id, e)}>
         {#each status.contentItems.items as contentItem (contentItem.id)}
           <Card
+            target="{client.dcAppHost}/authoring/content-item/edit/{contentItem.id}"
             title={contentItem.label}
             subtitle={contentTypeLookup[contentItem.schema].label}
             footer="Last changed {contentItem.modified}" />

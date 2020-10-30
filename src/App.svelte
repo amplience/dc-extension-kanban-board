@@ -12,7 +12,7 @@
   import Header from './components/Header.svelte';
   import Loader from './components/Loader.svelte';
   import Error from './components/Error.svelte';
-  import { DcExtensionClient, init } from './services/dc-extension-client';
+  import { DcExtensionClient, initDcExtensionClient } from './services/dc-extension-client';
   import ContentItem from './services/models/content-item';
   import type { StatusWithContentItemCollection } from './services/data/workflow-states';
   import type { ContentTypeLookup } from './services/data/content-types';
@@ -89,7 +89,7 @@
   }
   onMount(async () => {
     try {
-      client = await init({ debug: true });
+      client = await initDcExtensionClient({ debug: true });
       [contentItemsPath, statuses, contentTypeLookup] = await Promise.all([
         contentRepositories.getContentItemPath(client),
         workflowStates.fetchAndHydrateWithContentItems(client),
@@ -137,6 +137,6 @@
   {:else}
     <Header {contentItemsCount} {contentItemsPath} />
     <Toolbar />
-    <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} />
+    <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} {client}/>
   {/if}
 </section>

@@ -1,4 +1,4 @@
-import { SDK, Options } from 'dc-extensions-sdk';
+import { init, SDK, Options } from 'dc-extensions-sdk';
 import { DcClient } from './dc-client';
 
 export interface InstallationParamsStatus {
@@ -8,21 +8,27 @@ export interface InstallationParamsStatus {
 
 export class DcExtensionClient {
   public hubId!: string;
+  public dcAppHost!: string;
   public contentRepositoryId?: string | undefined;
   public folderId?: string | undefined;
   public statuses: InstallationParamsStatus[] = [];
   public dcClient!: DcClient;
 
   async init(options: Options): Promise<void> {
-    const sdk: SDK = await new SDK(options).init();
+    const sdk: SDK = await init(options);
     const {
       hubId,
+      locationHref,
       installation: { repositoryId, folderId, statuses = [] },
     } = sdk.params as any;
 
     if (!hubId) {
       throw new Error('Hub id required');
     }
+    if (!locationHref) {
+      throw new Error('Location href required');
+    }
+
     if (!repositoryId) {
       throw new Error('Repository id required');
     }
@@ -31,11 +37,14 @@ export class DcExtensionClient {
     this.contentRepositoryId = repositoryId;
     this.folderId = folderId;
     this.statuses = getUniqueStatuses(statuses);
+    this.dcAppHost = getDcAppHostFromLocationHref(locationHref);
     this.dcClient = new DcClient(sdk.client);
   }
 }
 
-export async function init(options: any): Promise<DcExtensionClient> {
+export async function initDcExtensionClient(
+  options: any
+): Promise<DcExtensionClient> {
   const client = new DcExtensionClient();
   await client.init(options);
   return client;
@@ -53,4 +62,8 @@ function getUniqueStatuses(
     statusesMap[status.id] = status;
   });
   return Object.values(statusesMap);
+}
+
+function getDcAppHostFromLocationHref(locationHref: string): string {
+  return locationHref.split('/dashboard')[0];
 }
