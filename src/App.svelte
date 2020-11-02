@@ -12,7 +12,10 @@
   import Header from './components/Header.svelte';
   import Loader from './components/Loader.svelte';
   import Error from './components/Error.svelte';
-  import { DcExtensionClient, initDcExtensionClient } from './services/dc-extension-client';
+  import {
+    DcExtensionClient,
+    initDcExtensionClient,
+  } from './services/dc-extension-client';
   import ContentItem from './services/models/content-item';
   import type { StatusWithContentItemCollection } from './services/data/workflow-states';
   import type { ContentTypeLookup } from './services/data/content-types';
@@ -26,6 +29,7 @@
   let toStatusId: string;
   let loading: boolean = true;
   let error: string = '';
+  const hoverColour = '#039BE5';
 
   // reactive block required to wrangle status id content item is dragged from and status id item is
   // being dragged to.
@@ -54,6 +58,9 @@
     const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
+    if (e.detail.info.trigger === 'dragStarted') {
+      (e.target as HTMLDivElement).style.borderColor = 'transparent';
+    }
     statuses[statusIndex].contentItems.items = e.detail.items as ContentItem[];
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
@@ -85,6 +92,7 @@
       toStatusId = statusId;
     } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
       fromStatusId = statusId;
+      (e.target as HTMLDivElement).style.borderColor = '';
     }
   }
   onMount(async () => {
@@ -137,6 +145,11 @@
   {:else}
     <Header {contentItemsCount} {contentItemsPath} />
     <Toolbar />
-    <Columns {statuses} {handleConsider} {handleFinalize} {contentTypeLookup} {client}/>
+    <Columns
+      {statuses}
+      {handleConsider}
+      {handleFinalize}
+      {contentTypeLookup}
+      {client} />
   {/if}
 </section>

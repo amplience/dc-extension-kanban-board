@@ -11,6 +11,7 @@
   export let client: DcExtensionClient;
   export let statuses: Array<StatusWithContentItemCollection> = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
+  const hoverColor = '#039BE5';
 </script>
 
 <style lang="scss">
@@ -31,6 +32,7 @@
     .content-item-wrap {
       overflow-y: auto;
       height: calc(100% - 90px);
+      border: 2px dashed transparent;
       &:focus {
         outline: none;
       }
@@ -54,7 +56,7 @@
         count={status.contentItems.page.elementsInCurrentPage} />
       <div
         class="content-item-wrap"
-        use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' } }}
+        use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none', borderColor: hoverColor } }}
         on:consider={(e) => handleConsider(status.id, e)}
         on:finalize={(e) => handleFinalize(status.id, e)}>
         {#each status.contentItems.items as contentItem (contentItem.id)}
