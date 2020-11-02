@@ -101,11 +101,16 @@ export default class Status {
 }
 
 function getContrastType(rgb: string) {
-  return getLuminance(rgb) > 0.179 ? DARK : LIGHT;
+  const match = rgb.match(/rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/);
+  if (!match) {
+    return DARK;
+  }
+  match.shift();
+  return getLuminance(match) > 0.179 ? DARK : LIGHT;
 }
 
-function getLuminance(rgb: string) {
-  const [r, g, b] = rgb.split(',').map((cs: string) => {
+function getLuminance(rgb: string[]) {
+  const [r, g, b] = rgb.map((cs: string) => {
     const c: number = Number(cs) / 255;
     return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
   });

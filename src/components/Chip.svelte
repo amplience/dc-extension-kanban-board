@@ -21,11 +21,11 @@
     line-height: 24px;
 
     &.light {
-      color: #fff;
+      color: #f2f2f2;
     }
 
     &.dark {
-      color: #000;
+      color: #333333;
     }
   }
 </style>
