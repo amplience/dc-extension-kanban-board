@@ -27,6 +27,7 @@
     box-sizing: border-box;
     background: #eee;
     overflow-y: hidden;
+    min-width: 136px;
 
     .content-item-wrap {
       overflow-y: auto;

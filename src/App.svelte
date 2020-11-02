@@ -123,7 +123,8 @@
 
   section {
     height: 100%;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: auto;
     display: flex;
     flex-direction: column;
   }
