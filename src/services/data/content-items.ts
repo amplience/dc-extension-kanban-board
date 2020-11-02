@@ -36,6 +36,9 @@ export async function fetchForStatus(
   params: Record<string, any>
 ): Promise<ContentItemCollection> {
   try {
+    if (!status.hydrated) {
+      return status.contentItems;
+    }
     const { dcClient, hubId, folderId, contentRepositoryId } = client;
     const { data } = await dcClient.post(
       `/hubs/${hubId}/content-items/facet`,
