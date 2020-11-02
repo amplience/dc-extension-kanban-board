@@ -17,11 +17,11 @@
     initDcExtensionClient,
   } from './services/dc-extension-client';
   import ContentItem from './services/models/content-item';
-  import type { StatusWithContentItemCollection } from './services/data/workflow-states';
   import type { ContentTypeLookup } from './services/data/content-types';
+  import type Status from './services/models/status';
 
   let client: DcExtensionClient;
-  let statuses: Array<StatusWithContentItemCollection> = [];
+  let statuses: Status[] = [];
   let contentTypeLookup: ContentTypeLookup = {};
   let contentItemsCount: number;
   let contentItemsPath: string;
@@ -142,7 +142,8 @@
 
   section {
     height: 100%;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: auto;
     display: flex;
     flex-direction: column;
   }

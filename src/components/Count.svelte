@@ -1,6 +1,7 @@
 <script>
   export let count: number = 0;
   export let total: number = 0;
+  export let additionalInfo: string | undefined;
 </script>
 
 <style lang="scss">
@@ -19,4 +20,5 @@
   <span class="bold">{count}</span>
   {#if count !== total}of {total}{/if}
   content items
+  {#if additionalInfo}{additionalInfo}{/if}
 </div>

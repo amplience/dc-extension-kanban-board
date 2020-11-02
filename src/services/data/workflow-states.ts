@@ -6,11 +6,6 @@ import type {
 import Status from '../models/status';
 import { contentItems } from '../data';
 
-export interface StatusWithContentItemCollection extends Status {
-  contentItems: ContentItemCollection;
-}
-
-export type StatusesWithContentItemCollection = StatusWithContentItemCollection[];
 const getLastStatus = (statuses: Status[]) => statuses[statuses.length - 1];
 
 export async function fetchAndHydrate(
@@ -38,7 +33,7 @@ export async function fetchAndHydrate(
 export async function fetchAndHydrateWithContentItems(
   client: DcExtensionClient,
   params: Record<string, any> = {}
-): Promise<StatusWithContentItemCollection[]> {
+): Promise<Status[]> {
   const hydratedStatuses = await fetchAndHydrate(client);
   const contentItemsByStatus = await contentItems.fetchForStatuses(
     client,
@@ -47,34 +42,17 @@ export async function fetchAndHydrateWithContentItems(
   );
 
   return hydratedStatuses.map((status: Status) => {
-    return {
-      ...status,
-      contentItems: findContentItemCollectionForStatus(
-        contentItemsByStatus,
-        status.id
-      ),
-    } as StatusWithContentItemCollection;
+    const collection = contentItemsByStatus.find(
+      (collection: ContentItemCollection) => collection.statusId === status.id
+    );
+    if (collection) {
+      status.contentItems = collection;
+    }
+    return status;
   });
 }
 
-function findContentItemCollectionForStatus(
-  collections: ContentItemCollection[],
-  statusId: string
-): ContentItemCollection {
-  return (
-    collections.find(
-      (collection: ContentItemCollection) => collection.statusId === statusId
-    ) || {
-      statusId,
-      items: [],
-      page: {},
-    }
-  );
-}
-
-export function getContentItemsCount(
-  statuses: StatusWithContentItemCollection[]
-): number {
+export function getContentItemsCount(statuses: Status[]): number {
   return statuses.reduce((p, c) => {
     return p + c.contentItems.items.length;
   }, 0);

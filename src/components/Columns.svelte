@@ -3,13 +3,13 @@
   import Card from './Card.svelte';
   import Count from './Count.svelte';
   import { dndzone } from 'svelte-dnd-action';
-  import type { StatusWithContentItemCollection } from '../services/data/workflow-states';
   import type { ContentTypeLookup } from '../services/data/content-types';
   import type { DcExtensionClient } from '../services/dc-extension-client';
+  import type Status from '../services/models/status';
   export let handleConsider: any;
   export let handleFinalize: any;
   export let client: DcExtensionClient;
-  export let statuses: Array<StatusWithContentItemCollection> = [];
+  export let statuses: Status[] = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
   const hoverColor = '#039BE5';
 </script>
@@ -29,6 +29,7 @@
     background: #eee;
     overflow-y: hidden;
     position: relative;
+    min-width: 136px;
 
     .content-item-wrap {
       position: absolute;
@@ -58,6 +59,7 @@
         label={status.label} />
       <Count
         total={status.contentItems.page.totalElements}
+        additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
         count={status.contentItems.page.elementsInCurrentPage} />
       <div
         class="content-item-wrap"

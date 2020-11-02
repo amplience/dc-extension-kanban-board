@@ -1,6 +1,5 @@
 name: QA Build
 
-# Controls when the action will run.
 on:
   push:
     branches: [main, release/**, develop]
