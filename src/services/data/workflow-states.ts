@@ -13,15 +13,13 @@ export async function fetchAndHydrate(
   params: Record<string, any> = { size: 100 }
 ): Promise<Status[]> {
   const { data } = await dcClient.get(`/hubs/${hubId}/workflow-states`, params);
-  const hydratedStatuses = statuses
-    .map(({ id }: InstallationParamsStatus) => {
-      const foundStatus = (data as any)?._embedded['workflow-states'].find(
-        (status: any) => status.id === id
-      );
+  const hydratedStatuses = statuses.map(({ id }: InstallationParamsStatus) => {
+    const foundStatus = (data as any)?._embedded['workflow-states'].find(
+      (status: any) => status.id === id
+    );
 
-      return new Status(foundStatus || { id });
-    })
-    .filter((status: Status) => status.hydrated);
+    return new Status(foundStatus || { id });
+  });
 
   const lastStatus = getLastStatus(hydratedStatuses);
   if (lastStatus) {
@@ -53,7 +51,5 @@ export async function fetchAndHydrateWithContentItems(
 }
 
 export function getContentItemsCount(statuses: Status[]): number {
-  return statuses.reduce((p, c) => {
-    return p + c.contentItems.items.length;
-  }, 0);
+  return statuses.reduce((p, c) => p + c.contentItems.items.length, 0);
 }

@@ -52,22 +52,21 @@ export default class Status {
   public backgroundColor?: string;
   public facets?: FacetField[];
   private appliedFacets: string[] = [];
-  public contentItems!: ContentItemCollection;
+  public contentItems: ContentItemCollection;
   constructor({ id, label, color }: any = {}) {
     this.id = id;
-    this.contentItems = {
-      items: [],
-      page: {},
-      statusId: this.id,
-    };
-    if (label && color) {
+    this.contentItems = getContentItemsPlaceholder(id);
+    const hasStatus = label;
+    if (hasStatus) {
       this.hydrated = true;
       this.label = label;
-      this.backgroundColor = color;
       this.color = PRESETS[color] || getContrastType(color);
+      this.backgroundColor = color;
       this.facets = [];
       this.addStatusFacetField(this.id);
       this.appliedFacets = [];
+    } else {
+      this.color = DARK;
     }
   }
 
@@ -100,10 +99,24 @@ export default class Status {
   }
 }
 
+function getContentItemsPlaceholder(id: string) {
+  return {
+    items: [],
+    page: {
+      size: 20,
+      totalElements: 0,
+      totalPages: 0,
+      number: 0,
+      elementsInCurrentPage: 0,
+    },
+    statusId: id,
+  };
+}
+
 function getContrastType(rgb: string) {
   const match = rgb.match(/rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/);
   if (!match) {
-    return DARK;
+    return;
   }
   match.shift();
   return getLuminance(match) > 0.179 ? DARK : LIGHT;
