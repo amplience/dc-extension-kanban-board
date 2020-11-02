@@ -30,6 +30,7 @@
   let loading: boolean = true;
   let error: string = '';
   const hoverColour = '#039BE5';
+  let originalDropTarget: HTMLDivElement;
 
   // reactive block required to wrangle status id content item is dragged from and status id item is
   // being dragged to.
@@ -58,8 +59,18 @@
     const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
-    if (e.detail.info.trigger === 'dragStarted') {
+    if (e.detail.info.trigger === TRIGGERS.DRAG_STARTED) {
       (e.target as HTMLDivElement).style.borderColor = 'transparent';
+      originalDropTarget = e.target as HTMLDivElement;
+    }
+
+    if (e.target !== originalDropTarget) {
+      if (e.detail.info.trigger === TRIGGERS.DRAGGED_ENTERED) {
+        (e.target as HTMLDivElement).style.borderColor = 'green';
+      }
+      if (e.detail.info.trigger === TRIGGERS.DRAGGED_LEFT) {
+        (e.target as HTMLDivElement).style.borderColor = hoverColour;
+      }
     }
     statuses[statusIndex].contentItems.items = e.detail.items as ContentItem[];
   }

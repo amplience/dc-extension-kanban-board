@@ -28,10 +28,15 @@
     box-sizing: border-box;
     background: #eee;
     overflow-y: hidden;
+    position: relative;
 
     .content-item-wrap {
+      position: absolute;
+      top: 110px;
+      bottom: 0;
+      left: 0;
+      right: 0;
       overflow-y: auto;
-      height: calc(100% - 90px);
       border: 2px dashed transparent;
       &:focus {
         outline: none;
