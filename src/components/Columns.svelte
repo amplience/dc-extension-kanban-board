@@ -38,7 +38,7 @@
       left: 0;
       right: 0;
       overflow-y: auto;
-      border: 2px dashed transparent;
+      background-color: transparent;
       &:focus {
         outline: none;
       }
@@ -63,7 +63,7 @@
         count={status.contentItems.page.elementsInCurrentPage} />
       <div
         class="content-item-wrap"
-        use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none', borderColor: hoverColor } }}
+        use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' } }}
         on:consider={(e) => handleConsider(status.id, e)}
         on:finalize={(e) => handleFinalize(status.id, e)}>
         {#each status.contentItems.items as contentItem (contentItem.id)}

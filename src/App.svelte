@@ -66,11 +66,13 @@
 
     if (e.target !== originalDropTarget) {
       if (e.detail.info.trigger === TRIGGERS.DRAGGED_ENTERED) {
-        (e.target as HTMLDivElement).style.borderColor = 'green';
+        (e.target as HTMLDivElement).style.backgroundColor = hoverColour;
       }
       if (e.detail.info.trigger === TRIGGERS.DRAGGED_LEFT) {
-        (e.target as HTMLDivElement).style.borderColor = hoverColour;
+        (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
       }
+    } else {
+      (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
     }
     statuses[statusIndex].contentItems.items = e.detail.items as ContentItem[];
   }
@@ -83,6 +85,7 @@
     );
     statuses[statusIndex].contentItems.items = listItems;
     if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
+      (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
       const droppedItem: ContentItem = listItems.filter(
         (item) => item.id === e.detail.info.id
       )[0];
@@ -103,7 +106,6 @@
       toStatusId = statusId;
     } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
       fromStatusId = statusId;
-      (e.target as HTMLDivElement).style.borderColor = '';
     }
   }
   onMount(async () => {
