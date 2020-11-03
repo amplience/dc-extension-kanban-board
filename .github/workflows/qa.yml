@@ -2,7 +2,7 @@ name: QA Build
 
 on:
   push:
-    branches: [main, release/**, develop]
+    branches: [main, release/**, feature/**, develop]
 jobs:
   build:
     runs-on: ubuntu-latest
