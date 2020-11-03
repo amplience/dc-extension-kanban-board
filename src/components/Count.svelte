@@ -7,18 +7,19 @@
 <style lang="scss">
   .count {
     font-size: 13px;
-    color: #676767;
+    color: #333;
     margin: 10px;
   }
   .bold {
     color: #333;
     font-size: 16px;
+    font-weight: 500;
   }
 </style>
 
 <div class="count">
   <span class="bold">{count}</span>
+  content item{#if count !== 1}s{/if}
   {#if count !== total}of {total}{/if}
-  content items
   {#if additionalInfo}{additionalInfo}{/if}
 </div>
