@@ -19,6 +19,9 @@
 
     a {
       text-decoration: none;
+      :hover {
+        color: #039be5;
+      }
     }
   }
 
@@ -26,6 +29,8 @@
     color: #333;
     font-size: 13px;
     margin-bottom: 4px;
+    font-weight: 500;
+    display: flex;
   }
   .subtitle,
   .footer {
@@ -35,7 +40,11 @@
   }
 </style>
 
-<section class="card">
+<section
+  class="card"
+  on:dblclick={() => {
+    window.parent.location.href = target;
+  }}>
   <a href={target} target="_top">
     <h1 class="title">{title}</h1>
   </a>
