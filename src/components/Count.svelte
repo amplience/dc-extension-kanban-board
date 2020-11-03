@@ -6,13 +6,13 @@
 
 <style lang="scss">
   .count {
-    font-size: 0.8em;
-    color: rgb(103, 103, 103);
-    margin: 1em;
+    font-size: 13px;
+    color: #676767;
+    margin: 10px;
   }
   .bold {
     color: #333;
-    font-size: 1.5em;
+    font-size: 16px;
   }
 </style>
 

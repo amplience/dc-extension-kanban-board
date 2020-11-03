@@ -11,10 +11,14 @@
   export let client: DcExtensionClient;
   export let statuses: Status[] = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
-  const hoverColor = '#039BE5';
+
+  function showMore(e: Event, status: Status) {
+    console.log('show more button clicked for status:', status);
+  }
 </script>
 
 <style lang="scss">
+  $color-primary: #039be5;
   .grid {
     box-sizing: border-box;
     display: grid;
@@ -30,6 +34,13 @@
     overflow-y: hidden;
     position: relative;
     min-width: 136px;
+
+    .counts-and-actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+    }
 
     .content-item-wrap {
       position: absolute;
@@ -57,10 +68,12 @@
         backgroundColor={status.backgroundColor}
         color={status.color}
         label={status.label || status.id} />
-      <Count
-        total={status.contentItems.page.totalElements}
-        additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
-        count={status.contentItems.page.elementsInCurrentPage} />
+      <div class="counts-and-actions">
+        <Count
+          total={status.contentItems.page.totalElements}
+          additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
+          count={status.contentItems.page.elementsInCurrentPage} />
+      </div>
       <div
         class="content-item-wrap"
         use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' }, dropFromOthersDisabled: !status.hydrated }}
