@@ -40,16 +40,6 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: baseline;
-
-      a {
-        width: 70px;
-        margin-right: 10px;
-        font-size: 13px;
-        color: $color-primary;
-        text-decoration: none;
-        float: right;
-        text-align: end;
-      }
     }
 
     .content-item-wrap {
@@ -83,8 +73,6 @@
           total={status.contentItems.page.totalElements}
           additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
           count={status.contentItems.page.elementsInCurrentPage} />
-        <!-- svelte-ignore a11y-invalid-attribute -->
-        <a href="#" on:click={(e) => showMore(e, status)}>Show more</a>
       </div>
       <div
         class="content-item-wrap"
