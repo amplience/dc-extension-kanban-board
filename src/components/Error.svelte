@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     font-size: 16px;
     color: #999;
     .message {

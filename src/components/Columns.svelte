@@ -6,6 +6,7 @@
   import type { ContentTypeLookup } from '../services/data/content-types';
   import type { DcExtensionClient } from '../services/dc-extension-client';
   import type Status from '../services/models/status';
+  import Error from './Error.svelte';
   export let handleConsider: any;
   export let handleFinalize: any;
   export let client: DcExtensionClient;
@@ -69,24 +70,30 @@
         color={status.color}
         label={status.label || status.id} />
       <div class="counts-and-actions">
-        <Count
-          total={status.contentItems.page.totalElements}
-          additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
-          count={status.contentItems.page.elementsInCurrentPage} />
+        {#if status.hydrated}
+          <Count
+            total={status.contentItems.page.totalElements}
+            additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
+            count={status.contentItems.page.elementsInCurrentPage} />
+        {/if}
       </div>
-      <div
-        class="content-item-wrap"
-        use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' }, dropFromOthersDisabled: !status.hydrated }}
-        on:consider={(e) => handleConsider(status.id, e)}
-        on:finalize={(e) => handleFinalize(status.id, e)}>
-        {#each status.contentItems.items as contentItem (contentItem.id)}
-          <Card
-            target="{client.dcAppHost}/authoring/content-item/edit/{contentItem.id}"
-            title={contentItem.label}
-            subtitle={contentTypeLookup[contentItem.schema].label}
-            footer="Last changed {contentItem.modified}" />
-        {/each}
-      </div>
+      {#if !status.hydrated}
+        <Error reason="Unable to find status" />
+      {:else}
+        <div
+          class="content-item-wrap"
+          use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' }, dropFromOthersDisabled: !status.hydrated }}
+          on:consider={(e) => handleConsider(status.id, e)}
+          on:finalize={(e) => handleFinalize(status.id, e)}>
+          {#each status.contentItems.items as contentItem (contentItem.id)}
+            <Card
+              target="{client.dcAppHost}/authoring/content-item/edit/{contentItem.id}"
+              title={contentItem.label}
+              subtitle={contentTypeLookup[contentItem.schema].label}
+              footer="Last changed {contentItem.modified}" />
+          {/each}
+        </div>
+      {/if}
     </div>
   {/each}
 </div>
