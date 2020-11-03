@@ -44,7 +44,7 @@
 
     .content-item-wrap {
       position: absolute;
-      top: 110px;
+      top: 80px;
       bottom: 0;
       left: 0;
       right: 0;
