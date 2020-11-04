@@ -30,10 +30,10 @@
   }
   .col {
     box-sizing: border-box;
-    background: #eee;
+    background: #f2f2f2;
     overflow-y: hidden;
     position: relative;
-    min-width: 136px;
+    min-width: 240px;
 
     .counts-and-actions {
       display: flex;
@@ -44,7 +44,7 @@
 
     .content-item-wrap {
       position: absolute;
-      top: 110px;
+      top: 80px;
       bottom: 0;
       left: 0;
       right: 0;

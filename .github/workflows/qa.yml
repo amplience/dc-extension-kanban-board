@@ -2,9 +2,7 @@ name: QA Build
 
 on:
   push:
-    branches: [main, release/**, develop]
-  pull_request:
-    branches: [feature/**, develop]
+    branches: [main, release/**, feature/**, develop]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -55,3 +53,5 @@ jobs:
           text: 'Latest build: ${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }} https://dc-extension-kanban-board.s3-eu-west-1.amazonaws.com/${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }}/index.html'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Echo build
+        run: echo https://dc-extension-kanban-board.s3-eu-west-1.amazonaws.com/${{ env.GITHUB_REF_SLUG }}-${{ github.run_number }}/index.html
