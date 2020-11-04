@@ -136,6 +136,7 @@
     margin: 0;
     padding: 0;
     background: #fff;
+    overflow-x: hidden;
   }
   :global(*) {
     font-family: 'Roboto', sans-serif;
@@ -145,7 +146,7 @@
   section {
     height: 100%;
     overflow-y: hidden;
-    overflow-x: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
   }
