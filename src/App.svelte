@@ -32,28 +32,7 @@
   const hoverColour = '#039BE5';
   let originalDropTarget: HTMLDivElement;
 
-  // reactive block required to wrangle status id content item is dragged from and status id item is
-  // being dragged to.
-  $: {
-    if (fromStatusId?.length && toStatusId?.length) {
-      const fromStatusIndex = statuses.findIndex(
-        (status: any) => status.id == fromStatusId
-      );
-      const toStatusIndex = statuses.findIndex(
-        (status: any) => status.id == toStatusId
-      );
-      if (fromStatusId !== toStatusId) {
-        statuses[fromStatusIndex].contentItems.page.totalElements--;
-        statuses[toStatusIndex].contentItems.page.totalElements++;
-        statuses[fromStatusIndex].contentItems.page.elementsInCurrentPage--;
-        statuses[toStatusIndex].contentItems.page.elementsInCurrentPage++;
-      }
-      fromStatusId = '';
-      toStatusId = '';
-    } else if (toStatusId?.length) {
-      toStatusId = '';
-    }
-  }
+  let droppedItem: ContentItem;
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
     const statusIndex = statuses.findIndex(
@@ -83,29 +62,49 @@
     const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
-    statuses[statusIndex].contentItems.items = listItems;
+    statuses[statusIndex].contentItems.items = listItems.sort(
+      (a: ContentItem, b: ContentItem): number => {
+        const aTicks = new Date(a['lastModifiedDate']).getTime();
+        const bTicks = new Date(b['lastModifiedDate']).getTime();
+        return bTicks - aTicks;
+      }
+    );
     if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
+      droppedItem = listItems.filter((item) => item.id === e.detail.info.id)[0];
       (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
-      const droppedItem: ContentItem = listItems.filter(
-        (item) => item.id === e.detail.info.id
-      )[0];
+      toStatusId = statusId;
+    } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
+      const toStatusIndex = statuses.findIndex(
+        (status: any) => status.id == toStatusId
+      );
       const response: ContentItem = await contentItems.updateWorkflowStatus(
         client.dcClient,
         droppedItem,
-        statusId
+        toStatusId
       );
       droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
 
-      statuses[statusIndex].contentItems.items = listItems.sort(
-        (a: ContentItem, b: ContentItem): number => {
-          const aTicks = new Date(a['lastModifiedDate']).getTime();
-          const bTicks = new Date(b['lastModifiedDate']).getTime();
-          return bTicks - aTicks;
-        }
-      );
-      toStatusId = statusId;
-    } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
+      statuses[toStatusIndex].contentItems.items = statuses[
+        toStatusIndex
+      ].contentItems.items.sort((a: ContentItem, b: ContentItem): number => {
+        const aTicks = new Date(a['lastModifiedDate']).getTime();
+        const bTicks = new Date(b['lastModifiedDate']).getTime();
+        return bTicks - aTicks;
+      });
+
       fromStatusId = statusId;
+
+      const fromStatusIndex = statuses.findIndex(
+        (status: any) => status.id == fromStatusId
+      );
+      if (fromStatusId !== toStatusId) {
+        statuses[fromStatusIndex].contentItems.page.totalElements--;
+        statuses[toStatusIndex].contentItems.page.totalElements++;
+        statuses[fromStatusIndex].contentItems.page.elementsInCurrentPage--;
+        statuses[toStatusIndex].contentItems.page.elementsInCurrentPage++;
+      }
+      fromStatusId = '';
+      toStatusId = '';
     }
   }
   onMount(async () => {
