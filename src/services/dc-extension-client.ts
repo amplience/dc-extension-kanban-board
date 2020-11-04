@@ -44,7 +44,7 @@ export class DcExtensionClient {
 }
 
 export async function initDcExtensionClient(
-  options: any
+  options: any = {}
 ): Promise<DcExtensionClient> {
   const client = new DcExtensionClient();
   await client.init(options);

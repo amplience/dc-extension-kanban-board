@@ -27,7 +27,8 @@
     grid-gap: 8px;
     height: 100%;
     width: 100%;
-    padding: 0.5em;
+    overflow-x: auto;
+    box-sizing: border-box;
   }
   .col {
     box-sizing: border-box;
@@ -56,38 +57,49 @@
       }
     }
   }
+  .grid-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-x: auto;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 0.5em;
+  }
 </style>
 
-<div
-  class="grid"
-  style="grid-template-columns:{Array(statuses.length + 1)
-    .join('1fr ')
-    .trim()}">
-  {#each statuses as status (status.id)}
-    <div class="col">
-      <Chip
-        backgroundColor={status.backgroundColor}
-        color={status.color}
-        label={status.label || status.id} />
-      <div class="counts-and-actions">
-        <Count
-          total={status.contentItems.page.totalElements}
-          additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
-          count={status.contentItems.page.elementsInCurrentPage} />
+<div class="grid-wrapper">
+  <div
+    class="grid"
+    style="grid-template-columns:{Array(statuses.length + 1)
+      .join('1fr ')
+      .trim()}">
+    {#each statuses as status (status.id)}
+      <div class="col">
+        <Chip
+          backgroundColor={status.backgroundColor}
+          color={status.color}
+          label={status.label || status.id} />
+        <div class="counts-and-actions">
+          <Count
+            total={status.contentItems.page.totalElements}
+            additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
+            count={status.contentItems.page.elementsInCurrentPage} />
+        </div>
+        <div
+          class="content-item-wrap"
+          use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' }, dropFromOthersDisabled: !status.hydrated }}
+          on:consider={(e) => handleConsider(status.id, e)}
+          on:finalize={(e) => handleFinalize(status.id, e)}>
+          {#each status.contentItems.items as contentItem (contentItem.id)}
+            <Card
+              target="{client.dcAppHost}/authoring/content-item/edit/{contentItem.id}"
+              title={contentItem.label}
+              subtitle={contentTypeLookup[contentItem.schema].label}
+              footer="Last changed {formatDate(contentItem.lastModifiedDate)}" />
+          {/each}
+        </div>
       </div>
-      <div
-        class="content-item-wrap"
-        use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' }, dropFromOthersDisabled: !status.hydrated }}
-        on:consider={(e) => handleConsider(status.id, e)}
-        on:finalize={(e) => handleFinalize(status.id, e)}>
-        {#each status.contentItems.items as contentItem (contentItem.id)}
-          <Card
-            target="{client.dcAppHost}/authoring/content-item/edit/{contentItem.id}"
-            title={contentItem.label}
-            subtitle={contentTypeLookup[contentItem.schema].label}
-            footer="Last changed {formatDate(contentItem.lastModifiedDate)}" />
-        {/each}
-      </div>
-    </div>
-  {/each}
+    {/each}
+  </div>
 </div>
