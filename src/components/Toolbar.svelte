@@ -4,7 +4,7 @@
 
 <style lang="scss">
   .toolbar {
-    margin: 0 8px 16px 8px;
+    margin: 0 8px 8px 8px;
     height: 40px;
     font-size: 13px;
   }
