@@ -18,3 +18,8 @@ export function toDcQueryStr(
   }
   return queryStr;
 }
+
+export function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+}

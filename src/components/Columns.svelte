@@ -6,6 +6,7 @@
   import type { ContentTypeLookup } from '../services/data/content-types';
   import type { DcExtensionClient } from '../services/dc-extension-client';
   import type Status from '../services/models/status';
+  import { formatDate } from '../utils';
   export let handleConsider: any;
   export let handleFinalize: any;
   export let client: DcExtensionClient;
@@ -95,7 +96,7 @@
               target="{client.dcAppHost}/authoring/content-item/edit/{contentItem.id}"
               title={contentItem.label}
               subtitle={contentTypeLookup[contentItem.schema].label}
-              footer="Last changed {contentItem.modified}" />
+              footer="Last changed {formatDate(contentItem.lastModifiedDate)}" />
           {/each}
         </div>
       </div>

@@ -109,7 +109,7 @@
   }
   onMount(async () => {
     try {
-      client = await initDcExtensionClient({ debug: true });
+      client = await initDcExtensionClient();
       [contentItemsPath, statuses, contentTypeLookup] = await Promise.all([
         contentRepositories.getContentItemPath(client),
         workflowStates.fetchAndHydrateWithContentItems(client),
@@ -144,10 +144,9 @@
 
   section {
     height: 100%;
-    overflow-y: hidden;
-    overflow-x: hidden;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 </style>
 

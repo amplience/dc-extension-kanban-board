@@ -11,9 +11,4 @@ export default class ContentItem {
     this.version = version;
     this.lastModifiedDate = lastModifiedDate;
   }
-
-  get modified(): string {
-    const date = new Date(this.lastModifiedDate);
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-  }
 }
