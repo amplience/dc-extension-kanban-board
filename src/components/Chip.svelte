@@ -7,7 +7,8 @@
 
 <style lang="scss">
   .chip {
-    width: 120px;
+    min-width: 120px;
+    max-width: 227px;
     margin: 0 2px 0 10px;
     font-size: 13px;
     box-sizing: border-box;
