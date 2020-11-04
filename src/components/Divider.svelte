@@ -6,7 +6,7 @@
   .divider {
     &.vertical {
       border-right: 1px solid #e5e5e5;
-      line-height: 1;
+      height: 20px;
       margin: 0 16px;
     }
 

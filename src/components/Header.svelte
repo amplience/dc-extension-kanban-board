@@ -12,22 +12,25 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
+    .info {
+      display: flex;
+      height: 100%;
+      align-items: center;
+    }
 
-  .info {
-    display: flex;
-    height: 100%;
-    align-items: center;
-  }
+    .label {
+      font-size: 13px;
+      color: #999;
+      &.repo-folder {
+        margin-right: 24px;
+      }
+    }
 
-  .label {
-    font-size: 13px;
-    color: #999;
-  }
-
-  .value {
-    font-size: 16px;
-    color: #333;
+    .value {
+      font-weight: 500;
+      font-size: 16px;
+      color: #333;
+    }
   }
 </style>
 
@@ -39,7 +42,7 @@
     </div>
     <Divider vertical="true" />
     <div>
-      <span class="label">Repo / folder</span>
+      <span class="label repo-folder">Repo / folder</span>
       <span class="value">{contentItemsPath || 'none'}</span>
     </div>
   </div>
