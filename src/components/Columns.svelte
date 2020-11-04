@@ -26,8 +26,8 @@
     grid-gap: 8px;
     height: 100%;
     width: 100%;
-    padding: 0.5em;
     overflow-x: auto;
+    box-sizing: border-box;
   }
   .col {
     box-sizing: border-box;
@@ -62,6 +62,8 @@
     flex-direction: column;
     overflow-x: auto;
     width: 100vw;
+    box-sizing: border-box;
+    padding: 0.5em;
   }
 </style>
 
