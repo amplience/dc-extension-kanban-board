@@ -147,6 +147,7 @@
     overflow-y: hidden;
     overflow-x: auto;
     display: flex;
+    flex: 0 0 100%;
     flex-direction: column;
   }
 </style>

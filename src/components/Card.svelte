@@ -7,14 +7,14 @@
 
 <style lang="scss">
   .card {
-    box-sizing: border-box;
     background-color: white;
-    padding: 10px 10px 20px 10px;
+    padding: 10px 10px 20px;
     border-radius: 3px;
     margin: 10px;
 
     &:focus {
-      outline-color: #039be5;
+      outline-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     a {
@@ -23,20 +23,20 @@
         color: #039be5;
       }
     }
-  }
 
-  .title {
-    color: #333;
-    font-size: 13px;
-    margin-bottom: 4px;
-    font-weight: 500;
-    display: flex;
-  }
-  .subtitle,
-  .footer {
-    font-size: 0.9em;
-    color: #999;
-    font-size: 13px;
+    .title {
+      color: #333;
+      font-size: 13px;
+      margin: 0 0 4px 0;
+      font-weight: 500;
+      display: flex;
+    }
+    .subtitle,
+    .footer {
+      font-size: 0.9em;
+      color: #999;
+      font-size: 13px;
+    }
   }
 </style>
 
