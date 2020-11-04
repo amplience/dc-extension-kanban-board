@@ -9,7 +9,7 @@ export interface InstallationParamsStatus {
 export class DcExtensionClient {
   public hubId!: string;
   public dcAppHost!: string;
-  public contentRepositoryId?: string | undefined;
+  public contentRepositoryId!: string;
   public folderId?: string | undefined;
   public statuses: InstallationParamsStatus[] = [];
   public dcClient!: DcClient;
@@ -25,6 +25,7 @@ export class DcExtensionClient {
     if (!hubId) {
       throw new Error('Hub id required');
     }
+
     if (!locationHref) {
       throw new Error('Location href required');
     }
