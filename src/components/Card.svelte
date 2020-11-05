@@ -31,6 +31,11 @@
       font-weight: 500;
       display: flex;
     }
+
+    .assignee {
+      margin: 8px 0;
+      height: 28px;
+    }
     .subtitle,
     .footer {
       font-size: 0.9em;
@@ -49,5 +54,6 @@
     <h1 class="title">{title}</h1>
   </a>
   <span class="subtitle">{subtitle}</span>
+  <div class="assignee" />
   <footer class="footer">{footer}</footer>
 </section>
