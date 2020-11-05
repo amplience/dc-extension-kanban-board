@@ -32,28 +32,7 @@
   const hoverColour = '#039BE5';
   let originalDropTarget: HTMLDivElement;
 
-  // reactive block required to wrangle status id content item is dragged from and status id item is
-  // being dragged to.
-  $: {
-    if (fromStatusId?.length && toStatusId?.length) {
-      const fromStatusIndex = statuses.findIndex(
-        (status: any) => status.id == fromStatusId
-      );
-      const toStatusIndex = statuses.findIndex(
-        (status: any) => status.id == toStatusId
-      );
-      if (fromStatusId !== toStatusId) {
-        statuses[fromStatusIndex].contentItems.page.totalElements--;
-        statuses[toStatusIndex].contentItems.page.totalElements++;
-        statuses[fromStatusIndex].contentItems.page.elementsInCurrentPage--;
-        statuses[toStatusIndex].contentItems.page.elementsInCurrentPage++;
-      }
-      fromStatusId = '';
-      toStatusId = '';
-    } else if (toStatusId?.length) {
-      toStatusId = '';
-    }
-  }
+  let droppedItem: ContentItem;
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
     const statusIndex = statuses.findIndex(
@@ -83,34 +62,54 @@
     const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
-    statuses[statusIndex].contentItems.items = listItems;
+    statuses[statusIndex].contentItems.items = listItems.sort(
+      (a: ContentItem, b: ContentItem): number => {
+        const aTicks = new Date(a['lastModifiedDate']).getTime();
+        const bTicks = new Date(b['lastModifiedDate']).getTime();
+        return bTicks - aTicks;
+      }
+    );
     if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
+      droppedItem = listItems.filter((item) => item.id === e.detail.info.id)[0];
       (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
-      const droppedItem: ContentItem = listItems.filter(
-        (item) => item.id === e.detail.info.id
-      )[0];
+      toStatusId = statusId;
+    } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
+      const toStatusIndex = statuses.findIndex(
+        (status: any) => status.id == toStatusId
+      );
       const response: ContentItem = await contentItems.updateWorkflowStatus(
         client.dcClient,
         droppedItem,
-        statusId
+        toStatusId
       );
       droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
 
-      statuses[statusIndex].contentItems.items = listItems.sort(
-        (a: ContentItem, b: ContentItem): number => {
-          const aTicks = new Date(a['lastModifiedDate']).getTime();
-          const bTicks = new Date(b['lastModifiedDate']).getTime();
-          return bTicks - aTicks;
-        }
-      );
-      toStatusId = statusId;
-    } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
+      statuses[toStatusIndex].contentItems.items = statuses[
+        toStatusIndex
+      ].contentItems.items.sort((a: ContentItem, b: ContentItem): number => {
+        const aTicks = new Date(a['lastModifiedDate']).getTime();
+        const bTicks = new Date(b['lastModifiedDate']).getTime();
+        return bTicks - aTicks;
+      });
+
       fromStatusId = statusId;
+
+      const fromStatusIndex = statuses.findIndex(
+        (status: any) => status.id == fromStatusId
+      );
+      if (fromStatusId !== toStatusId) {
+        statuses[fromStatusIndex].contentItems.page.totalElements--;
+        statuses[toStatusIndex].contentItems.page.totalElements++;
+        statuses[fromStatusIndex].contentItems.page.elementsInCurrentPage--;
+        statuses[toStatusIndex].contentItems.page.elementsInCurrentPage++;
+      }
+      fromStatusId = '';
+      toStatusId = '';
     }
   }
   onMount(async () => {
     try {
-      client = await initDcExtensionClient({ debug: true });
+      client = await initDcExtensionClient();
       [contentItemsPath, statuses, contentTypeLookup] = await Promise.all([
         contentRepositories.getContentItemPath(client),
         workflowStates.fetchAndHydrateWithContentItems(client),
@@ -131,7 +130,8 @@
   @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
   :global(body, html) {
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -141,17 +141,7 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
   }
-
-  section {
-    height: 100%;
-    overflow-y: hidden;
-    overflow-x: auto;
-    display: flex;
-    flex-direction: column;
-  }
-</style>
-
-<section>
+</style> 
   {#if loading}
     <Loader />
   {:else if error}
@@ -166,4 +156,3 @@
       {contentTypeLookup}
       {client} />
   {/if}
-</section>

@@ -7,34 +7,36 @@
   import type { DcExtensionClient } from '../services/dc-extension-client';
   import type Status from '../services/models/status';
   import Error from './Error.svelte';
+  import { formatDate } from '../utils';
   export let handleConsider: any;
   export let handleFinalize: any;
   export let client: DcExtensionClient;
   export let statuses: Status[] = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
 
-  function showMore(e: Event, status: Status) {
-    console.log('show more button clicked for status:', status);
-  }
 </script>
 
 <style lang="scss">
   $color-primary: #039be5;
   .grid {
+    position: relative;
+    top: 116px;
+    padding: 0 8px;
     box-sizing: border-box;
     display: grid;
     grid-template-rows: 1fr;
     grid-gap: 8px;
-    height: 100%;
+    height: calc(100% - 116px);
     width: 100%;
-    padding: 0.5em;
+    overflow-x: auto;
+    box-sizing: border-box;
   }
   .col {
     box-sizing: border-box;
-    background: #eee;
-    overflow-y: hidden;
+    background: #f2f2f2;
+    overflow: hidden;
     position: relative;
-    min-width: 136px;
+    min-width: 240px;
 
     .counts-and-actions {
       display: flex;
@@ -45,7 +47,7 @@
 
     .content-item-wrap {
       position: absolute;
-      top: 110px;
+      top: 80px;
       bottom: 0;
       left: 0;
       right: 0;
@@ -90,7 +92,7 @@
               target="{client.dcAppHost}/authoring/content-item/edit/{contentItem.id}"
               title={contentItem.label}
               subtitle={contentTypeLookup[contentItem.schema].label}
-              footer="Last changed {contentItem.modified}" />
+              footer="Last changed {formatDate(contentItem.lastModifiedDate)}" />
           {/each}
         </div>
       {/if}

@@ -4,8 +4,11 @@
 
 <style lang="scss">
   .toolbar {
-    margin: 0 8px 16px 8px;
     height: 40px;
+    position: fixed;
+    top: 60px;
+    left: 8px;
+    right: 8px;
     font-size: 13px;
   }
 
