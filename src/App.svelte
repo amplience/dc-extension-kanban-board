@@ -135,22 +135,12 @@
     margin: 0;
     padding: 0;
     background: #fff;
-    overflow-x: hidden;
   }
   :global(*) {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
   }
-
-  section {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-</style>
-
-<section>
+</style> 
   {#if loading}
     <Loader />
   {:else if error}
@@ -165,4 +155,3 @@
       {contentTypeLookup}
       {client} />
   {/if}
-</section>

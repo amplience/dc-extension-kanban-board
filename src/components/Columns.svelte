@@ -18,11 +18,14 @@
 <style lang="scss">
   $color-primary: #039be5;
   .grid {
+    position: relative;
+    top: 116px;
+    padding: 0 8px;
     box-sizing: border-box;
     display: grid;
     grid-template-rows: 1fr;
     grid-gap: 8px;
-    height: 100%;
+    height: calc(100% - 116px);
     width: 100%;
     overflow-x: auto;
     box-sizing: border-box;
@@ -30,7 +33,7 @@
   .col {
     box-sizing: border-box;
     background: #f2f2f2;
-    overflow-y: hidden;
+    overflow: hidden;
     position: relative;
     min-width: 240px;
 
@@ -54,18 +57,8 @@
       }
     }
   }
-  .grid-wrapper {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    overflow-x: auto;
-    width: 100vw;
-    box-sizing: border-box;
-    padding: 0.5em;
-  }
 </style>
-
-<div class="grid-wrapper">
+ 
   <div
     class="grid"
     style="grid-template-columns:{Array(statuses.length + 1)
@@ -98,5 +91,4 @@
         </div>
       </div>
     {/each}
-  </div>
-</div>
+  </div> 

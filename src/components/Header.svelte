@@ -7,7 +7,10 @@
 
 <style lang="scss">
   header {
-    margin: 0 8px 0 8px;
+    position: fixed;
+    top: 0;
+    left: 8px;
+    right: 8px;
     height: 60px;
     display: flex;
     flex-direction: column;
