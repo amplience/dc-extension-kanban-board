@@ -54,7 +54,9 @@
     <Divider vertical="true" />
     <div class=" repo-folder-wrap">
       <span class="label repo-folder">Repo / folder</span>
-      <span class="value path"> {contentItemsPath || 'none'} </span>
+      <span class="value path" title={contentItemsPath || 'none'}>
+        {contentItemsPath || 'none'}
+      </span>
     </div>
   </div>
   <Divider />
