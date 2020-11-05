@@ -1,5 +1,11 @@
 {
-  "include": ["src", "types"],
+  "include": [
+    "src",
+    "types",
+    "src/utils/queryString.ts",
+    "src/@types/global.d.ts",
+    "src/utils/toQueryStr.ts"
+  ],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
