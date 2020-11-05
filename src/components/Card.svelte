@@ -10,7 +10,7 @@
     background-color: white;
     padding: 10px 10px 20px;
     border-radius: 3px;
-    margin: 10px;
+    margin: 8px 10px;
 
     &:focus {
       outline-color: #fff;
