@@ -13,9 +13,6 @@
   export let statuses: Status[] = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
 
-  function showMore(e: Event, status: Status) {
-    console.log('show more button clicked for status:', status);
-  }
 </script>
 
 <style lang="scss">
