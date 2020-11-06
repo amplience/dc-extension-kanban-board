@@ -145,7 +145,7 @@
   {#if loading}
     <Loader />
   {:else if error}
-    <Error reason="An error occured while loading: {error}" />
+    <Error reason="An error occurred while loading. Please check your dashboard extension is set up correctly." />
   {:else}
     <Header {contentItemsCount} {contentItemsPath} />
     <Toolbar />
