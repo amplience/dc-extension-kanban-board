@@ -25,11 +25,15 @@
     }
 
     .title {
+      display: inline;
       color: #333;
       font-size: 13px;
       margin: 0 0 4px 0;
       font-weight: 500;
-      display: flex;
+      overflow-wrap: break-word;
+    }
+    .subtitle {
+      overflow-wrap: break-word;
     }
 
     .assignee {
@@ -53,7 +57,9 @@
   <a href={target} target="_top">
     <h1 class="title">{title}</h1>
   </a>
-  <span class="subtitle">{subtitle}</span>
-  <div class="assignee" />
-  <footer class="footer">{footer}</footer>
+  <div>
+    <span class="subtitle">{subtitle}</span>
+    <div class="assignee" />
+    <footer class="footer">{footer}</footer>
+  </div>
 </section>
