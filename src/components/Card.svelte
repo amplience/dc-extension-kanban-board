@@ -35,6 +35,11 @@
     .subtitle {
       overflow-wrap: break-word;
     }
+
+    .assignee {
+      margin: 8px 0;
+      height: 28px;
+    }
     .subtitle,
     .footer {
       font-size: 0.9em;
@@ -54,6 +59,7 @@
   </a>
   <div>
     <span class="subtitle">{subtitle}</span>
+    <div class="assignee" />
     <footer class="footer">{footer}</footer>
   </div>
 </section>
