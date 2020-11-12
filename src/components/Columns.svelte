@@ -6,6 +6,7 @@
   import type { ContentTypeLookup } from '../services/data/content-types';
   import type { DcExtensionClient } from '../services/dc-extension-client';
   import type Status from '../services/models/status';
+  import Error from './Error.svelte';
   import { formatDate } from '../utils';
   export let handleConsider: any;
   export let handleFinalize: any;
@@ -18,11 +19,14 @@
 <style lang="scss">
   $color-primary: #039be5;
   .grid {
+    position: relative;
+    top: 116px;
+    padding: 0 8px;
     box-sizing: border-box;
     display: grid;
     grid-template-rows: 1fr;
     grid-gap: 8px;
-    height: 100%;
+    height: calc(100% - 116px);
     width: 100%;
     overflow-x: auto;
     box-sizing: border-box;
@@ -30,7 +34,7 @@
   .col {
     box-sizing: border-box;
     background: #f2f2f2;
-    overflow-y: hidden;
+    overflow: hidden;
     position: relative;
     min-width: 240px;
 
@@ -54,35 +58,30 @@
       }
     }
   }
-  .grid-wrapper {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    overflow-x: auto;
-    width: 100vw;
-    box-sizing: border-box;
-    padding: 0.5em;
-  }
 </style>
 
-<div class="grid-wrapper">
-  <div
-    class="grid"
-    style="grid-template-columns:{Array(statuses.length + 1)
-      .join('1fr ')
-      .trim()}">
-    {#each statuses as status (status.id)}
-      <div class="col">
-        <Chip
-          backgroundColor={status.backgroundColor}
-          color={status.color}
-          label={status.label || status.id} />
-        <div class="counts-and-actions">
+<div
+  class="grid"
+  style="grid-template-columns:{Array(statuses.length + 1)
+    .join('1fr ')
+    .trim()}">
+  {#each statuses as status (status.id)}
+    <div class="col">
+      <Chip
+        backgroundColor={status.backgroundColor}
+        color={status.color}
+        label={status.label || status.id} />
+      <div class="counts-and-actions">
+        {#if status.hydrated}
           <Count
             total={status.contentItems.page.totalElements}
             additionalInfo={status.hasDateLast7DaysFacet ? '(from last 7 days)' : ''}
             count={status.contentItems.page.elementsInCurrentPage} />
-        </div>
+        {/if}
+      </div>
+      {#if !status.hydrated}
+        <Error reason="Unable to find status" />
+      {:else}
         <div
           class="content-item-wrap"
           use:dndzone={{ items: status.contentItems.items, type: 'content-items', dropTargetStyle: { outline: 'none' }, dropFromOthersDisabled: !status.hydrated }}
@@ -96,7 +95,7 @@
               footer="Last changed {formatDate(contentItem.lastModifiedDate)}" />
           {/each}
         </div>
-      </div>
-    {/each}
-  </div>
+      {/if}
+    </div>
+  {/each}
 </div>

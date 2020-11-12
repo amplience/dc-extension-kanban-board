@@ -10,7 +10,7 @@
     background-color: white;
     padding: 10px 10px 20px;
     border-radius: 3px;
-    margin: 10px;
+    margin: 10px 8px;
 
     &:focus {
       outline-color: #fff;
@@ -25,11 +25,20 @@
     }
 
     .title {
+      display: inline;
       color: #333;
       font-size: 13px;
       margin: 0 0 4px 0;
       font-weight: 500;
-      display: flex;
+      overflow-wrap: break-word;
+    }
+    .subtitle {
+      overflow-wrap: break-word;
+    }
+
+    .assignee {
+      margin: 8px 0;
+      height: 28px;
     }
     .subtitle,
     .footer {
@@ -48,6 +57,9 @@
   <a href={target} target="_top">
     <h1 class="title">{title}</h1>
   </a>
-  <span class="subtitle">{subtitle}</span>
-  <footer class="footer">{footer}</footer>
+  <div>
+    <span class="subtitle">{subtitle}</span>
+    <div class="assignee" />
+    <footer class="footer">{footer}</footer>
+  </div>
 </section>

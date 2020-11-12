@@ -6,8 +6,12 @@
 </script>
 
 <style lang="scss">
+  $count-label-width: 140px;
   header {
-    margin: 0 8px 0 8px;
+    position: fixed;
+    top: 0;
+    left: 8px;
+    right: 8px;
     height: 60px;
     display: flex;
     flex-direction: column;
@@ -23,6 +27,7 @@
       color: #999;
       &.repo-folder {
         margin-right: 24px;
+        padding-top: 5px;
       }
     }
 
@@ -30,6 +35,15 @@
       font-weight: 500;
       font-size: 16px;
       color: #333;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding-top: 2px;
+    }
+    .repo-folder-wrap {
+      display: flex;
+      white-space: nowrap;
+      max-width: calc(100% - #{$count-label-width});
     }
   }
 </style>
@@ -41,9 +55,11 @@
       <span class="label">content items</span>
     </div>
     <Divider vertical="true" />
-    <div>
+    <div class=" repo-folder-wrap">
       <span class="label repo-folder">Repo / folder</span>
-      <span class="value">{contentItemsPath || 'none'}</span>
+      <span class="value path" title={contentItemsPath || 'none'}>
+        {contentItemsPath || 'none'}
+      </span>
     </div>
   </div>
   <Divider />
