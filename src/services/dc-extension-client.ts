@@ -30,10 +30,6 @@ export class DcExtensionClient {
       throw new Error('Location href required');
     }
 
-    if (!repositoryId) {
-      throw new Error('Repository id required');
-    }
-
     this.hubId = hubId;
     this.contentRepositoryId = repositoryId;
     this.folderId = folderId;
