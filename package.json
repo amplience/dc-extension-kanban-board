@@ -5,6 +5,7 @@
   },
   "scripts": {
     "start": "snowpack dev",
+    "start:secure": "snowpack dev --secure",
     "build": "snowpack build",
     "test": "jest"
   },

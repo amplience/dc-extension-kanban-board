@@ -3,7 +3,7 @@ import type { DcExtensionClient } from '../dc-extension-client';
 export async function getContentItemPath(
   client: DcExtensionClient
 ): Promise<string> {
-  const repository: any = await fetchRepository(client);
+  const repository: any = (await fetchRepository(client)) || {};
   const folders: any = await fetchFolders(client);
   if (folders) {
     repository.child = folders;
@@ -15,14 +15,12 @@ async function fetchRepository({
   dcClient,
   contentRepositoryId,
 }: DcExtensionClient): Promise<any> {
+  if (!contentRepositoryId) {
+    return;
+  }
   const { data: repository } = await dcClient.get(
     `/content-repositories/${contentRepositoryId}`
   );
-
-  if (!repository) {
-    throw new Error('Unable to get repository');
-  }
-
   return repository;
 }
 
