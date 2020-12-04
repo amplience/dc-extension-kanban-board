@@ -16,10 +16,10 @@ jobs:
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Use Node.js 12.19.0
+      - name: Use Node.js 14.15.1
         uses: actions/setup-node@v1
         with:
-          node-version: 12.19.0
+          node-version: 14.15.1
 
       - name: Allow access to private Amplience repos
         run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_AUTH_TOKEN}}" >> .npmrc
