@@ -1,9 +1,8 @@
-import type { DcClient } from '../dc-client';
 import type Status from '../models/status';
-import ContentItem from '../models/content-item';
 import PromisePool from '@supercharge/promise-pool';
 import type { DcExtensionClient } from '../dc-extension-client';
 import { toDcQueryStr } from '../../utils';
+import type { FacetedContentItem, HalResource, Page } from 'dc-management-sdk-js';
 
 const FACETS_DEFAULT_PARAMS = {
   page: 0,
@@ -14,7 +13,7 @@ const FACETS_DEFAULT_PARAMS = {
 export interface ContentItemCollection {
   statusId: string;
   page: Record<string, any>;
-  items: ContentItem[] | [];
+  items: FacetedContentItem[] | [];
 }
 
 export async function fetchForStatuses(
@@ -39,11 +38,10 @@ export async function fetchForStatus(
     if (!status.hydrated) {
       return status.contentItems;
     }
-    const { dcClient, hubId, folderId, contentRepositoryId } = client;
-    const { data } = await dcClient.post(
-      `/hubs/${hubId}/content-items/facet`,
+    const { hub, folderId, contentRepositoryId } = client;
+    const response = await hub.related.contentItems.facet(
       {
-        fields: status.facets,
+        fields: status.facets || [],
         returnEntities: true,
       },
       {
@@ -59,8 +57,8 @@ export async function fetchForStatus(
 
     return {
       statusId: status.id,
-      items: mapContentItems(data),
-      page: getPagination(data),
+      items: response.getItems(),
+      page: getPagination(response),
     };
   } catch (error) {
     return {
@@ -71,35 +69,11 @@ export async function fetchForStatus(
   }
 }
 
-export async function updateWorkflowStatus(
-  client: DcClient,
-  contentItem: ContentItem,
-  workflowStatusId: string
-): Promise<ContentItem> {
-  const { data } = await client.patch(
-    `/content-items/${contentItem.id}/workflow`,
-    {
-      version: contentItem.version,
-      state: workflowStatusId,
-    },
-    {}
-  );
-  return new ContentItem(data);
-}
-
-function mapContentItems(data: any) {
-  return (
-    data?._embedded?.['content-items'].map(
-      (item: any) => new ContentItem(item)
-    ) || []
-  );
-}
-
-function getPagination(data: any) {
+function getPagination(data: Page<HalResource>) {
   return (
     {
       ...data?.page,
-      elementsInCurrentPage: data?._embedded?.['content-items'].length,
+      elementsInCurrentPage: data?.getItems().length,
     } || {}
   );
 }

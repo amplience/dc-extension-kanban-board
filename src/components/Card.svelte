@@ -1,8 +1,18 @@
 <script>
-  export let target: string = '';
-  export let title: string = '';
-  export let subtitle: string = '';
-  export let footer: string = '';
+  import type { DcExtensionClient } from "src/services/dc-extension-client";
+  import type { FacetedContentItem } from 'dc-management-sdk-js';
+  import type { ContentTypeLookup } from "src/services/data/content-types";
+  import { formatDate } from "../utils";
+
+  export let client: DcExtensionClient;
+  export let contentItem: FacetedContentItem;
+  export let contentTypeLookup: ContentTypeLookup = Object.create(null);
+
+  let target: string|undefined = '';
+
+  if (client) {
+    target = client.dashboardSdk.applicationNavigator.openContentItem(contentItem, {returnHref: true});
+  }
 </script>
 
 <style lang="scss">
@@ -52,14 +62,14 @@
 <section
   class="card"
   on:dblclick={() => {
-    window.parent.location.href = target;
+    client.dashboardSdk.applicationNavigator.openContentItem(contentItem);
   }}>
   <a href={target} target="_top">
-    <h1 class="title">{title}</h1>
+    <h1 class="title">{contentItem.label}</h1>
   </a>
   <div>
-    <span class="subtitle">{subtitle}</span>
+    <span class="subtitle">{contentTypeLookup[contentItem.schema]?.settings?.label}</span>
     <div class="assignee" />
-    <footer class="footer">{footer}</footer>
+    <footer class="footer">Last changed {formatDate(contentItem.lastModifiedDate)}</footer>
   </div>
 </section>

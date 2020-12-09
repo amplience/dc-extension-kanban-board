@@ -1,20 +1,15 @@
+import { ContentType } from 'dc-management-sdk-js';
 import type { DcExtensionClient } from '../dc-extension-client';
-import ContentType from '../models/content-type';
 
 export interface ContentTypeLookup {
   [key: string]: ContentType;
 }
 
 export async function fetchAll({
-  dcClient,
-  hubId,
+  hub,
 }: DcExtensionClient): Promise<ContentTypeLookup> {
-  const { data } = await dcClient.getAll(
-    'content-types',
-    `/hubs/${hubId}/content-types`
-  );
-
-  return getLookupMap(data.items);
+  const data = await hub.related.contentTypes.list();
+  return getLookupMap(data.getItems());
 }
 
 function getLookupMap(items: any[]) {
