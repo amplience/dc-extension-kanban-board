@@ -88,11 +88,7 @@
           on:consider={(e) => handleConsider(status.id, e)}
           on:finalize={(e) => handleFinalize(status.id, e)}>
           {#each status.contentItems.items as contentItem (contentItem.id)}
-            <Card
-              target="{client.dcAppHost}/authoring/content-item/edit/{contentItem.id}"
-              title={contentItem.label}
-              subtitle={contentTypeLookup[contentItem.schema].label}
-              footer="Last changed {formatDate(contentItem.lastModifiedDate)}" />
+            <Card {client} {contentItem} {contentTypeLookup} />
           {/each}
         </div>
       {/if}

@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import {
     contentRepositories,
-    contentItems,
     contentTypes,
     workflowStates,
   } from './services/data';
@@ -16,9 +15,10 @@
     DcExtensionClient,
     initDcExtensionClient,
   } from './services/dc-extension-client';
-  import ContentItem from './services/models/content-item';
   import type { ContentTypeLookup } from './services/data/content-types';
   import type Status from './services/models/status';
+  import { WorkflowState } from 'dc-management-sdk-js/build/main/lib/model/WorkflowState';
+  import type { ContentItem, FacetedContentItem } from 'dc-management-sdk-js';
 
   let client: DcExtensionClient;
   let statuses: Status[] = [];
@@ -32,12 +32,12 @@
   const hoverColour = '#039BE5';
   let originalDropTarget: HTMLDivElement;
 
-  let droppedItem: ContentItem;
+  let droppedItem: FacetedContentItem;
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
     const statusIndex = statuses.findIndex(
-      (status: any) => status.id == statusId
-    );
+      (status) => status.id == statusId
+      );
     if (e.detail.info.trigger === TRIGGERS.DRAG_STARTED) {
       (e.target as HTMLDivElement).style.borderColor = 'transparent';
       originalDropTarget = e.target as HTMLDivElement;
@@ -53,40 +53,34 @@
     } else {
       (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
     }
-    statuses[statusIndex].contentItems.items = e.detail.items as ContentItem[];
+    statuses[statusIndex].contentItems.items = e.detail.items as FacetedContentItem[];
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
-    const listItems: ContentItem[] = e.detail.items.map((item) => {
-      return new ContentItem(item);
-    });
+    const listItems = e.detail.items;
     const statusIndex = statuses.findIndex(
       (status: any) => status.id == statusId
     );
     statuses[statusIndex].contentItems.items = listItems.sort(
-      (a: ContentItem, b: ContentItem): number => {
+      (a, b): number => {
         const aTicks = new Date(a['lastModifiedDate']).getTime();
         const bTicks = new Date(b['lastModifiedDate']).getTime();
         return bTicks - aTicks;
       }
-    );
+    ) as FacetedContentItem[];
     if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
-      droppedItem = listItems.filter((item) => item.id === e.detail.info.id)[0];
+      droppedItem = listItems.filter((item) => item.id === e.detail.info.id)[0] as FacetedContentItem;
       (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
       toStatusId = statusId;
     } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
       const toStatusIndex = statuses.findIndex(
         (status: any) => status.id == toStatusId
       );
-      const response: ContentItem = await contentItems.updateWorkflowStatus(
-        client.dcClient,
-        droppedItem,
-        toStatusId
-      );
+      const response: ContentItem = await droppedItem.related.assignWorkflowState(new WorkflowState({id: toStatusId}));
       droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
 
       statuses[toStatusIndex].contentItems.items = statuses[
         toStatusIndex
-      ].contentItems.items.sort((a: ContentItem, b: ContentItem): number => {
+      ].contentItems.items.sort((a, b): number => {
         const aTicks = new Date(a['lastModifiedDate']).getTime();
         const bTicks = new Date(b['lastModifiedDate']).getTime();
         return bTicks - aTicks;
@@ -141,7 +135,7 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
   }
-</style> 
+</style>
   {#if loading}
     <Loader />
   {:else if error}

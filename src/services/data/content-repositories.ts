@@ -1,3 +1,4 @@
+import type { ContentRepository, Folder } from 'dc-management-sdk-js';
 import type { DcExtensionClient } from '../dc-extension-client';
 
 export async function getContentItemPath(
@@ -14,14 +15,11 @@ export async function getContentItemPath(
 async function fetchRepository({
   dcClient,
   contentRepositoryId,
-}: DcExtensionClient): Promise<any> {
+}: DcExtensionClient): Promise<ContentRepository | undefined> {
   if (!contentRepositoryId) {
     return;
   }
-  const { data: repository } = await dcClient.get(
-    `/content-repositories/${contentRepositoryId}`
-  );
-  return repository;
+  return await dcClient.contentRepositories.get(contentRepositoryId);
 }
 
 async function fetchFolders(client: DcExtensionClient): Promise<any> {
@@ -44,16 +42,11 @@ async function fetchFolders(client: DcExtensionClient): Promise<any> {
 async function fetchFolder(
   { dcClient, folderId }: DcExtensionClient,
   parentFolderId?: string
-): Promise<any> {
-  const { data: folder } = await dcClient.get(
-    `/folders/${parentFolderId || folderId}`
-  );
-
+): Promise<Folder> {
   if (!folderId) {
     throw new Error('Unable to get folder');
   }
-
-  return folder;
+  return await dcClient.folders.get(parentFolderId || folderId);
 }
 
 function getPath(tree: any, path: Path): Path {
