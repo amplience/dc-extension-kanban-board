@@ -1,8 +1,8 @@
 # Contributing
 
-## Developing dc-extension-ga-dashboard
+## Developing dc-extension-kanban-board
 
-You are considering contributing changes to dc-extension-ga-dashboard – thank you!
+You are considering contributing changes to dc-extension-kanban-board – thank you!
 Please read these guidelines when filling a pull request:
 
 - Commits follow the [Angular commit convention](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines)
