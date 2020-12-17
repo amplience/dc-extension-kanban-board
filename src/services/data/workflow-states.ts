@@ -9,14 +9,12 @@ import { contentItems } from '../data';
 const getLastStatus = (statuses: Status[]) => statuses[statuses.length - 1];
 
 export async function fetchAndHydrate(
-  { dcClient, hubId, statuses }: DcExtensionClient,
+  { statuses, hub }: DcExtensionClient,
   params: Record<string, any> = { size: 100 }
 ): Promise<Status[]> {
-  const { data } = await dcClient.get(`/hubs/${hubId}/workflow-states`, params);
+  const data = await hub.related.workflowStates.list();
   const hydratedStatuses = statuses.map(({ id }: InstallationParamsStatus) => {
-    const foundStatus = (data as any)?._embedded['workflow-states'].find(
-      (status: any) => status.id === id
-    );
+    const foundStatus = data.getItems().find((status: any) => status.id === id);
 
     return new Status(foundStatus || { id });
   });

@@ -1,13 +1,5 @@
-import type { ContentItem } from 'dc-extensions-sdk';
+import type { DateFacet, EnumFacet, FacetField } from 'dc-management-sdk-js';
 import type { ContentItemCollection } from '../data/content-items';
-
-interface FacetField {
-  facetAs: string;
-  field: string;
-  name: string;
-  filter?: Record<string, any>;
-  range?: Record<string, any>;
-}
 
 const DARK = 'dark';
 const LIGHT = 'light';
@@ -75,18 +67,18 @@ export default class Status {
   }
 
   addStatusFacetField(id: string) {
-    const facet = {
+    const facet : EnumFacet = {
       facetAs: 'ENUM',
       field: 'workflow.state',
       filter: { type: 'IN', values: [id] },
       name: 'workflow.state',
     };
-    this.appliedFacets.push(facet.name);
+    this.appliedFacets.push(facet.name as string);
     this.facets?.push(facet);
   }
 
   addDateFacetField() {
-    const facet = {
+    const facet : DateFacet = {
       facetAs: 'DATE',
       name: DATE_FACET_LAST_7_DAYS,
       field: 'lastModifiedDate',
@@ -94,7 +86,7 @@ export default class Status {
       filter: { type: 'DATE', values: ['-7:DAYS,NOW'] },
     };
 
-    this.appliedFacets.push(facet.name);
+    this.appliedFacets.push(facet.name as string);
     this.facets?.push(facet);
   }
 }

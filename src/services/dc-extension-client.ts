@@ -1,41 +1,54 @@
-import { init, SDK, Options } from 'dc-extensions-sdk';
-import { DcClient } from './dc-client';
+import {
+  init,
+  InitOptions,
+  DashboardExtension,
+  Params,
+} from 'dc-extensions-sdk';
+import { DynamicContent, Hub } from 'dc-management-sdk-js';
 
 export interface InstallationParamsStatus {
   id: string;
   [key: string]: any;
 }
 
+interface DashboardInstallationParams extends Params {
+  installation: {
+    repositoryId: string;
+    folderId: string;
+    statuses: InstallationParamsStatus[];
+  };
+}
+
 export class DcExtensionClient {
-  public hubId!: string;
   public dcAppHost!: string;
   public contentRepositoryId!: string;
   public folderId?: string | undefined;
   public statuses: InstallationParamsStatus[] = [];
-  public dcClient!: DcClient;
+  public dcClient!: DynamicContent;
+  public hub!: Hub;
+  public dashboardSdk!: DashboardExtension<DashboardInstallationParams>;
 
-  async init(options: Options): Promise<void> {
-    const sdk: SDK = await init(options);
+  async init(options: Partial<InitOptions>): Promise<void> {
+    this.dashboardSdk = await init(
+      options
+    );
+    this.dcClient = new DynamicContent({}, {}, this.dashboardSdk.client);
+
     const {
       hubId,
-      locationHref,
-      installation: { repositoryId, folderId, statuses = [] },
-    } = sdk.params as any;
+      params: {
+        installation: { repositoryId, folderId, statuses = [] },
+      },
+    } = this.dashboardSdk;
 
     if (!hubId) {
       throw new Error('Hub id required');
     }
 
-    if (!locationHref) {
-      throw new Error('Location href required');
-    }
-
-    this.hubId = hubId;
     this.contentRepositoryId = repositoryId;
     this.folderId = folderId;
     this.statuses = getUniqueStatuses(statuses);
-    this.dcAppHost = getDcAppHostFromLocationHref(locationHref);
-    this.dcClient = new DcClient(sdk.client);
+    this.hub = await this.dcClient.hubs.get(hubId);
   }
 }
 
@@ -59,8 +72,4 @@ function getUniqueStatuses(
     statusesMap[status.id] = status;
   });
   return Object.values(statusesMap);
-}
-
-function getDcAppHostFromLocationHref(locationHref: string): string {
-  return locationHref.split('/dashboard')[0];
 }
