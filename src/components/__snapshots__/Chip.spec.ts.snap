@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`chip component should render a chip component 1`] = `
+<div>
+  <div
+    class="chip  svelte-1yjwfb7"
+  >
+    <div
+      class="truncate svelte-atm87y"
+      title="LABEL"
+    >
+      LABEL
+    </div>
+  </div>
+</div>
+`;

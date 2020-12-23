@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`toolbar component should render a toolbar component 1`] = `
+<div>
+  <div
+    class="toolbar svelte-k3o3ls"
+  >
+    <div
+      class="inner svelte-k3o3ls"
+    >
+      <span
+        class="label svelte-k3o3ls"
+      >
+        Sorted by
+      </span>
+       
+      <span>
+        Last modified (most recent first)
+      </span>
+    </div>
+     
+    <div
+      class="divider horizontal svelte-mi6et7"
+    />
+  </div>
+</div>
+`;
