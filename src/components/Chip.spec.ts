@@ -4,7 +4,7 @@ import Chip from './Chip.svelte';
 describe('chip component', () => {
   it('should render a chip component', () => {
     const { container } = render(Chip, {
-      label: 'LABEL'
+      label: 'LABEL',
     });
     expect(container.firstChild).toMatchSnapshot();
   });

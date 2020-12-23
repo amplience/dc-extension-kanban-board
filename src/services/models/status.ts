@@ -67,7 +67,7 @@ export default class Status {
   }
 
   addStatusFacetField(id: string) {
-    const facet : EnumFacet = {
+    const facet: EnumFacet = {
       facetAs: 'ENUM',
       field: 'workflow.state',
       filter: { type: 'IN', values: [id] },
@@ -78,7 +78,7 @@ export default class Status {
   }
 
   addDateFacetField() {
-    const facet : DateFacet = {
+    const facet: DateFacet = {
       facetAs: 'DATE',
       name: DATE_FACET_LAST_7_DAYS,
       field: 'lastModifiedDate',

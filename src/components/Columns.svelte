@@ -13,7 +13,6 @@
   export let client: DcExtensionClient;
   export let statuses: Status[] = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
-
 </script>
 
 <style lang="scss">

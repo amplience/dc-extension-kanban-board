@@ -1,17 +1,20 @@
 <script>
-  import type { DcExtensionClient } from "src/services/dc-extension-client";
+  import type { DcExtensionClient } from 'src/services/dc-extension-client';
   import type { FacetedContentItem } from 'dc-management-sdk-js';
-  import type { ContentTypeLookup } from "src/services/data/content-types";
-  import { formatDate } from "../utils";
+  import type { ContentTypeLookup } from 'src/services/data/content-types';
+  import { formatDate } from '../utils';
 
   export let client: DcExtensionClient;
   export let contentItem: FacetedContentItem;
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
 
-  let target: string|undefined = '';
+  let target: string | undefined = '';
 
   if (client) {
-    target = client.dashboardSdk.applicationNavigator.openContentItem(contentItem, {returnHref: true});
+    target = client.dashboardSdk.applicationNavigator.openContentItem(
+      contentItem,
+      { returnHref: true }
+    );
   }
 </script>
 
@@ -68,8 +71,12 @@
     <h1 class="title">{contentItem.label}</h1>
   </a>
   <div>
-    <span class="subtitle">{contentTypeLookup[contentItem.schema]?.settings?.label}</span>
+    <span
+      class="subtitle">{contentTypeLookup[contentItem.schema]?.settings?.label}</span>
     <div class="assignee" />
-    <footer class="footer">Last changed {formatDate(contentItem.lastModifiedDate)}</footer>
+    <footer class="footer">
+      Last changed
+      {formatDate(contentItem.lastModifiedDate)}
+    </footer>
   </div>
 </section>

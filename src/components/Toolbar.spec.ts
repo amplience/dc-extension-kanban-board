@@ -3,10 +3,10 @@ import Toolbar from './Toolbar.svelte';
 
 describe('toolbar component', () => {
   it('should render a toolbar component', () => {
-      const { container } = render(Toolbar, {
-        // no-op.
-      });
+    const { container } = render(Toolbar, {
+      // no-op.
+    });
 
-      expect(container.firstChild).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

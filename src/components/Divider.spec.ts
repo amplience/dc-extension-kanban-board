@@ -3,10 +3,10 @@ import Divider from './Divider.svelte';
 
 describe('divider component', () => {
   it('should render a divider component', () => {
-      const { container } = render(Divider, {
-        // no-op.
-      });
+    const { container } = render(Divider, {
+      // no-op.
+    });
 
-      expect(container.firstChild).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });
