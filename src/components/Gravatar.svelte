@@ -51,7 +51,7 @@
     overflow: hidden;
     color: #fff;
     text-transform: uppercase;
-    margin: 5px 5px 5px 0;
+    margin: 5px 0;
     font-weight: 500;
     font-size: 16px;
   }
@@ -76,7 +76,7 @@
   {#if gravatarUrl !== null}
   <img alt={`${user.firstName} ${user.lastName}`} src={gravatarUrl} />
   {:else}
-  <div class="gravatar-intial" style="--gravatar-color: {getColor()}" title={`${user.firstName} ${user.lastName}`}>{getUserInitial()}</div>
+  <div class="gravatar-intial" style="--gravatar-color: {getColor()}" >{getUserInitial()}</div>
   {/if}
 {/await}
 </div>
