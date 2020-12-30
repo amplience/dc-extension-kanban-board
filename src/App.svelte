@@ -4,6 +4,7 @@
     contentRepositories,
     contentTypes,
     workflowStates,
+    users,
   } from './services/data';
   import { TRIGGERS } from 'svelte-dnd-action';
   import Toolbar from './components/Toolbar.svelte';
@@ -19,10 +20,12 @@
   import type Status from './services/models/status';
   import { WorkflowState } from 'dc-management-sdk-js/build/main/lib/model/WorkflowState';
   import type { ContentItem, FacetedContentItem } from 'dc-management-sdk-js';
+  import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
 
   let client: DcExtensionClient;
   let statuses: Status[] = [];
   let contentTypeLookup: ContentTypeLookup = {};
+  let userList: User[] = [];
   let contentItemsCount: number;
   let contentItemsPath: string;
   let fromStatusId: string;
@@ -104,10 +107,11 @@
   onMount(async () => {
     try {
       client = await initDcExtensionClient();
-      [contentItemsPath, statuses, contentTypeLookup] = await Promise.all([
+      [contentItemsPath, statuses, contentTypeLookup, userList] = await Promise.all([
         contentRepositories.getContentItemPath(client),
         workflowStates.fetchAndHydrateWithContentItems(client),
         contentTypes.fetchAll(client),
+        users.fetchAll(client)
       ]);
 
       contentItemsCount = workflowStates.getContentItemsCount(statuses);
@@ -148,5 +152,6 @@
       {handleConsider}
       {handleFinalize}
       {contentTypeLookup}
-      {client} />
+      {client}
+      users={userList} />
   {/if}

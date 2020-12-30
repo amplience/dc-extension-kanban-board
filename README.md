@@ -14,14 +14,12 @@ Open http://localhost:8080 to view it in the browser.
 The page will reload if you make edits.
 You will also see any lint errors in the console.
 
-
 ### npm run start:secure
 
 Same as `npm start` (runs the app in development mode).
 Opens https://localhost:8080 to view it in the browser.
 
-
-To run the mode you will need to [generate a ssl certificate (snowpack.key and snowpack.crt)](https://www.snowpack.dev/#https%2Fhttp2)
+To run the mode you will need to [generate a ssl certificate (snowpack.key and snowpack.crt)](https://www.snowpack.dev/guides/https-ssl-certificates)
 
 ### npm test
 

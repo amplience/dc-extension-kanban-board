@@ -3,15 +3,26 @@
   import type { FacetedContentItem } from 'dc-management-sdk-js';
   import type { ContentTypeLookup } from "src/services/data/content-types";
   import { formatDate } from "../utils";
+  import type { User } from "dc-extensions-sdk/dist/types/lib/components/Users";
+  import Assignees from "./Assignees.svelte";
 
   export let client: DcExtensionClient;
   export let contentItem: FacetedContentItem;
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
+  export let users: User[] = [];
 
   let target: string|undefined = '';
 
   if (client) {
     target = client.dashboardSdk.applicationNavigator.openContentItem(contentItem, {returnHref: true});
+  }
+
+  function getAssignedUsers(): User[] {
+    if (!contentItem.assignees) {
+      return [];
+    }
+
+    return users.filter(user => contentItem?.assignees.includes(user.id))
   }
 </script>
 
@@ -45,11 +56,6 @@
     .subtitle {
       overflow-wrap: break-word;
     }
-
-    .assignee {
-      margin: 8px 0;
-      height: 28px;
-    }
     .subtitle,
     .footer {
       font-size: 0.9em;
@@ -69,7 +75,7 @@
   </a>
   <div>
     <span class="subtitle">{contentTypeLookup[contentItem.schema]?.settings?.label}</span>
-    <div class="assignee" />
+    <Assignees users={getAssignedUsers()} />
     <footer class="footer">Last changed {formatDate(contentItem.lastModifiedDate)}</footer>
   </div>
 </section>

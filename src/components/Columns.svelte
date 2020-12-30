@@ -1,18 +1,21 @@
 <script>
-  import Chip from './Chip.svelte';
-  import Card from './Card.svelte';
-  import Count from './Count.svelte';
+  import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
   import { dndzone } from 'svelte-dnd-action';
   import type { ContentTypeLookup } from '../services/data/content-types';
   import type { DcExtensionClient } from '../services/dc-extension-client';
   import type Status from '../services/models/status';
+  import Card from './Card.svelte';
+  import Chip from './Chip.svelte';
+  import Count from './Count.svelte';
   import Error from './Error.svelte';
-  import { formatDate } from '../utils';
+
+
   export let handleConsider: any;
   export let handleFinalize: any;
   export let client: DcExtensionClient;
   export let statuses: Status[] = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
+  export let users: User[] = [];
 
 </script>
 
@@ -88,7 +91,7 @@
           on:consider={(e) => handleConsider(status.id, e)}
           on:finalize={(e) => handleFinalize(status.id, e)}>
           {#each status.contentItems.items as contentItem (contentItem.id)}
-            <Card {client} {contentItem} {contentTypeLookup} />
+            <Card {client} {contentItem} {contentTypeLookup} {users} />
           {/each}
         </div>
       {/if}

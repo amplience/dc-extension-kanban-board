@@ -9,7 +9,7 @@ interface Preset {
 }
 
 const DATE_FACET_LAST_7_DAYS: string = 'lastModifiedDate:Last 7 days';
-const PRESETS: Preset = {
+export const PRESETS: Preset = {
   'rgb(63,152,134)': LIGHT,
   'rgb(100,190,225)': DARK,
   'rgb(25,195,151)': DARK,
@@ -34,7 +34,7 @@ const PRESETS: Preset = {
   'rgb(110,137,151)': LIGHT,
   'rgb(137,162,212)': DARK,
   'rgb(201,196,212)': DARK,
-};
+} as const;
 
 export default class Status {
   public id: string;
@@ -67,7 +67,7 @@ export default class Status {
   }
 
   addStatusFacetField(id: string) {
-    const facet : EnumFacet = {
+    const facet: EnumFacet = {
       facetAs: 'ENUM',
       field: 'workflow.state',
       filter: { type: 'IN', values: [id] },
@@ -78,7 +78,7 @@ export default class Status {
   }
 
   addDateFacetField() {
-    const facet : DateFacet = {
+    const facet: DateFacet = {
       facetAs: 'DATE',
       name: DATE_FACET_LAST_7_DAYS,
       field: 'lastModifiedDate',

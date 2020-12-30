@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@supercharge/promise-pool": "^1.5.0",
-    "dc-extensions-sdk": "github:amplience/dc-extensions-sdk#feature/dashboard-application-navigator",
+    "dc-extensions-sdk": "github:amplience/dc-extensions-sdk#feature/get-user-by-id",
     "dc-management-sdk-js": "^1.9.0",
+    "md5": "^2.3.0",
     "svelte": "^3.24.0",
     "svelte-dnd-action": "^0.6.22"
   },
@@ -27,6 +28,7 @@
     "@testing-library/svelte": "^3.0.0",
     "@tsconfig/svelte": "^1.0.3",
     "@types/jest": "^26.0.4",
+    "@types/md5": "^2.2.1",
     "@types/snowpack-env": "^2.3.0",
     "jest": "^26.2.2",
     "snowpack": "^2.15.1",
