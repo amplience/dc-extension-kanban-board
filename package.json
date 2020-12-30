@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@supercharge/promise-pool": "^1.5.0",
-    "dc-extensions-sdk": "github:amplience/dc-extensions-sdk#feature/get-user-by-id",
+    "dc-extensions-sdk": "github:amplience/dc-extensions-sdk#feature/list-users",
     "dc-management-sdk-js": "^1.9.0",
     "md5": "^2.3.0",
     "svelte": "^3.24.0",
