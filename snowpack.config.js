@@ -22,14 +22,14 @@ module.exports = {
   ],
   installOptions: {
     polyfillNode: true,
-    sourceMap: true
+    sourceMap: true,
   },
   devOptions: {
     /* ... */
   },
   buildOptions: {
-    baseUrl: "./",
-    sourceMaps: true
+    baseUrl: './',
+    sourceMaps: true,
   },
   proxy: {
     /* ... */

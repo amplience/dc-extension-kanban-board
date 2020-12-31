@@ -1,15 +1,15 @@
 <script>
-  import type { DcExtensionClient } from "src/services/dc-extension-client";
+  import type { DcExtensionClient } from "../services/dc-extension-client";
   import type { FacetedContentItem } from 'dc-management-sdk-js';
-  import type { ContentTypeLookup } from "src/services/data/content-types";
+  import type { ContentTypeLookup } from "../services/data/content-types";
   import { formatDate } from "../utils";
   import type { User } from "dc-extensions-sdk/dist/types/lib/components/Users";
   import Assignees from "./Assignees.svelte";
+  import { users } from "../services/stores/users";
 
   export let client: DcExtensionClient;
   export let contentItem: FacetedContentItem;
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
-  export let users: User[] = [];
 
   let target: string|undefined = '';
 
@@ -22,7 +22,7 @@
       return [];
     }
 
-    return users.filter(user => contentItem?.assignees.includes(user.id))
+    return $users.filter(user => contentItem?.assignees.includes(user.id))
   }
 </script>
 

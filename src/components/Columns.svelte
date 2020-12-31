@@ -1,5 +1,4 @@
 <script>
-  import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
   import { dndzone } from 'svelte-dnd-action';
   import type { ContentTypeLookup } from '../services/data/content-types';
   import type { DcExtensionClient } from '../services/dc-extension-client';
@@ -9,14 +8,11 @@
   import Count from './Count.svelte';
   import Error from './Error.svelte';
 
-
   export let handleConsider: any;
   export let handleFinalize: any;
   export let client: DcExtensionClient;
   export let statuses: Status[] = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
-  export let users: User[] = [];
-
 </script>
 
 <style lang="scss">
@@ -33,6 +29,7 @@
     width: 100%;
     overflow-x: auto;
     box-sizing: border-box;
+    z-index: 1;
   }
   .col {
     box-sizing: border-box;
@@ -40,6 +37,7 @@
     overflow: hidden;
     position: relative;
     min-width: 240px;
+    z-index: 1;
 
     .counts-and-actions {
       display: flex;
@@ -56,6 +54,7 @@
       right: 0;
       overflow-y: auto;
       background-color: transparent;
+      z-index: 1;
       &:focus {
         outline: none;
       }
@@ -91,7 +90,7 @@
           on:consider={(e) => handleConsider(status.id, e)}
           on:finalize={(e) => handleFinalize(status.id, e)}>
           {#each status.contentItems.items as contentItem (contentItem.id)}
-            <Card {client} {contentItem} {contentTypeLookup} {users} />
+            <Card {client} {contentItem} {contentTypeLookup} />
           {/each}
         </div>
       {/if}

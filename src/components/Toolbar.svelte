@@ -1,4 +1,5 @@
 <script>
+  import AssigneeFilter from './AssigneeFilter.svelte';
   import Divider from './Divider.svelte';
 </script>
 
@@ -18,6 +19,10 @@
     align-items: center;
   }
 
+  .inner .sortInfo {
+    padding-right: 40px;
+  }
+
   .label {
     color: #999;
     margin-right: 3px;
@@ -26,8 +31,11 @@
 
 <div class="toolbar">
   <div class="inner">
-    <span class="label">Sorted by</span>
-    <span>Last modified (most recent first)</span>
+    <div class="sortInfo">
+      <span class="label">Sorted by</span>
+      <span>Last modified (most recent first)</span>
+    </div>
+    <AssigneeFilter />
   </div>
   <Divider />
 </div>
