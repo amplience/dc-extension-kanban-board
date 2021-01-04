@@ -32,8 +32,9 @@ exports[`card component should render a card component 1`] = `
       <footer
         class="footer svelte-1rse9oa"
       >
-        Last changed 
-        1/1/2020 12:00 AM
+        Last changed
+      
+        01/01/2020 12:00 AM
       </footer>
     </div>
   </section>
