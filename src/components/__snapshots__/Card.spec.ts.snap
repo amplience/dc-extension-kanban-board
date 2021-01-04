@@ -4,6 +4,7 @@ exports[`card component should render a card component 1`] = `
 <div>
   <section
     class="card svelte-1rse9oa"
+    data-testid="card"
   >
     <a
       class="svelte-1rse9oa"

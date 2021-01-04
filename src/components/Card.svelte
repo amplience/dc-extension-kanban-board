@@ -64,6 +64,7 @@
 
 <section
   class="card"
+  data-testid="card"
   on:dblclick={() => {
     client.dashboardSdk.applicationNavigator.openContentItem(contentItem);
   }}>
