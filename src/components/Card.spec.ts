@@ -1,8 +1,11 @@
 import { render } from '@testing-library/svelte';
 import Card from './Card.svelte';
+import { formatDate } from '../utils';
 
+jest.mock('../utils');
 describe('card component', () => {
   it('should render a card component', () => {
+    (formatDate as jest.Mock).mockImplementation(() => '01/01/2020 12:00 AM');
     const client = {
       dashboardSdk: {
         applicationNavigator: {
