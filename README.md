@@ -55,3 +55,42 @@ Sandbox permissions
   ]
 }
 ```
+
+## How to build
+
+Install the dependencies...
+
+```bash
+npm ci
+```
+
+To build a version of the app:
+
+```bash
+npm run build
+```
+
+## Running tests
+
+```bash
+npm run test
+```
+
+## How to run locally
+
+```bash
+npm run start
+```
+
+Opens http://localhost:8080 to view it in the browser.
+
+## How to run locally over https
+
+```bash
+npm run start:secure
+```
+
+Same as `npm start` (runs the app in development mode).
+Opens https://localhost:8080 to view it in the browser.
+
+To run the mode you will need to [generate a ssl certificate (snowpack.key and snowpack.crt)](https://www.snowpack.dev/#https%2Fhttp2)
