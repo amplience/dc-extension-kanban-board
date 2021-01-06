@@ -23,13 +23,12 @@
   import { hub } from './services/stores/hub';
   import { users } from './services/stores/users';
   import { totalsPerStatus } from './services/stores/status-totals';
+  import { contentItemFacets } from './services/stores/content-item-facets';
 
   let statuses: Status[] = [];
   let contentTypeLookup: ContentTypeLookup = {};
   let userList: User[] = [];
   let contentItemsPath: string;
-  let facetedContentItems: FacetedContentItem[] = [];
-  let statusTotals: StatusTotals;
   let loading: boolean = true;
   let error: string = '';
 
@@ -39,24 +38,17 @@
       [
         contentItemsPath,
         statuses,
-        { contentItems: facetedContentItems, statusTotals },
         contentTypeLookup,
         userList,
       ] = await Promise.all([
         contentRepositories.getContentItemPath($extensionClient),
         workflowStates.fetchAndHydrate($extensionClient),
-        fetchByStatusId(
-          $extensionClient,
-          $extensionClient.statuses.map(({ id }) => id)
-        ),
         contentTypes.fetchAll($extensionClient),
         userService.fetchAll($extensionClient),
       ]);
 
       $users = userList;
-      $contentItems = facetedContentItems;
       $hub = $extensionClient.hub;
-      $totalsPerStatus = statusTotals;
     } catch (e) {
       error = e.message;
       console.error(e);
@@ -64,6 +56,24 @@
       loading = false;
     }
   });
+
+  $: (async () => {
+    try {
+      const {
+        contentItems: facetedContentItems,
+        statusTotals,
+      } = await fetchByStatusId(
+        $extensionClient,
+        $extensionClient.statuses.map(({ id }) => id),
+        $contentItemFacets
+      );
+
+      $contentItems = facetedContentItems;
+      $totalsPerStatus = statusTotals;
+    } catch {
+      error = 'Unable to load content items';
+    }
+  })();
 </script>
 
 <style lang="scss">

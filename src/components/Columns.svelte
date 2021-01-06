@@ -7,7 +7,10 @@
   import { dndzone, TRIGGERS } from 'svelte-dnd-action';
   import type { ContentTypeLookup } from '../services/data/content-types';
   import type Status from '../services/models/status';
-  import { contentItems } from '../services/stores/content-items';
+  import {
+    contentItems,
+    getByStatusId,
+  } from '../services/stores/content-items';
   import { totalsPerStatus } from '../services/stores/status-totals';
   import Card from './Card.svelte';
   import Chip from './Chip.svelte';
@@ -77,22 +80,22 @@
     }
   }
 
-  function isLastStatus(id: string): boolean {
+  function isLastStatus(id: string) {
     return (
       statuses.findIndex((status) => status.id === id) === statuses.length - 1
     );
   }
 
-  function initContent() {
+  function initContentByStatus(contentItems: FacetedContentItem[]) {
     const itemsByStatus: { [k: string]: FacetedContentItem[] } = {};
     statuses.forEach((status) => {
-      itemsByStatus[status.id] = contentItems.getByStatusId(status.id);
+      itemsByStatus[status.id] = getByStatusId(contentItems, status.id);
     });
 
     return itemsByStatus;
   }
 
-  $: contentItemsByStatus = initContent();
+  $: contentItemsByStatus = initContentByStatus($contentItems);
 </script>
 
 <style lang="scss">

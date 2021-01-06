@@ -35,7 +35,8 @@ type ContentItemFetchOptions = Pageable &
 
 export async function fetchByStatusId(
   client: DcExtensionClient,
-  ids: string | string[]
+  ids: string | string[],
+  facets: FacetField[]
 ): Promise<ContentItemsWithStatusTotals> {
   if (!Array.isArray(ids)) {
     ids = [ids];
@@ -45,13 +46,14 @@ export async function fetchByStatusId(
   const { results } = await PromisePool.withConcurrency(5)
     .for(ids)
     .process(async (id: string) => {
-      const facets: FacetField[] = [
+      const statusFacets: FacetField[] = [
         {
           facetAs: 'ENUM',
           field: 'workflow.state',
           filter: { type: 'IN', values: [id] },
           name: 'workflow.state',
         },
+        ...facets,
       ];
 
       if (id === ids[ids.length - 1]) {
@@ -62,9 +64,9 @@ export async function fetchByStatusId(
           range: { start: 'NOW', end: '-7:DAYS' },
           filter: { type: 'DATE', values: ['-7:DAYS,NOW'] },
         };
-        facets.push(dateFacet);
+        statusFacets.push(dateFacet);
       }
-      const { contentItems, totalElements } = await fetch(client, facets);
+      const { contentItems, totalElements } = await fetch(client, statusFacets);
       statusTotals[id] = totalElements;
       return contentItems;
     });
