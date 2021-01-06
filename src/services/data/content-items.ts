@@ -3,11 +3,15 @@ import PromisePool from '@supercharge/promise-pool';
 import type { DcExtensionClient } from '../dc-extension-client';
 import { toDcQueryStr } from '../../utils';
 import type {
+  DateFacet,
   FacetedContentItem,
+  FacetField,
   HalResource,
   Page,
+  Pageable,
+  Sortable,
 } from 'dc-management-sdk-js';
-import { assigneesFilter } from '../stores/assignee-filter';
+import { DATE_FACET_LAST_7_DAYS } from '../models/facets';
 
 const FACETS_DEFAULT_PARAMS = {
   page: 0,
@@ -15,38 +19,71 @@ const FACETS_DEFAULT_PARAMS = {
   size: 20,
 };
 
-export interface ContentItemCollection {
-  statusId: string;
-  page: Record<string, any>;
-  items: FacetedContentItem[] | [];
-}
+export type StatusTotals = {
+  [k: string]: number;
+};
 
-export async function fetchForStatuses(
+type ContentItemsWithStatusTotals = {
+  contentItems: FacetedContentItem[];
+  statusTotals: StatusTotals;
+};
+
+type ContentItemFetchOptions = Pageable &
+  Sortable & {
+    query: string;
+  };
+
+export async function fetchByStatusId(
   client: DcExtensionClient,
-  statuses: Status[],
-  params: Record<string, any>
-): Promise<ContentItemCollection[]> {
+  ids: string | string[]
+): Promise<ContentItemsWithStatusTotals> {
+  if (!Array.isArray(ids)) {
+    ids = [ids];
+  }
+
+  const statusTotals: StatusTotals = {};
   const { results } = await PromisePool.withConcurrency(5)
-    .for(statuses)
-    .process(
-      async (status: Status) => await fetchForStatus(client, status, params)
-    );
-  return results;
+    .for(ids)
+    .process(async (id: string) => {
+      const facets: FacetField[] = [
+        {
+          facetAs: 'ENUM',
+          field: 'workflow.state',
+          filter: { type: 'IN', values: [id] },
+          name: 'workflow.state',
+        },
+      ];
+
+      if (id === ids[ids.length - 1]) {
+        const dateFacet: DateFacet = {
+          facetAs: 'DATE',
+          name: DATE_FACET_LAST_7_DAYS,
+          field: 'lastModifiedDate',
+          range: { start: 'NOW', end: '-7:DAYS' },
+          filter: { type: 'DATE', values: ['-7:DAYS,NOW'] },
+        };
+        facets.push(dateFacet);
+      }
+      const { contentItems, totalElements } = await fetch(client, facets);
+      statusTotals[id] = totalElements;
+      return contentItems;
+    });
+
+  return { contentItems: results.flat(), statusTotals };
 }
 
-export async function fetchForStatus(
+async function fetch(
   client: DcExtensionClient,
-  status: Status,
-  params: Record<string, any>
-): Promise<ContentItemCollection> {
+  facets: FacetField[],
+  params?: ContentItemFetchOptions
+): Promise<{ contentItems: FacetedContentItem[]; totalElements: number }> {
+  let contentItems: FacetedContentItem[] = [];
+  let totalElements = 0;
   try {
-    if (!status.hydrated) {
-      return status.contentItems;
-    }
     const { hub, folderId, contentRepositoryId } = client;
     const response = await hub.related.contentItems.facet(
       {
-        fields: status.facets || [],
+        fields: facets || [],
         returnEntities: true,
       },
       {
@@ -59,18 +96,10 @@ export async function fetchForStatus(
         }),
       }
     );
-
-    return {
-      statusId: status.id,
-      items: response.getItems(),
-      page: getPagination(response),
-    };
-  } catch (error) {
-    return {
-      statusId: status.id,
-      items: [],
-      page: {},
-    };
+    contentItems = response.getItems();
+    totalElements = response.page?.totalElements || 0;
+  } finally {
+    return { contentItems, totalElements };
   }
 }
 

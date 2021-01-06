@@ -1,32 +1,45 @@
-<script>
+<script type="ts">
   import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
-  import FilterChip from './FilterChip.svelte';
+  import { onMount } from 'svelte';
   import FilterIcon from '../assets/icons/ic-filter.svg';
+  import { selectedAssignees } from '../services/stores/filters/selected-assignees';
+  import { users } from '../services/stores/users';
+  import FilterChip from './FilterChip.svelte';
   import Icon from './Icon.svelte';
   import Overlay from './Overlay.svelte';
-  import { users } from '../services/stores/users';
-  import { assigneesFilter } from '../services/stores/assignee-filter';
 
   let sectionElement: HTMLElement;
   let isModalVisible: boolean = false;
   let modalPositionStyle = '';
+  let assignees: User[] = [];
 
-  function updateAssigneeFilter(user: User) {
-    const existing = $assigneesFilter.findIndex(
-      (assignee) => assignee.id === user.id
-    );
+  onMount(() => {
+    assignees = $selectedAssignees;
+  });
 
-    if (existing !== undefined) {
-      removeAssigneeFromFilter(user.id);
-    } else {
-      $assigneesFilter.push(user);
-    }
+  function updateAssigneeFilter() {
+    $selectedAssignees = assignees;
   }
 
   function removeAssigneeFromFilter(id: string) {
-    $assigneesFilter = $assigneesFilter.filter(
-      (assignee) => assignee.id === id
-    );
+    removeAssignee(id);
+    updateAssigneeFilter();
+  }
+
+  function updateAssignees(user: User) {
+    const existing = assignees.some((assignee) => assignee.id === user.id);
+
+    if (existing) {
+      removeAssignee(user.id);
+    } else {
+      assignees.push(user);
+    }
+
+    updateAssigneeFilter();
+  }
+
+  function removeAssignee(id: string) {
+    assignees = assignees.filter((assignee) => assignee.id !== id);
   }
 
   function showModal() {
@@ -43,8 +56,8 @@
     isModalVisible = false;
   }
 
-  function isFiltered(userId: string) {
-    return $assigneesFilter.some((assignee) => assignee.id === userId);
+  function assigneeIncludedInFilter(userId: string) {
+    return assignees.some((assignee) => assignee.id === userId);
   }
 </script>
 
@@ -53,7 +66,6 @@
     background-color: #fff;
     padding: 5px;
     position: relative;
-    z-index: 23;
   }
 
   .assignee-filter {
@@ -66,6 +78,7 @@
     font-size: 13px;
     font-weight: 400;
     padding-right: 10px;
+    cursor: pointer;
   }
 
   .assignee-filter div.filter-icon {
@@ -75,15 +88,21 @@
     background-color: hsl(0, 0%, 90%);
     border-radius: 4px;
     margin-right: 8px;
+    cursor: pointer;
+  }
+
+  .assignee-filter div.assignee-names {
+    display: flex;
+    flex-direction: row;
   }
 
   .modal-popup {
     background-color: #fff;
     position: fixed;
     width: 500px;
-    z-index: 23;
     --webkit-box-shadow: 0 3px 13px rgba(0, 0, 0, 0.2);
     box-shadow: 0 3px 13px rgba(0, 0, 0, 0.2);
+    z-index: 3;
   }
 </style>
 
@@ -94,10 +113,10 @@
   <div class="assignee-filter">
     <span on:click={showModal}>Assignee</span>
     <div class="assignee-names">
-      {#if $assigneesFilter.length < 1}
-        <FilterChip label="All" on:click={showModal} />
+      {#if $selectedAssignees.length < 1}
+        <FilterChip label="All" on:click={showModal} clickable={true} />
       {:else}
-        {#each $assigneesFilter as assignee}
+        {#each $selectedAssignees as assignee}
           <FilterChip
             label={`${assignee.firstName} ${assignee.lastName}`}
             removeable={true}
@@ -121,8 +140,8 @@
               type="checkbox"
               value={user.id}
               name={user.id}
-              on:change={() => updateAssigneeFilter(user)}
-              checked={isFiltered(user.id)} />
+              on:change={() => updateAssignees(user)}
+              checked={assigneeIncludedInFilter(user.id)} />
           </li>
         {/each}
       </ul>

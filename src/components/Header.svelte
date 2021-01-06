@@ -1,8 +1,12 @@
 <script>
+  import { contentItems } from '../services/stores/content-items';
+
   import Divider from './Divider.svelte';
 
-  export let contentItemsCount: number = 0;
+  let contentItemsCount: number;
   export let contentItemsPath: string = '';
+
+  $: contentItemsCount = $contentItems.length;
 </script>
 
 <style lang="scss">

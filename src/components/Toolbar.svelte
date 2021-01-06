@@ -11,6 +11,7 @@
     left: 8px;
     right: 8px;
     font-size: 13px;
+    z-index: 2;
   }
 
   .inner {

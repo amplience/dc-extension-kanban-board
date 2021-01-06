@@ -20,6 +20,6 @@
 <div class="count">
   <span class="bold">{count}</span>
   content item{#if count !== 1}s{/if}
-  {#if count !== total}of {total}{/if}
+  {#if count < total}of {total}{/if}
   {#if additionalInfo}{additionalInfo}{/if}
 </div>
