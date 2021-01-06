@@ -1,6 +1,4 @@
 <script lang="ts">
-  import InlineSVG from 'svelte-inline-svg'
-
   export let icon: string;
   export let className = '';
   export let width = '24px';
@@ -22,5 +20,5 @@
 </style>
 
 <div class={className} style="--icon-width: {width}; --icon-height: {height}">
-  <InlineSVG src={icon} {width} {height} />
+  {@html icon}
 </div>

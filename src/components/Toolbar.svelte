@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import AssigneeFilter from './AssigneeFilter.svelte';
   import Divider from './Divider.svelte';
 </script>

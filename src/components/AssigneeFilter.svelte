@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
   import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
   import { onMount } from 'svelte';
   import FilterIcon from '../assets/icons/ic-filter.svg';

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { contentItems } from '../services/stores/content-items';
 
   import Divider from './Divider.svelte';

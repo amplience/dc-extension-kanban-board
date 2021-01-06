@@ -1,5 +1,5 @@
 <script lang="ts">
-  import DeleteIcon from '../assets/icons/ic-delete.svg'
+  import DeleteIcon from '../assets/icons/ic-delete.svg';
   import Icon from './Icon.svelte';
   import { createEventDispatcher } from 'svelte';
   export let label: string;

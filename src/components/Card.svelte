@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
   import type { FacetedContentItem } from 'dc-management-sdk-js';
   import type { ContentTypeLookup } from '../services/data/content-types';

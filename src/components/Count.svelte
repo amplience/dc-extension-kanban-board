@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let count: number = 0;
   export let total: number = 0;
   export let additionalInfo: string | undefined;

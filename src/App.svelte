@@ -1,6 +1,5 @@
-<script>
+<script type="ts">
   import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
-  import type { FacetedContentItem } from 'dc-management-sdk-js';
   import { onMount } from 'svelte';
   import Columns from './components/Columns.svelte';
   import Error from './components/Error.svelte';
@@ -14,7 +13,6 @@
     workflowStates,
   } from './services/data';
   import { fetchByStatusId } from './services/data/content-items';
-  import type { StatusTotals } from './services/data/content-items';
   import type { ContentTypeLookup } from './services/data/content-types';
   import { initDcExtensionClient } from './services/dc-extension-client';
   import type Status from './services/models/status';

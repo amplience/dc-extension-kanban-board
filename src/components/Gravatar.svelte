@@ -1,9 +1,8 @@
-<script>
+<script lang="ts">
   import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
   import { PRESETS } from '../services/models/status';
   import { gravatars } from '../services/stores/gravatar';
   import md5 from 'md5';
-
 
   const GRAVATAR_URL = 'https://www.gravatar.com/avatar' as const;
   const GRAVATAR_QUERY = '?d=404&s=56' as const;
@@ -16,12 +15,12 @@
   async function resolveGravatar(): Promise<string | null> {
     let gravatarUrl = $gravatars.get(emailHash);
     if (gravatarUrl !== undefined) {
-      return gravatarUrl
+      return gravatarUrl;
     }
 
     gravatarUrl = `${GRAVATAR_URL}/${emailHash}${GRAVATAR_QUERY}`;
     const res = await fetch(gravatarUrl);
-    if(!res.ok) {
+    if (!res.ok) {
       gravatarUrl = null;
     }
 
@@ -72,11 +71,13 @@
 </style>
 
 <div class="gravatar">
-{#await resolveGravatar() then gravatarUrl}
-  {#if gravatarUrl !== null}
-  <img alt={`${user.firstName} ${user.lastName}`} src={gravatarUrl} />
-  {:else}
-  <div class="gravatar-intial" style="--gravatar-color: {getColor()}" >{getUserInitial()}</div>
-  {/if}
-{/await}
+  {#await resolveGravatar() then gravatarUrl}
+    {#if gravatarUrl !== null}
+      <img alt={`${user.firstName} ${user.lastName}`} src={gravatarUrl} />
+    {:else}
+      <div class="gravatar-intial" style="--gravatar-color: {getColor()}">
+        {getUserInitial()}
+      </div>
+    {/if}
+  {/await}
 </div>

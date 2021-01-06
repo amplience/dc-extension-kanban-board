@@ -1,30 +1,30 @@
 {
   "engines": {
     "node": "14.15.1",
-    "npm": "6.14.8"
+    "npm": "^6.14.8"
   },
   "scripts": {
-    "start": "snowpack dev",
-    "start:secure": "snowpack dev --secure",
-    "build": "snowpack build",
-    "test": "jest"
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv public --port 8080",
+    "lint": "prettier --check \"src/**/*.{ts,svelte}\" && eslint \"src/**/*.ts\"",
+    "lint:fix": "prettier --write 'src/**/*.{ts,svelte}'",
+    "test": "jest src --silent",
+    "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
-    "@supercharge/promise-pool": "^1.5.0",
     "dc-extensions-sdk": "github:amplience/dc-extensions-sdk#feature/list-users",
     "dc-management-sdk-js": "^1.9.0",
     "md5": "^2.3.0",
-    "svelte": "^3.24.0",
-    "svelte-dnd-action": "^0.6.22",
-    "svelte-inline-svg": "^1.0.5"
+    "sirv-cli": "^1.0.6"
   },
   "devDependencies": {
-    "@snowpack/app-scripts-svelte": "^1.9.1",
-    "@snowpack/plugin-dotenv": "^2.0.4",
-    "@snowpack/plugin-run-script": "^2.1.7",
-    "@snowpack/plugin-sass": "^1.1.1",
-    "@snowpack/plugin-svelte": "^3.1.0",
-    "@snowpack/plugin-typescript": "^1.0.2",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-replace": "^2.3.3",
+    "@rollup/plugin-typescript": "^5.0.0",
+    "@supercharge/promise-pool": "^1.5.0",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/svelte": "^3.0.0",
     "@tsconfig/svelte": "^1.0.3",
@@ -33,15 +33,24 @@
     "@types/snowpack-env": "^2.3.0",
     "@typescript-eslint/eslint-plugin": "^4.11.1",
     "@typescript-eslint/parser": "^4.11.1",
+    "dotenv": "^8.2.0",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-svelte3": "^3.0.0",
     "jest": "^26.2.2",
+    "node-sass": "^4.14.1",
     "prettier": "^2.2.1",
     "prettier-plugin-svelte": "^1.4.2",
-    "snowpack": "^2.18.5",
-    "svelte-check": "^1.0.0",
-    "svelte-preprocess": "^4.0.8",
+    "rollup": "^2.26.5",
+    "rollup-plugin-inline-svg": "^2.0.0",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-postcss": "^3.1.6",
+    "rollup-plugin-svelte": "^6.1.1",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.24.1",
+    "svelte-check": "^1.0.23",
+    "svelte-dnd-action": "^0.6.22",
+    "svelte-preprocess": "^4.1.1",
     "typescript": "^4.0.0"
   }
 }
