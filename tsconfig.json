@@ -1,28 +1,14 @@
 {
-  "include": [
-    "src",
-    "types",
-    "src/utils/queryString.ts",
-    "src/@types/global.d.ts",
-    "src/utils/toQueryStr.ts"
-  ],
+  "extends": "@tsconfig/svelte/tsconfig.json",
+
+  "include": ["src/**/*", "types"],
+  "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "moduleResolution": "node",
-    "jsx": "preserve",
-    "baseUrl": "./",
-    /* paths - If you configure Snowpack import aliases, add them here. */
-    "paths": {},
-    /* noEmit - Snowpack builds (emits) files, not tsc. */
-    "noEmit": true,
-    /* Additional Options */
-    "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "types": ["jest", "@testing-library/jest-dom"],
+    "allowJs": true,
+    "esModuleInterop": true,
     "resolveJsonModule": true,
-    "useDefineForClassFields": true,
-    "allowSyntheticDefaultImports": true,
-    "importsNotUsedAsValues": "error"
+    "isolatedModules": false,
+    "lib": ["es2019", "dom"]
   }
 }

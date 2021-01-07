@@ -7,39 +7,20 @@
   import FilterChip from './FilterChip.svelte';
   import Icon from './Icon.svelte';
   import Overlay from './Overlay.svelte';
+  import List, { Graphic, Item, Label } from '@smui/list';
+  import Checkbox from '@smui/checkbox';
 
   let sectionElement: HTMLElement;
   let isModalVisible: boolean = false;
   let modalPositionStyle = '';
-  let assignees: User[] = [];
+  let assignees: string[] = [];
 
-  onMount(() => {
-    assignees = $selectedAssignees;
-  });
-
-  function updateAssigneeFilter() {
-    $selectedAssignees = assignees;
+  function updateAssigneeFilter(items: string[]) {
+    $selectedAssignees = items;
   }
 
   function removeAssigneeFromFilter(id: string) {
-    removeAssignee(id);
-    updateAssigneeFilter();
-  }
-
-  function updateAssignees(user: User) {
-    const existing = assignees.some((assignee) => assignee.id === user.id);
-
-    if (existing) {
-      removeAssignee(user.id);
-    } else {
-      assignees.push(user);
-    }
-
-    updateAssigneeFilter();
-  }
-
-  function removeAssignee(id: string) {
-    assignees = assignees.filter((assignee) => assignee.id !== id);
+    assignees = assignees.filter((assignee) => assignee !== id);
   }
 
   function showModal() {
@@ -56,9 +37,12 @@
     isModalVisible = false;
   }
 
-  function assigneeIncludedInFilter(userId: string) {
-    return assignees.some((assignee) => assignee.id === userId);
+  function getAssigneeLabel(id: string): string {
+    const assignee = $users.find((user) => user.id === id);
+    return `${assignee?.firstName} ${assignee?.lastName}`;
   }
+
+  $: updateAssigneeFilter(assignees);
 </script>
 
 <style lang="scss">
@@ -97,12 +81,36 @@
   }
 
   .modal-popup {
+    padding: 10px 16px;
     background-color: #fff;
     position: fixed;
     width: 500px;
     --webkit-box-shadow: 0 3px 13px rgba(0, 0, 0, 0.2);
     box-shadow: 0 3px 13px rgba(0, 0, 0, 0.2);
     z-index: 3;
+  }
+
+  .modal-popup h3 {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .modal-popup :global(.mdc-list-item) {
+    height: 25px;
+    font-size: 13px;
+  }
+
+  .modal-popup :global(.mdc-list-item__graphic) {
+    margin-right: 5px;
+  }
+
+  .modal-popup
+    :global(.mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate)
+      ~ .mdc-checkbox__background) {
+    height: 15px;
+    width: 15px;
+    border-width: 2px;
+    border-color: #cccccc;
   }
 </style>
 
@@ -113,14 +121,14 @@
   <div class="assignee-filter">
     <span on:click={showModal}>Assignee</span>
     <div class="assignee-names">
-      {#if $selectedAssignees.length < 1}
+      {#if assignees.length < 1}
         <FilterChip label="All" on:click={showModal} clickable={true} />
       {:else}
-        {#each $selectedAssignees as assignee}
+        {#each assignees as assignee}
           <FilterChip
-            label={`${assignee.firstName} ${assignee.lastName}`}
+            label={getAssigneeLabel(assignee)}
             removeable={true}
-            on:close={() => removeAssigneeFromFilter(assignee.id)}
+            on:close={() => removeAssigneeFromFilter(assignee)}
             on:click={showModal}
             clickable={true} />
         {/each}
@@ -132,19 +140,17 @@
   </div>
   {#if isModalVisible}
     <div class="modal-popup" style={modalPositionStyle}>
-      <ul>
+      <h3>Assignee</h3>
+      <List checklist>
         {#each $users as user}
-          <li>
-            <label for={user.id}>{user.firstName} {user.lastName}</label>
-            <input
-              type="checkbox"
-              value={user.id}
-              name={user.id}
-              on:change={() => updateAssignees(user)}
-              checked={assigneeIncludedInFilter(user.id)} />
-          </li>
+          <Item>
+            <Graphic>
+              <Checkbox bind:group={assignees} value={user.id} />
+            </Graphic>
+            <Label>{user.firstName} {user.lastName}</Label>
+          </Item>
         {/each}
-      </ul>
+      </List>
     </div>
   {/if}
 </section>

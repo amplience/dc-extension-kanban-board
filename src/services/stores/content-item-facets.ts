@@ -14,11 +14,11 @@ export const contentItemFacets = derived(
   }
 );
 
-function createAssigneeFacet(users: User[]): FacetField {
+function createAssigneeFacet(assignees: string[]): FacetField {
   return {
     facetAs: 'ENUM',
     field: 'assignees',
-    filter: { type: 'IN', values: users.map((user) => user.id) },
+    filter: { type: 'IN', values: assignees },
     name: 'assignees',
   };
 }

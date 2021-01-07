@@ -1,0 +1,19 @@
+@import '@material/theme/color-palette';
+
+// Svelte Colors!
+$mdc-theme-primary: #039be5;
+$mdc-theme-secondary: #039be5;
+
+$mdc-theme-background: #fff;
+$mdc-theme-surface: #fff;
+$mdc-theme-on-surface: #333;
+
+// mdc select
+$mdc-select-label-position-y: 130%;
+$mdc-select-height: 48px;
+
+$mdc-list-side-padding: 16px;
+
+$mdc-radio-touch-area: 20px;
+$mdc-checkbox-touch-area: 20px;
+$mdc-checkbox-mark-color: #fff;
