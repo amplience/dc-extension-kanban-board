@@ -1,38 +1,57 @@
+[![Amplience Dynamic Content](media/header.png)](https://amplience.com/dynamic-content)
+
 # dc-extension-kanban-board
 
-# New Project
+## How to install Kanban dashboard extension
 
-> ✨ Bootstrapped with Create Snowpack App (CSA).
+This extension needs to be [registered](https://amplience.com/docs/development/registeringextensions.html) in the Dynamic Content application (Developer -> Extensions) under the type of Dashboard.
 
-## Available Scripts
+The dashboard requires a specific configuration and the following example settings need to be defined:
 
-### npm start
+### Setup
 
-Runs the app in the development mode.
-Open http://localhost:8080 to view it in the browser.
+![Setup](media/setup.png)
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+#### URL
 
-### npm run start:secure
+You can use our deployed version of this extension (builds from the "production" branch) -
 
-Same as `npm start` (runs the app in development mode).
-Opens https://localhost:8080 to view it in the browser.
+[https://dc-extension-kanban-board.amplience.net](https://dc-extension-kanban-board.amplience.net)
 
-To run the mode you will need to [generate a ssl certificate (snowpack.key and snowpack.crt)](https://www.snowpack.dev/guides/https-ssl-certificates)
+_As this is an open source project you're welcome to host your own "fork" of this project. You can use any standard static hosting service (Netlify, Amplify, Vercel, etc.) if you wish._
 
-### npm test
+### Permissions
 
-Launches the test runner in the interactive watch mode.
-See the section about running tests for more information.
+![Permissions](media/permissions.png)
 
-### npm run build
+To use the application the following permissions must be enabled:
 
-Builds a static copy of your site to the `build/` folder.
-Your app is ready to be deployed!
+API permissions
 
-**For the best production performance:** Add a build bundler plugin like [@snowpack/plugin-webpack](https://github.com/snowpackjs/snowpack/tree/master/plugins/plugin-webpack) or [snowpack-plugin-rollup-bundle](https://github.com/ParamagicDev/snowpack-plugin-rollup-bundle) to your `snowpack.config.json` config file.
+- Read access
+- Write access
 
-### Q: What about Eject?
+Sandbox permissions
 
-No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
+- Allow same origin
+- Allow top navigation
+- Allow pop-ups
+
+### Installation parameters
+
+```json
+{
+  "repositoryId": "<repository_id>",
+  "statuses": [
+    {
+      "id": "<workflow_status_id>"
+    },
+    {
+      "id": "<workflow_status_id>"
+    },
+    {
+      "id": "<workflow_status_id>"
+    }
+  ]
+}
+```
