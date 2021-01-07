@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
+  import Checkbox from '@smui/checkbox';
+  import List, { Graphic, Item, Label } from '@smui/list';
   import { onMount } from 'svelte';
   import FilterIcon from '../assets/icons/ic-filter.svg';
   import { selectedAssignees } from '../services/stores/filters/selected-assignees';
@@ -7,13 +8,11 @@
   import FilterChip from './FilterChip.svelte';
   import Icon from './Icon.svelte';
   import Overlay from './Overlay.svelte';
-  import List, { Graphic, Item, Label } from '@smui/list';
-  import Checkbox from '@smui/checkbox';
 
   let sectionElement: HTMLElement;
   let isModalVisible: boolean = false;
   let modalPositionStyle = '';
-  let assignees: string[] = [];
+  let assignees: string[];
 
   function updateAssigneeFilter(items: string[]) {
     $selectedAssignees = items;
@@ -42,6 +41,7 @@
     return `${assignee?.firstName} ${assignee?.lastName}`;
   }
 
+  $: assignees = $selectedAssignees || [];
   $: updateAssigneeFilter(assignees);
 </script>
 
@@ -134,7 +134,7 @@
         {/each}
       {/if}
     </div>
-    <div class="filter-icon" on:click={showModal}>
+    <div class="filter-icon" data-testid="filter-icon" on:click={showModal}>
       <Icon icon={FilterIcon} width="20px" height="20px" />
     </div>
   </div>

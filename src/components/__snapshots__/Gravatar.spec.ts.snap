@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gravatar should render a gravatar 1`] = `
+<div>
+  <div
+    class="gravatar svelte-17a39iv"
+  >
+    <img
+      alt="TEST USER"
+      class="svelte-17a39iv"
+      src="https://www.gravatar.com/avatar/HASH?d=404&s=56"
+    />
+    
+  </div>
+</div>
+`;
+
+exports[`Gravatar should render a placeholder image when no gravatar is available 1`] = `
+<div>
+  <div
+    class="gravatar svelte-17a39iv"
+  >
+    <div
+      class="gravatar-intial svelte-17a39iv"
+      style="--gravatar-color: #999;"
+    >
+      T
+    </div>
+    
+  </div>
+</div>
+`;

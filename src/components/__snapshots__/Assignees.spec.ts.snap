@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Assignees should not output any assignees if an empty array is passed 1`] = `
+<div>
+  <div
+    class="assignees svelte-1ilxe5k"
+    title=""
+  />
+</div>
+`;
+
+exports[`Assignees should not output any assignees if not passed any users 1`] = `
+<div>
+  <div
+    class="assignees svelte-1ilxe5k"
+    title=""
+  />
+</div>
+`;
+
+exports[`Assignees should render a single assignee 1`] = `
+<div>
+  <div
+    class="assignees svelte-1ilxe5k"
+    title="Assigned to TEST USER"
+  >
+    <div
+      class="gravatar svelte-17a39iv"
+    />
+     
+    
+  </div>
+</div>
+`;
+
+exports[`Assignees should render multiple assignees 1`] = `
+<div>
+  <div
+    class="assignees svelte-1ilxe5k"
+    title="Assigned to TEST USER, ANOTHER USER"
+  >
+    <div
+      class="gravatar svelte-17a39iv"
+    />
+     
+    <span
+      class="svelte-1ilxe5k"
+    >
+      +
+      1
+    </span>
+    
+  </div>
+</div>
+`;

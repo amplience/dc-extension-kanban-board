@@ -14,7 +14,7 @@ export const contentItemFacets = derived(
   }
 );
 
-function createAssigneeFacet(assignees: string[]): FacetField {
+export function createAssigneeFacet(assignees: string[]): FacetField {
   return {
     facetAs: 'ENUM',
     field: 'assignees',

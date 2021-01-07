@@ -3,5 +3,6 @@ build
 web_modules
 node_modules
 .vscode
-snowpack.key
-snowpack.crt
+
+# testing
+coverage
