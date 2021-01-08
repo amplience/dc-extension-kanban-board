@@ -8,7 +8,7 @@ exports[`Gravatar should render a gravatar 1`] = `
     <img
       alt="TEST USER"
       class="svelte-17a39iv"
-      src="https://www.gravatar.com/avatar/HASH?d=404&s=56"
+      src="https://www.gravatar.com/avatar/50b7748612b28db487d115f220bb77ab?d=404&s=56"
     />
     
   </div>
@@ -22,7 +22,7 @@ exports[`Gravatar should render a placeholder image when no gravatar is availabl
   >
     <div
       class="gravatar-intial svelte-17a39iv"
-      style="--gravatar-color: #999;"
+      style="--gravatar-color: rgb(198,78,103);"
     >
       T
     </div>
