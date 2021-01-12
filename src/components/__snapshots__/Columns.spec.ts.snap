@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`columns component should render a columns component 1`] = `
+<div>
+  <div
+    class="grid svelte-1r9oxt"
+    style="grid-template-columns: 1fr;"
+  >
+    <div
+      class="col svelte-1r9oxt"
+    >
+      <div
+        class="chip BLUE svelte-8agz7l"
+        style="background-color: RED;"
+      >
+        <div
+          class="truncate svelte-4ya5ts"
+          title="STATUS_LABEL"
+        >
+          STATUS_LABEL
+        </div>
+      </div>
+       
+      <div
+        class="counts-and-actions svelte-1r9oxt"
+      >
+        <div
+          class="count svelte-16actsm"
+        >
+          <span
+            class="bold svelte-16actsm"
+          >
+            0
+          </span>
+          
+  content item
+          s
+           
+           
+          (from last 7 days)
+        </div>
+      </div>
+       
+      <div
+        aria-describedby="dnd-zone-active"
+        aria-disabled="false"
+        class="content-item-wrap svelte-1r9oxt"
+        role="list"
+        tabindex="0"
+      />
+       
+    </div>
+  </div>
+</div>
+`;

@@ -37,7 +37,7 @@ export const PRESETS: Preset = {
 
 export default class Status {
   public id: string;
-  public hydrated: boolean = false;
+  public hydrated = false;
   public label?: string;
   public color?: string;
   public backgroundColor?: string;

@@ -69,6 +69,7 @@
 
 <section
   class="card"
+  data-testid="card"
   on:dblclick={() => {
     $extensionClient.dashboardSdk.applicationNavigator.openContentItem(contentItem);
   }}>

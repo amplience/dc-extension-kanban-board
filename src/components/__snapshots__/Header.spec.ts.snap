@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header component should render a header component with default values 1`] = `
+<div>
+  <header
+    class="svelte-1ahabjb"
+  >
+    <div
+      class="info svelte-1ahabjb"
+    >
+      <div
+        class="info__count"
+      >
+        <span
+          class="value svelte-1ahabjb"
+        >
+          0
+        </span>
+         
+        <span
+          class="label svelte-1ahabjb"
+        >
+          content items
+        </span>
+      </div>
+       
+      <div
+        class="divider vertical svelte-1rcmn0v"
+      />
+       
+      <div
+        class=" repo-folder-wrap svelte-1ahabjb"
+      >
+        <span
+          class="label repo-folder svelte-1ahabjb"
+        >
+          Repo / folder
+        </span>
+         
+        <span
+          class="value path svelte-1ahabjb"
+          title="all"
+        >
+          all
+        </span>
+      </div>
+    </div>
+     
+    <div
+      class="divider horizontal svelte-1rcmn0v"
+    />
+  </header>
+</div>
+`;
+
+exports[`header component should render a header component with values 1`] = `
+<div>
+  <header
+    class="svelte-1ahabjb"
+  >
+    <div
+      class="info svelte-1ahabjb"
+    >
+      <div
+        class="info__count"
+      >
+        <span
+          class="value svelte-1ahabjb"
+        >
+          0
+        </span>
+         
+        <span
+          class="label svelte-1ahabjb"
+        >
+          content items
+        </span>
+      </div>
+       
+      <div
+        class="divider vertical svelte-1rcmn0v"
+      />
+       
+      <div
+        class=" repo-folder-wrap svelte-1ahabjb"
+      >
+        <span
+          class="label repo-folder svelte-1ahabjb"
+        >
+          Repo / folder
+        </span>
+         
+        <span
+          class="value path svelte-1ahabjb"
+          title="CONTENT_ITEMS_PATH"
+        >
+          CONTENT_ITEMS_PATH
+        </span>
+      </div>
+    </div>
+     
+    <div
+      class="divider horizontal svelte-1rcmn0v"
+    />
+  </header>
+</div>
+`;

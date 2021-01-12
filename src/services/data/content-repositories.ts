@@ -74,7 +74,7 @@ class Path {
     this.parts.push(part);
   }
 
-  toString(delimiter: string = ' / '): string {
+  toString(delimiter = ' / '): string {
     return this.parts.map(({ label }) => label).join(delimiter);
   }
 }

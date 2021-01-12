@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`count component should render a count component with count and total value of 1 1`] = `
+<div>
+  <div
+    class="count svelte-16actsm"
+  >
+    <span
+      class="bold svelte-16actsm"
+    >
+      1
+    </span>
+    
+  content item
+     
+     
+    ADDITIONAL_INFO
+  </div>
+</div>
+`;
+
+exports[`count component should render a count component with count greater than 1 1`] = `
+<div>
+  <div
+    class="count svelte-16actsm"
+  >
+    <span
+      class="bold svelte-16actsm"
+    >
+      2
+    </span>
+    
+  content item
+    s
+     
+    of 
+    4
+     
+    ADDITIONAL_INFO
+  </div>
+</div>
+`;
+
+exports[`count component should render a count component with default values 1`] = `
+<div>
+  <div
+    class="count svelte-16actsm"
+  >
+    <span
+      class="bold svelte-16actsm"
+    >
+      0
+    </span>
+    
+  content item
+    s
+     
+     
+  </div>
+</div>
+`;
