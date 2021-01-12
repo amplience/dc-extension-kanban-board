@@ -1,6 +1,3 @@
-import type { DateFacet, EnumFacet, FacetField } from 'dc-management-sdk-js';
-import { DATE_FACET_LAST_7_DAYS } from './facets';
-
 const DARK = 'dark';
 const LIGHT = 'light';
 

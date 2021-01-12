@@ -1,4 +1,3 @@
-import type Status from '../models/status';
 import PromisePool from '@supercharge/promise-pool';
 import type { DcExtensionClient } from '../dc-extension-client';
 import { toDcQueryStr } from '../../utils';
@@ -6,8 +5,6 @@ import type {
   DateFacet,
   FacetedContentItem,
   FacetField,
-  HalResource,
-  Page,
   Pageable,
   Sortable,
 } from 'dc-management-sdk-js';
@@ -103,13 +100,4 @@ async function fetch(
   } finally {
     return { contentItems, totalElements };
   }
-}
-
-function getPagination(data: Page<HalResource>) {
-  return (
-    {
-      ...data?.page,
-      elementsInCurrentPage: data?.getItems().length,
-    } || {}
-  );
 }

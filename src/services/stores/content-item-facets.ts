@@ -1,4 +1,3 @@
-import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
 import type { FacetField } from 'dc-management-sdk-js';
 import { derived } from 'svelte/store';
 import { selectedAssignees } from './filters/selected-assignees';

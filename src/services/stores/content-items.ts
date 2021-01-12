@@ -3,5 +3,7 @@ import { writable } from 'svelte/store';
 
 export const contentItems = writable<FacetedContentItem[]>([]);
 
-export const getByStatusId = (items: FacetedContentItem[], id: string) =>
-  items.filter((item) => item?.workflow?.state === id);
+export const getByStatusId = (
+  items: FacetedContentItem[],
+  id: string
+): FacetedContentItem[] => items.filter((item) => item?.workflow?.state === id);

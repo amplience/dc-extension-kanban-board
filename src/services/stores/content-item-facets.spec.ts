@@ -1,4 +1,3 @@
-import { assign } from 'svelte/internal';
 import { contentItemFacets, createAssigneeFacet } from './content-item-facets';
 import { selectedAssignees } from './filters/selected-assignees';
 
