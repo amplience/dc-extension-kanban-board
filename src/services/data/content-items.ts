@@ -2,7 +2,11 @@ import type Status from '../models/status';
 import PromisePool from '@supercharge/promise-pool';
 import type { DcExtensionClient } from '../dc-extension-client';
 import { toDcQueryStr } from '../../utils';
-import type { FacetedContentItem, HalResource, Page } from 'dc-management-sdk-js';
+import type {
+  FacetedContentItem,
+  HalResource,
+  Page,
+} from 'dc-management-sdk-js';
 
 const FACETS_DEFAULT_PARAMS = {
   page: 0,

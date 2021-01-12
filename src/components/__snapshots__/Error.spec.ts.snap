@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`error component should render an error component with default value 1`] = `
+<div>
+  <div
+    class="error svelte-bb2wmt"
+  >
+    <div
+      class="message svelte-bb2wmt"
+    >
+      
+    </div>
+  </div>
+</div>
+`;
+
+exports[`error component should render an error component with value 1`] = `
+<div>
+  <div
+    class="error svelte-bb2wmt"
+  >
+    <div
+      class="message svelte-bb2wmt"
+    >
+      REASON
+    </div>
+  </div>
+</div>
+`;
