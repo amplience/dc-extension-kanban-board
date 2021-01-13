@@ -1,20 +1,19 @@
-<script>
-  import type { DcExtensionClient } from 'src/services/dc-extension-client';
-  import type { FacetedContentItem } from 'dc-management-sdk-js';
-  import type { ContentTypeLookup } from 'src/services/data/content-types';
-  import { formatDate } from '../utils';
+<script lang="ts">
   import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
+  import type { FacetedContentItem } from 'dc-management-sdk-js';
+  import type { ContentTypeLookup } from '../services/data/content-types';
+  import { extensionClient } from '../services/stores/extensionClient';
+  import { users } from '../services/stores/users';
+  import { formatDate } from '../utils';
   import Assignees from './Assignees.svelte';
 
-  export let client: DcExtensionClient;
   export let contentItem: FacetedContentItem;
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
-  export let users: User[] = [];
 
   let target: string | undefined = '';
 
-  if (client) {
-    target = client.dashboardSdk.applicationNavigator.openContentItem(
+  if ($extensionClient) {
+    target = $extensionClient.dashboardSdk.applicationNavigator.openContentItem(
       contentItem,
       { returnHref: true }
     );
@@ -25,7 +24,7 @@
       return [];
     }
 
-    return users.filter((user) => contentItem?.assignees.includes(user.id));
+    return $users.filter((user) => contentItem?.assignees.includes(user.id));
   }
 </script>
 
@@ -72,7 +71,7 @@
   class="card"
   data-testid="card"
   on:dblclick={() => {
-    client.dashboardSdk.applicationNavigator.openContentItem(contentItem);
+    $extensionClient.dashboardSdk.applicationNavigator.openContentItem(contentItem);
   }}>
   <a href={target} target="_top">
     <h1 class="title">{contentItem.label}</h1>

@@ -3,24 +3,74 @@
 exports[`toolbar component should render a toolbar component 1`] = `
 <div>
   <div
-    class="toolbar svelte-k3o3ls"
+    class="toolbar svelte-d3be3"
   >
     <div
-      class="inner svelte-k3o3ls"
+      class="inner svelte-d3be3"
     >
-      <span
-        class="label svelte-k3o3ls"
+      <div
+        class="sortInfo svelte-d3be3"
       >
-        Sorted by
-      </span>
+        <span
+          class="label svelte-d3be3"
+        >
+          Sorted by
+        </span>
+         
+        <span>
+          Last modified (most recent first)
+        </span>
+      </div>
        
-      <span>
-        Last modified (most recent first)
-      </span>
+       
+      <section
+        class="svelte-6yrjka"
+      >
+        <div
+          class="assignee-filter svelte-6yrjka"
+        >
+          <span
+            class="svelte-6yrjka"
+          >
+            Assignee
+          </span>
+           
+          <div
+            class="assignee-names svelte-6yrjka"
+          >
+            <div
+              class=" clickable  svelte-h28tab"
+              data-testid="chip"
+            >
+              <span
+                class="label svelte-h28tab"
+              >
+                All
+              </span>
+               
+            </div>
+          </div>
+           
+          <div
+            class="filter-icon svelte-6yrjka"
+            data-testid="filter-icon"
+          >
+            <div
+              class=" svelte-zpbvvv"
+              style="--icon-width: 20px; --icon-height: 20px;"
+            >
+              <object
+                src="ic-filter.svg/"
+              />
+            </div>
+          </div>
+        </div>
+         
+      </section>
     </div>
      
     <div
-      class="divider horizontal svelte-mi6et7"
+      class="divider horizontal svelte-1rcmn0v"
     />
   </div>
 </div>

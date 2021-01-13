@@ -27,5 +27,6 @@ yarn-error.log*
 
 # ide
 .vscode
-snowpack.key
-snowpack.crt
+
+# testing
+coverage

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Truncate from './Truncate.svelte';
   export let backgroundColor: string = '';
   export let color: string = '';
