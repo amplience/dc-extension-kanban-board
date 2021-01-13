@@ -3,35 +3,36 @@
 exports[`card component should render a card component 1`] = `
 <div>
   <section
-    class="card svelte-1rse9oa"
+    class="card svelte-109tt0a"
     data-testid="card"
   >
     <a
-      class="svelte-1rse9oa"
+      class="svelte-109tt0a"
       target="_top"
     >
       <h1
-        class="title svelte-1rse9oa"
+        class="title svelte-109tt0a"
       >
         LABEL
       </h1>
     </a>
      
     <div
-      class="svelte-1rse9oa"
+      class="svelte-109tt0a"
     >
       <span
-        class="subtitle svelte-1rse9oa"
+        class="subtitle svelte-109tt0a"
       >
         SCHEMA LABEL
       </span>
        
       <div
-        class="assignee svelte-1rse9oa"
+        class="assignees svelte-61hcvm"
+        title=""
       />
        
       <footer
-        class="footer svelte-1rse9oa"
+        class="footer svelte-109tt0a"
       >
         Last changed
       

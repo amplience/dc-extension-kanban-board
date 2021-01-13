@@ -28,7 +28,7 @@
     "@snowpack/plugin-typescript": "^1.0.2",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/svelte": "^3.0.0",
-    "@tsconfig/svelte": "^1.0.3",
+    "@tsconfig/svelte": "^1.0.10",
     "@types/jest": "^26.0.4",
     "@types/md5": "^2.2.1",
     "@types/snowpack-env": "^2.3.0",
