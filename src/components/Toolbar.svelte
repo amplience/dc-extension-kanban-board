@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+  import AssigneeFilter from './AssigneeFilter.svelte';
   import Divider from './Divider.svelte';
 </script>
 
@@ -10,12 +11,17 @@
     left: 8px;
     right: 8px;
     font-size: 13px;
+    z-index: 2;
   }
 
   .inner {
     height: 100%;
     display: flex;
     align-items: center;
+  }
+
+  .inner .sortInfo {
+    padding-right: 40px;
   }
 
   .label {
@@ -26,8 +32,11 @@
 
 <div class="toolbar">
   <div class="inner">
-    <span class="label">Sorted by</span>
-    <span>Last modified (most recent first)</span>
+    <div class="sortInfo">
+      <span class="label">Sorted by</span>
+      <span>Last modified (most recent first)</span>
+    </div>
+    <AssigneeFilter />
   </div>
   <Divider />
 </div>

@@ -3,7 +3,7 @@
 exports[`divider component should render a divider component 1`] = `
 <div>
   <div
-    class="divider horizontal svelte-mi6et7"
+    class="divider horizontal svelte-1rcmn0v"
   />
 </div>
 `;

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   const dots = new Array(3);
 </script>
 

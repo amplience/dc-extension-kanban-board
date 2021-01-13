@@ -3,7 +3,7 @@
 exports[`truncate component should render a truncate component with default value 1`] = `
 <div>
   <div
-    class="truncate svelte-atm87y"
+    class="truncate svelte-4ya5ts"
     title=""
   >
     
@@ -14,7 +14,7 @@ exports[`truncate component should render a truncate component with default valu
 exports[`truncate component should render a truncate component with value 1`] = `
 <div>
   <div
-    class="truncate svelte-atm87y"
+    class="truncate svelte-4ya5ts"
     title="TEXT"
   >
     TEXT

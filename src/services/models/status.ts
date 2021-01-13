@@ -1,6 +1,3 @@
-import type { DateFacet, EnumFacet, FacetField } from 'dc-management-sdk-js';
-import type { ContentItemCollection } from '../data/content-items';
-
 const DARK = 'dark';
 const LIGHT = 'light';
 
@@ -8,8 +5,7 @@ interface Preset {
   [key: string]: string;
 }
 
-const DATE_FACET_LAST_7_DAYS = 'lastModifiedDate:Last 7 days';
-const PRESETS: Preset = {
+export const PRESETS: Preset = {
   'rgb(63,152,134)': LIGHT,
   'rgb(100,190,225)': DARK,
   'rgb(25,195,151)': DARK,
@@ -34,7 +30,7 @@ const PRESETS: Preset = {
   'rgb(110,137,151)': LIGHT,
   'rgb(137,162,212)': DARK,
   'rgb(201,196,212)': DARK,
-};
+} as const;
 
 export default class Status {
   public id: string;
@@ -42,67 +38,18 @@ export default class Status {
   public label?: string;
   public color?: string;
   public backgroundColor?: string;
-  public facets?: FacetField[];
-  private appliedFacets: string[] = [];
-  public contentItems: ContentItemCollection;
   constructor({ id, label, color }: any = {}) {
     this.id = id;
-    this.contentItems = getContentItemsPlaceholder(id);
     const hasStatus = label;
     if (hasStatus) {
       this.hydrated = true;
       this.label = label;
       this.color = PRESETS[color] || getContrastType(color);
       this.backgroundColor = color;
-      this.facets = [];
-      this.addStatusFacetField(this.id);
-      this.appliedFacets = [];
     } else {
       this.color = DARK;
     }
   }
-
-  get hasDateLast7DaysFacet() {
-    return this.appliedFacets.includes(DATE_FACET_LAST_7_DAYS);
-  }
-
-  addStatusFacetField(id: string) {
-    const facet: EnumFacet = {
-      facetAs: 'ENUM',
-      field: 'workflow.state',
-      filter: { type: 'IN', values: [id] },
-      name: 'workflow.state',
-    };
-    this.appliedFacets.push(facet.name as string);
-    this.facets?.push(facet);
-  }
-
-  addDateFacetField() {
-    const facet: DateFacet = {
-      facetAs: 'DATE',
-      name: DATE_FACET_LAST_7_DAYS,
-      field: 'lastModifiedDate',
-      range: { start: 'NOW', end: '-7:DAYS' },
-      filter: { type: 'DATE', values: ['-7:DAYS,NOW'] },
-    };
-
-    this.appliedFacets.push(facet.name as string);
-    this.facets?.push(facet);
-  }
-}
-
-function getContentItemsPlaceholder(id: string) {
-  return {
-    items: [],
-    page: {
-      size: 20,
-      totalElements: 0,
-      totalPages: 0,
-      number: 0,
-      elementsInCurrentPage: 0,
-    },
-    statusId: id,
-  };
 }
 
 function getContrastType(rgb: string) {

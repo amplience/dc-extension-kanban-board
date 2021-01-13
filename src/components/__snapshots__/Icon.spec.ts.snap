@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon should render a Icon 1`] = `
+<div>
+  <div
+    class=" svelte-zpbvvv"
+    style="--icon-width: 24px; --icon-height: 24px;"
+  >
+    <svg>
+      <text>
+        svg text
+      </text>
+    </svg>
+  </div>
+</div>
+`;

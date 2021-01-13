@@ -1,0 +1,599 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AssigneeFilter should render the assignee filter 1`] = `
+<div>
+   
+  <section
+    class="svelte-6yrjka"
+  >
+    <div
+      class="assignee-filter svelte-6yrjka"
+    >
+      <span
+        class="svelte-6yrjka"
+      >
+        Assignee
+      </span>
+       
+      <div
+        class="assignee-names svelte-6yrjka"
+      >
+        <div
+          class=" clickable  svelte-h28tab"
+          data-testid="chip"
+        >
+          <span
+            class="label svelte-h28tab"
+          >
+            All
+          </span>
+           
+        </div>
+      </div>
+       
+      <div
+        class="filter-icon svelte-6yrjka"
+        data-testid="filter-icon"
+      >
+        <div
+          class=" svelte-zpbvvv"
+          style="--icon-width: 20px; --icon-height: 20px;"
+        >
+          <object
+            src="ic-filter.svg/"
+          />
+        </div>
+      </div>
+    </div>
+     
+  </section>
+</div>
+`;
+
+exports[`AssigneeFilter should render the assignee filter with selected assignees 1`] = `
+<div>
+   
+  <section
+    class="svelte-6yrjka"
+  >
+    <div
+      class="assignee-filter svelte-6yrjka"
+    >
+      <span
+        class="svelte-6yrjka"
+      >
+        Assignee
+      </span>
+       
+      <div
+        class="assignee-names svelte-6yrjka"
+      >
+        <div
+          class=" clickable removeable svelte-h28tab"
+          data-testid="chip"
+        >
+          <span
+            class="label svelte-h28tab"
+          >
+            TEST USER
+          </span>
+           
+          <span
+            class="cross svelte-h28tab"
+            data-testid="remove-chip-button"
+          >
+            <div
+              class=" svelte-zpbvvv"
+              style="--icon-width: 8px; --icon-height: 8px;"
+            >
+              <object
+                src="ic-delete.svg/"
+              />
+            </div>
+          </span>
+        </div>
+        <div
+          class=" clickable removeable svelte-h28tab"
+          data-testid="chip"
+        >
+          <span
+            class="label svelte-h28tab"
+          >
+            ANOTHER USER
+          </span>
+           
+          <span
+            class="cross svelte-h28tab"
+            data-testid="remove-chip-button"
+          >
+            <div
+              class=" svelte-zpbvvv"
+              style="--icon-width: 8px; --icon-height: 8px;"
+            >
+              <object
+                src="ic-delete.svg/"
+              />
+            </div>
+          </span>
+        </div>
+        
+      </div>
+       
+      <div
+        class="filter-icon svelte-6yrjka"
+        data-testid="filter-icon"
+      >
+        <div
+          class=" svelte-zpbvvv"
+          style="--icon-width: 20px; --icon-height: 20px;"
+        >
+          <object
+            src="ic-filter.svg/"
+          />
+        </div>
+      </div>
+    </div>
+     
+  </section>
+</div>
+`;
+
+exports[`AssigneeFilter should render the modal with a list of users 1`] = `
+<div>
+  <div
+    class="svelte-1k192f9"
+    data-testid="overlay"
+    style="z-index: 2"
+  />
+   
+  <section
+    class="svelte-6yrjka"
+  >
+    <div
+      class="assignee-filter svelte-6yrjka"
+    >
+      <span
+        class="svelte-6yrjka"
+      >
+        Assignee
+      </span>
+       
+      <div
+        class="assignee-names svelte-6yrjka"
+      >
+        <div
+          class=" clickable  svelte-h28tab"
+          data-testid="chip"
+        >
+          <span
+            class="label svelte-h28tab"
+          >
+            All
+          </span>
+           
+        </div>
+      </div>
+       
+      <div
+        class="filter-icon svelte-6yrjka"
+        data-testid="filter-icon"
+      >
+        <div
+          class=" svelte-zpbvvv"
+          style="--icon-width: 20px; --icon-height: 20px;"
+        >
+          <object
+            src="ic-filter.svg/"
+          />
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="modal-popup svelte-6yrjka"
+      style="top: NaNpx;left: undefinedpx"
+    >
+      <h3
+        class="svelte-6yrjka"
+      >
+        Assignee
+      </h3>
+       
+      <ul
+        class="
+      mdc-list
+      
+      
+      
+      
+      
+      
+    "
+        role="group"
+      >
+        <li
+          aria-checked="false"
+          aria-disabled="false"
+          class="
+    mdc-list-item
+    
+    
+    
+    
+    
+  "
+          role="checkbox"
+          tabindex="-1"
+        >
+          <span
+            class="mdc-list-item__graphic "
+          >
+            <div
+              class="mdc-checkbox mdc-checkbox--upgraded"
+            >
+              <input
+                class="mdc-checkbox__native-control "
+                id="SMUI-form-field-list-0"
+                tabindex="-1"
+                type="checkbox"
+                value="ID_1"
+              />
+               
+              <div
+                class="mdc-checkbox__background"
+              >
+                <svg
+                  class="mdc-checkbox__checkmark"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    class="mdc-checkbox__checkmark-path"
+                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                    fill="none"
+                  />
+                </svg>
+                 
+                <div
+                  class="mdc-checkbox__mixedmark"
+                />
+              </div>
+               
+              <div
+                class="mdc-checkbox__ripple"
+              />
+            </div>
+          </span>
+          
+           
+          <label
+            class="mdc-list-item__text "
+            for="SMUI-form-field-list-0"
+          >
+            TEST
+             
+            USER
+          </label>
+           
+        </li>
+        
+        <li
+          aria-checked="false"
+          aria-disabled="false"
+          class="
+    mdc-list-item
+    
+    
+    
+    
+    
+  "
+          role="checkbox"
+          tabindex="-1"
+        >
+          <span
+            class="mdc-list-item__graphic "
+          >
+            <div
+              class="mdc-checkbox mdc-checkbox--upgraded"
+            >
+              <input
+                class="mdc-checkbox__native-control "
+                id="SMUI-form-field-list-1"
+                tabindex="-1"
+                type="checkbox"
+                value="ID_2"
+              />
+               
+              <div
+                class="mdc-checkbox__background"
+              >
+                <svg
+                  class="mdc-checkbox__checkmark"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    class="mdc-checkbox__checkmark-path"
+                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                    fill="none"
+                  />
+                </svg>
+                 
+                <div
+                  class="mdc-checkbox__mixedmark"
+                />
+              </div>
+               
+              <div
+                class="mdc-checkbox__ripple"
+              />
+            </div>
+          </span>
+          
+           
+          <label
+            class="mdc-list-item__text "
+            for="SMUI-form-field-list-1"
+          >
+            ANOTHER
+             
+            USER
+          </label>
+           
+        </li>
+        
+        
+      </ul>
+      
+    </div>
+  </section>
+</div>
+`;
+
+exports[`AssigneeFilter should render the modal with a list of users with checkboxes ticked 1`] = `
+<div>
+  <div
+    class="svelte-1k192f9"
+    data-testid="overlay"
+    style="z-index: 2"
+  />
+   
+  <section
+    class="svelte-6yrjka"
+  >
+    <div
+      class="assignee-filter svelte-6yrjka"
+    >
+      <span
+        class="svelte-6yrjka"
+      >
+        Assignee
+      </span>
+       
+      <div
+        class="assignee-names svelte-6yrjka"
+      >
+        <div
+          class=" clickable removeable svelte-h28tab"
+          data-testid="chip"
+        >
+          <span
+            class="label svelte-h28tab"
+          >
+            TEST USER
+          </span>
+           
+          <span
+            class="cross svelte-h28tab"
+            data-testid="remove-chip-button"
+          >
+            <div
+              class=" svelte-zpbvvv"
+              style="--icon-width: 8px; --icon-height: 8px;"
+            >
+              <object
+                src="ic-delete.svg/"
+              />
+            </div>
+          </span>
+        </div>
+        <div
+          class=" clickable removeable svelte-h28tab"
+          data-testid="chip"
+        >
+          <span
+            class="label svelte-h28tab"
+          >
+            ANOTHER USER
+          </span>
+           
+          <span
+            class="cross svelte-h28tab"
+            data-testid="remove-chip-button"
+          >
+            <div
+              class=" svelte-zpbvvv"
+              style="--icon-width: 8px; --icon-height: 8px;"
+            >
+              <object
+                src="ic-delete.svg/"
+              />
+            </div>
+          </span>
+        </div>
+        
+      </div>
+       
+      <div
+        class="filter-icon svelte-6yrjka"
+        data-testid="filter-icon"
+      >
+        <div
+          class=" svelte-zpbvvv"
+          style="--icon-width: 20px; --icon-height: 20px;"
+        >
+          <object
+            src="ic-filter.svg/"
+          />
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="modal-popup svelte-6yrjka"
+      style="top: NaNpx;left: undefinedpx"
+    >
+      <h3
+        class="svelte-6yrjka"
+      >
+        Assignee
+      </h3>
+       
+      <ul
+        class="
+      mdc-list
+      
+      
+      
+      
+      
+      
+    "
+        role="group"
+      >
+        <li
+          aria-checked="true"
+          aria-disabled="false"
+          class="
+    mdc-list-item
+    
+    
+    
+    
+    
+  "
+          role="checkbox"
+          tabindex="0"
+        >
+          <span
+            class="mdc-list-item__graphic "
+          >
+            <div
+              class="mdc-checkbox mdc-checkbox--upgraded"
+            >
+              <input
+                class="mdc-checkbox__native-control "
+                id="SMUI-form-field-list-2"
+                tabindex="-1"
+                type="checkbox"
+                value="ID_1"
+              />
+               
+              <div
+                class="mdc-checkbox__background"
+              >
+                <svg
+                  class="mdc-checkbox__checkmark"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    class="mdc-checkbox__checkmark-path"
+                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                    fill="none"
+                  />
+                </svg>
+                 
+                <div
+                  class="mdc-checkbox__mixedmark"
+                />
+              </div>
+               
+              <div
+                class="mdc-checkbox__ripple"
+              />
+            </div>
+          </span>
+          
+           
+          <label
+            class="mdc-list-item__text "
+            for="SMUI-form-field-list-2"
+          >
+            TEST
+             
+            USER
+          </label>
+           
+        </li>
+        
+        <li
+          aria-checked="true"
+          aria-disabled="false"
+          class="
+    mdc-list-item
+    
+    
+    
+    
+    
+  "
+          role="checkbox"
+          tabindex="0"
+        >
+          <span
+            class="mdc-list-item__graphic "
+          >
+            <div
+              class="mdc-checkbox mdc-checkbox--upgraded"
+            >
+              <input
+                class="mdc-checkbox__native-control "
+                id="SMUI-form-field-list-3"
+                tabindex="-1"
+                type="checkbox"
+                value="ID_2"
+              />
+               
+              <div
+                class="mdc-checkbox__background"
+              >
+                <svg
+                  class="mdc-checkbox__checkmark"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    class="mdc-checkbox__checkmark-path"
+                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                    fill="none"
+                  />
+                </svg>
+                 
+                <div
+                  class="mdc-checkbox__mixedmark"
+                />
+              </div>
+               
+              <div
+                class="mdc-checkbox__ripple"
+              />
+            </div>
+          </span>
+          
+           
+          <label
+            class="mdc-list-item__text "
+            for="SMUI-form-field-list-3"
+          >
+            ANOTHER
+             
+            USER
+          </label>
+           
+        </li>
+        
+        
+      </ul>
+      
+    </div>
+  </section>
+</div>
+`;

@@ -3,10 +3,10 @@
 exports[`error component should render an error component with default value 1`] = `
 <div>
   <div
-    class="error svelte-bb2wmt"
+    class="error svelte-q74y49"
   >
     <div
-      class="message svelte-bb2wmt"
+      class="message svelte-q74y49"
     >
       
     </div>
@@ -17,10 +17,10 @@ exports[`error component should render an error component with default value 1`]
 exports[`error component should render an error component with value 1`] = `
 <div>
   <div
-    class="error svelte-bb2wmt"
+    class="error svelte-q74y49"
   >
     <div
-      class="message svelte-bb2wmt"
+      class="message svelte-q74y49"
     >
       REASON
     </div>

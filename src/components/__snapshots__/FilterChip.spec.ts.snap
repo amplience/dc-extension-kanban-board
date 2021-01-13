@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterChip should render a Chip 1`] = `
+<div>
+  <div
+    class="   svelte-h28tab"
+    data-testid="chip"
+  >
+    <span
+      class="label svelte-h28tab"
+    >
+      test-label
+    </span>
+     
+  </div>
+</div>
+`;
+
+exports[`FilterChip should render a clickable Chip 1`] = `
+<div>
+  <div
+    class=" clickable  svelte-h28tab"
+    data-testid="chip"
+  >
+    <span
+      class="label svelte-h28tab"
+    >
+      test-label
+    </span>
+     
+  </div>
+</div>
+`;
+
+exports[`FilterChip should render an active Chip 1`] = `
+<div>
+  <div
+    class="active   svelte-h28tab"
+    data-testid="chip"
+  >
+    <span
+      class="label svelte-h28tab"
+    >
+      test-label
+    </span>
+     
+  </div>
+</div>
+`;
+
+exports[`FilterChip should render an clickable active Chip 1`] = `
+<div>
+  <div
+    class="active clickable  svelte-h28tab"
+    data-testid="chip"
+  >
+    <span
+      class="label svelte-h28tab"
+    >
+      test-label
+    </span>
+     
+  </div>
+</div>
+`;

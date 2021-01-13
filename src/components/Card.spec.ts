@@ -2,18 +2,22 @@ import { render, fireEvent } from '@testing-library/svelte';
 import { screen } from '@testing-library/dom';
 import Card from './Card.svelte';
 import { formatDate } from '../utils';
+import { extensionClient } from '../services/stores/extensionClient';
+import type { DcExtensionClient } from '../services/dc-extension-client';
+import { get } from 'svelte/store';
 
 jest.mock('../utils');
 describe('card component', () => {
   it('should render a card component', () => {
     (formatDate as jest.Mock).mockImplementation(() => '01/01/2020 12:00 AM');
-    const client = {
+
+    extensionClient.set(({
       dashboardSdk: {
         applicationNavigator: {
           openContentItem: jest.fn(),
         },
       },
-    };
+    } as unknown) as DcExtensionClient);
 
     const { container } = render(Card, {
       contentItem: {
@@ -21,7 +25,6 @@ describe('card component', () => {
         schema: 'schema',
         lastModifiedDate: '2020-01-01T00:00:59Z',
       },
-      client: client,
       contentTypeLookup: {
         schema: {
           settings: {
@@ -34,20 +37,19 @@ describe('card component', () => {
   });
 
   it('should call open content item function on load and double click', async () => {
-    const client = {
+    extensionClient.set(({
       dashboardSdk: {
         applicationNavigator: {
           openContentItem: jest.fn(),
         },
       },
-    };
+    } as unknown) as DcExtensionClient);
     render(Card, {
       contentItem: {
         label: 'LABEL',
         schema: 'schema',
         lastModifiedDate: '2020-01-01T00:00:59Z',
       },
-      client: client,
       contentTypeLookup: {
         schema: {
           settings: {
@@ -64,8 +66,10 @@ describe('card component', () => {
         cancelable: true,
       })
     );
-    expect(client.dashboardSdk.applicationNavigator.openContentItem.mock.calls)
-      .toMatchInlineSnapshot(`
+    expect(
+      (get(extensionClient).dashboardSdk.applicationNavigator
+        .openContentItem as jest.Mock).mock.calls
+    ).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
