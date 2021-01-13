@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`card component should render a card component 1`] = `
+<div>
+  <section
+    class="card svelte-1rse9oa"
+    data-testid="card"
+  >
+    <a
+      class="svelte-1rse9oa"
+      target="_top"
+    >
+      <h1
+        class="title svelte-1rse9oa"
+      >
+        LABEL
+      </h1>
+    </a>
+     
+    <div
+      class="svelte-1rse9oa"
+    >
+      <span
+        class="subtitle svelte-1rse9oa"
+      >
+        SCHEMA LABEL
+      </span>
+       
+      <div
+        class="assignee svelte-1rse9oa"
+      />
+       
+      <footer
+        class="footer svelte-1rse9oa"
+      >
+        Last changed
+      
+        01/01/2020 12:00 AM
+      </footer>
+    </div>
+  </section>
+</div>
+`;

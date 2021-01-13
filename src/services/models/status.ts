@@ -8,7 +8,7 @@ interface Preset {
   [key: string]: string;
 }
 
-const DATE_FACET_LAST_7_DAYS: string = 'lastModifiedDate:Last 7 days';
+const DATE_FACET_LAST_7_DAYS = 'lastModifiedDate:Last 7 days';
 export const PRESETS: Preset = {
   'rgb(63,152,134)': LIGHT,
   'rgb(100,190,225)': DARK,
@@ -38,7 +38,7 @@ export const PRESETS: Preset = {
 
 export default class Status {
   public id: string;
-  public hydrated: boolean = false;
+  public hydrated = false;
   public label?: string;
   public color?: string;
   public backgroundColor?: string;

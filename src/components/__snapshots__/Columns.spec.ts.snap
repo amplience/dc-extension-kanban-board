@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`columns component should render a columns component 1`] = `
+<div
+  id="dnd-zone-drag-disabled"
+  style="display: none; position: fixed; z-index: -5;"
+>
+  <p>
+    This is a disabled drag and drop list
+  </p>
+</div>
+`;

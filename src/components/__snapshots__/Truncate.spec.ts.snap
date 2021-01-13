@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`truncate component should render a truncate component with default value 1`] = `
+<div>
+  <div
+    class="truncate svelte-atm87y"
+    title=""
+  >
+    
+  </div>
+</div>
+`;
+
+exports[`truncate component should render a truncate component with value 1`] = `
+<div>
+  <div
+    class="truncate svelte-atm87y"
+    title="TEXT"
+  >
+    TEXT
+  </div>
+</div>
+`;

@@ -38,9 +38,7 @@
   let droppedItem: FacetedContentItem;
 
   function handleConsider(statusId: string, e: CustomEvent<DndEvent>) {
-    const statusIndex = statuses.findIndex(
-      (status) => status.id == statusId
-      );
+    const statusIndex = statuses.findIndex((status) => status.id == statusId);
     if (e.detail.info.trigger === TRIGGERS.DRAG_STARTED) {
       (e.target as HTMLDivElement).style.borderColor = 'transparent';
       originalDropTarget = e.target as HTMLDivElement;
@@ -56,7 +54,8 @@
     } else {
       (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
     }
-    statuses[statusIndex].contentItems.items = e.detail.items as FacetedContentItem[];
+    statuses[statusIndex].contentItems.items = e.detail
+      .items as FacetedContentItem[];
   }
   async function handleFinalize(statusId: string, e: CustomEvent<DndEvent>) {
     const listItems = e.detail.items;
@@ -71,14 +70,18 @@
       }
     ) as FacetedContentItem[];
     if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ZONE) {
-      droppedItem = listItems.filter((item) => item.id === e.detail.info.id)[0] as FacetedContentItem;
+      droppedItem = listItems.filter(
+        (item) => item.id === e.detail.info.id
+      )[0] as FacetedContentItem;
       (e.target as HTMLDivElement).style.backgroundColor = 'transparent';
       toStatusId = statusId;
     } else if (e.detail.info.trigger === TRIGGERS.DROPPED_INTO_ANOTHER) {
       const toStatusIndex = statuses.findIndex(
         (status: any) => status.id == toStatusId
       );
-      const response: ContentItem = await droppedItem.related.assignWorkflowState(new WorkflowState({id: toStatusId}));
+      const response: ContentItem = await droppedItem.related.assignWorkflowState(
+        new WorkflowState({ id: toStatusId })
+      );
       droppedItem['lastModifiedDate'] = response['lastModifiedDate'];
 
       statuses[toStatusIndex].contentItems.items = statuses[
@@ -107,11 +110,16 @@
   onMount(async () => {
     try {
       client = await initDcExtensionClient();
-      [contentItemsPath, statuses, contentTypeLookup, userList] = await Promise.all([
+      [
+        contentItemsPath,
+        statuses,
+        contentTypeLookup,
+        userList,
+      ] = await Promise.all([
         contentRepositories.getContentItemPath(client),
         workflowStates.fetchAndHydrateWithContentItems(client),
         contentTypes.fetchAll(client),
-        users.fetchAll(client)
+        users.fetchAll(client),
       ]);
 
       contentItemsCount = workflowStates.getContentItemsCount(statuses);
@@ -140,18 +148,20 @@
     font-weight: 400;
   }
 </style>
-  {#if loading}
-    <Loader />
-  {:else if error}
-    <Error reason="An error occurred while loading. Please check your dashboard extension is set up correctly." />
-  {:else}
-    <Header {contentItemsCount} {contentItemsPath} />
-    <Toolbar />
-    <Columns
-      {statuses}
-      {handleConsider}
-      {handleFinalize}
-      {contentTypeLookup}
-      {client}
-      users={userList} />
-  {/if}
+
+{#if loading}
+  <Loader />
+{:else if error}
+  <Error
+    reason="An error occurred while loading. Please check your dashboard extension is set up correctly." />
+{:else}
+  <Header {contentItemsCount} {contentItemsPath} />
+  <Toolbar />
+  <Columns
+    {statuses}
+    {handleConsider}
+    {handleFinalize}
+    {contentTypeLookup}
+    {client}
+    users={userList} />
+{/if}

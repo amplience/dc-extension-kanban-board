@@ -29,9 +29,7 @@ export class DcExtensionClient {
   public dashboardSdk!: DashboardExtension<DashboardInstallationParams>;
 
   async init(options: Partial<InitOptions>): Promise<void> {
-    this.dashboardSdk = await init(
-      options
-    );
+    this.dashboardSdk = await init(options);
     this.dcClient = new DynamicContent({}, {}, this.dashboardSdk.client);
 
     const {

@@ -9,14 +9,12 @@
   import Count from './Count.svelte';
   import Error from './Error.svelte';
 
-
   export let handleConsider: any;
   export let handleFinalize: any;
   export let client: DcExtensionClient;
   export let statuses: Status[] = [];
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
   export let users: User[] = [];
-
 </script>
 
 <style lang="scss">

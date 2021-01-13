@@ -1,20 +1,23 @@
 <script>
-  import type { DcExtensionClient } from "src/services/dc-extension-client";
+  import type { DcExtensionClient } from 'src/services/dc-extension-client';
   import type { FacetedContentItem } from 'dc-management-sdk-js';
-  import type { ContentTypeLookup } from "src/services/data/content-types";
-  import { formatDate } from "../utils";
-  import type { User } from "dc-extensions-sdk/dist/types/lib/components/Users";
-  import Assignees from "./Assignees.svelte";
+  import type { ContentTypeLookup } from 'src/services/data/content-types';
+  import { formatDate } from '../utils';
+  import type { User } from 'dc-extensions-sdk/dist/types/lib/components/Users';
+  import Assignees from './Assignees.svelte';
 
   export let client: DcExtensionClient;
   export let contentItem: FacetedContentItem;
   export let contentTypeLookup: ContentTypeLookup = Object.create(null);
   export let users: User[] = [];
 
-  let target: string|undefined = '';
+  let target: string | undefined = '';
 
   if (client) {
-    target = client.dashboardSdk.applicationNavigator.openContentItem(contentItem, {returnHref: true});
+    target = client.dashboardSdk.applicationNavigator.openContentItem(
+      contentItem,
+      { returnHref: true }
+    );
   }
 
   function getAssignedUsers(): User[] {
@@ -22,7 +25,7 @@
       return [];
     }
 
-    return users.filter(user => contentItem?.assignees.includes(user.id))
+    return users.filter((user) => contentItem?.assignees.includes(user.id));
   }
 </script>
 
@@ -67,6 +70,7 @@
 
 <section
   class="card"
+  data-testid="card"
   on:dblclick={() => {
     client.dashboardSdk.applicationNavigator.openContentItem(contentItem);
   }}>
@@ -74,8 +78,12 @@
     <h1 class="title">{contentItem.label}</h1>
   </a>
   <div>
-    <span class="subtitle">{contentTypeLookup[contentItem.schema]?.settings?.label}</span>
+    <span
+      class="subtitle">{contentTypeLookup[contentItem.schema]?.settings?.label}</span>
     <Assignees users={getAssignedUsers()} />
-    <footer class="footer">Last changed {formatDate(contentItem.lastModifiedDate)}</footer>
+    <footer class="footer">
+      Last changed
+      {formatDate(contentItem.lastModifiedDate)}
+    </footer>
   </div>
 </section>

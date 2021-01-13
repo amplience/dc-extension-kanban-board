@@ -1,4 +1,4 @@
-export function isObject(value: any): boolean {
+export function isObject(value: unknown): boolean {
   return value !== null && typeof value === 'object';
 }
 
@@ -11,7 +11,7 @@ export function toDcQueryStr(
   query: Record<string, string | undefined>
 ): string {
   let queryStr = '';
-  for (let key in query) {
+  for (const key in query) {
     if (query[key]) {
       queryStr += `${key}:"${query[key]}"`;
     }
