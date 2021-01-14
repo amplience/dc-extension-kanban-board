@@ -3,36 +3,44 @@
 exports[`card component should render a card component 1`] = `
 <div>
   <section
-    class="card svelte-aw75r8"
+    class="card svelte-1mso38a"
     data-testid="card"
   >
-    <a
-      class="svelte-aw75r8"
-      target="_top"
-    >
-      <h1
-        class="title svelte-aw75r8"
-      >
-        LABEL
-      </h1>
-    </a>
-     
     <div
-      class="svelte-aw75r8"
+      class="svelte-1mso38a"
     >
-      <span
-        class="subtitle svelte-aw75r8"
-      >
-        SCHEMA LABEL
-      </span>
-       
       <div
-        class="assignees svelte-1ilxe5k"
-        title=""
-      />
+        class="header svelte-1mso38a"
+      >
+        <div
+          class="titles svelte-1mso38a"
+        >
+          <a
+            class="svelte-1mso38a"
+            target="_top"
+          >
+            <h1
+              class="title svelte-1mso38a"
+            >
+              LABEL
+            </h1>
+          </a>
+           
+          <span
+            class="subtitle svelte-1mso38a"
+          >
+            SCHEMA LABEL
+          </span>
+        </div>
+         
+        <div
+          class="assignees svelte-1ilxe5k"
+          title=""
+        />
+      </div>
        
       <footer
-        class="footer svelte-aw75r8"
+        class="footer svelte-1mso38a"
       >
         Last changed
       
