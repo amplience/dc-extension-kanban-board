@@ -58,6 +58,16 @@
     .subtitle {
       overflow-wrap: break-word;
     }
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .title {
+      display: flex;
+      flex-direction: column;
+    }
     .subtitle,
     .footer {
       font-size: 0.9em;
@@ -73,13 +83,17 @@
   on:dblclick={() => {
     $extensionClient.dashboardSdk.applicationNavigator.openContentItem(contentItem);
   }}>
-  <a href={target} target="_top">
-    <h1 class="title">{contentItem.label}</h1>
-  </a>
   <div>
-    <span
-      class="subtitle">{contentTypeLookup[contentItem.schema]?.settings?.label}</span>
-    <Assignees users={getAssignedUsers()} />
+    <div class="header">
+      <div class="titles">
+        <a href={target} target="_top">
+          <h1 class="title">{contentItem.label}</h1>
+        </a>
+        <span
+          class="subtitle">{contentTypeLookup[contentItem.schema]?.settings?.label}</span>
+      </div>
+      <Assignees users={getAssignedUsers()} />
+    </div>
     <footer class="footer">
       Last changed
       {formatDate(contentItem.lastModifiedDate)}
