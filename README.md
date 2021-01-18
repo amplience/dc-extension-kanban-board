@@ -16,7 +16,7 @@ The dashboard requires a specific configuration and the following example settin
 
 You can use our deployed version of this extension (builds from the "production" branch) -
 
-[https://dc-extension-kanban-board.amplience.net](https://dc-extension-kanban-board.amplience.net)
+[https://kanban-board.extensions.content.amplience.net](https://kanban-board.extensions.content.amplience.net)
 
 _As this is an open source project you're welcome to host your own "fork" of this project. You can use any standard static hosting service (Netlify, Amplify, Vercel, etc.) if you wish._
 
