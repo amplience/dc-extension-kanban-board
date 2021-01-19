@@ -4,19 +4,33 @@ exports[`AssigneeFilter should render the assignee filter 1`] = `
 <div>
    
   <section
-    class="svelte-6yrjka"
+    class="svelte-1ggh271"
   >
     <div
-      class="assignee-filter svelte-6yrjka"
+      class="assignee-filter svelte-1ggh271"
     >
+      <div
+        class="filter-icon  svelte-1ggh271"
+        data-testid="filter-icon"
+      >
+        <div
+          class=" svelte-zpbvvv"
+          style="--icon-width: 20px; --icon-height: 20px;"
+        >
+          <object
+            src="ic-filter.svg/"
+          />
+        </div>
+      </div>
+       
       <span
-        class="svelte-6yrjka"
+        class="svelte-1ggh271"
       >
         Assignee
       </span>
        
       <div
-        class="assignee-names svelte-6yrjka"
+        class="assignee-names svelte-1ggh271"
       >
         <div
           class=" clickable  svelte-h28tab"
@@ -30,9 +44,23 @@ exports[`AssigneeFilter should render the assignee filter 1`] = `
            
         </div>
       </div>
-       
+    </div>
+     
+  </section>
+</div>
+`;
+
+exports[`AssigneeFilter should render the assignee filter with selected assignees 1`] = `
+<div>
+   
+  <section
+    class="svelte-1ggh271"
+  >
+    <div
+      class="assignee-filter svelte-1ggh271"
+    >
       <div
-        class="filter-icon svelte-6yrjka"
+        class="filter-icon has-assignees svelte-1ggh271"
         data-testid="filter-icon"
       >
         <div
@@ -44,29 +72,15 @@ exports[`AssigneeFilter should render the assignee filter 1`] = `
           />
         </div>
       </div>
-    </div>
-     
-  </section>
-</div>
-`;
-
-exports[`AssigneeFilter should render the assignee filter with selected assignees 1`] = `
-<div>
-   
-  <section
-    class="svelte-6yrjka"
-  >
-    <div
-      class="assignee-filter svelte-6yrjka"
-    >
+       
       <span
-        class="svelte-6yrjka"
+        class="svelte-1ggh271"
       >
         Assignee
       </span>
        
       <div
-        class="assignee-names svelte-6yrjka"
+        class="assignee-names svelte-1ggh271"
       >
         <div
           class=" clickable removeable svelte-h28tab"
@@ -118,20 +132,6 @@ exports[`AssigneeFilter should render the assignee filter with selected assignee
         </div>
         
       </div>
-       
-      <div
-        class="filter-icon svelte-6yrjka"
-        data-testid="filter-icon"
-      >
-        <div
-          class=" svelte-zpbvvv"
-          style="--icon-width: 20px; --icon-height: 20px;"
-        >
-          <object
-            src="ic-filter.svg/"
-          />
-        </div>
-      </div>
     </div>
      
   </section>
@@ -147,19 +147,33 @@ exports[`AssigneeFilter should render the modal with a list of users 1`] = `
   />
    
   <section
-    class="svelte-6yrjka"
+    class="svelte-1ggh271"
   >
     <div
-      class="assignee-filter svelte-6yrjka"
+      class="assignee-filter svelte-1ggh271"
     >
+      <div
+        class="filter-icon  svelte-1ggh271"
+        data-testid="filter-icon"
+      >
+        <div
+          class=" svelte-zpbvvv"
+          style="--icon-width: 20px; --icon-height: 20px;"
+        >
+          <object
+            src="ic-filter.svg/"
+          />
+        </div>
+      </div>
+       
       <span
-        class="svelte-6yrjka"
+        class="svelte-1ggh271"
       >
         Assignee
       </span>
        
       <div
-        class="assignee-names svelte-6yrjka"
+        class="assignee-names svelte-1ggh271"
       >
         <div
           class=" clickable  svelte-h28tab"
@@ -173,28 +187,14 @@ exports[`AssigneeFilter should render the modal with a list of users 1`] = `
            
         </div>
       </div>
-       
-      <div
-        class="filter-icon svelte-6yrjka"
-        data-testid="filter-icon"
-      >
-        <div
-          class=" svelte-zpbvvv"
-          style="--icon-width: 20px; --icon-height: 20px;"
-        >
-          <object
-            src="ic-filter.svg/"
-          />
-        </div>
-      </div>
     </div>
      
     <div
-      class="modal-popup svelte-6yrjka"
+      class="modal-popup svelte-1ggh271"
       style="top: NaNpx;left: undefinedpx"
     >
       <h3
-        class="svelte-6yrjka"
+        class="svelte-1ggh271"
       >
         Assignee
       </h3>
@@ -358,19 +358,33 @@ exports[`AssigneeFilter should render the modal with a list of users with checkb
   />
    
   <section
-    class="svelte-6yrjka"
+    class="svelte-1ggh271"
   >
     <div
-      class="assignee-filter svelte-6yrjka"
+      class="assignee-filter svelte-1ggh271"
     >
+      <div
+        class="filter-icon has-assignees svelte-1ggh271"
+        data-testid="filter-icon"
+      >
+        <div
+          class=" svelte-zpbvvv"
+          style="--icon-width: 20px; --icon-height: 20px;"
+        >
+          <object
+            src="ic-filter.svg/"
+          />
+        </div>
+      </div>
+       
       <span
-        class="svelte-6yrjka"
+        class="svelte-1ggh271"
       >
         Assignee
       </span>
        
       <div
-        class="assignee-names svelte-6yrjka"
+        class="assignee-names svelte-1ggh271"
       >
         <div
           class=" clickable removeable svelte-h28tab"
@@ -422,28 +436,14 @@ exports[`AssigneeFilter should render the modal with a list of users with checkb
         </div>
         
       </div>
-       
-      <div
-        class="filter-icon svelte-6yrjka"
-        data-testid="filter-icon"
-      >
-        <div
-          class=" svelte-zpbvvv"
-          style="--icon-width: 20px; --icon-height: 20px;"
-        >
-          <object
-            src="ic-filter.svg/"
-          />
-        </div>
-      </div>
     </div>
      
     <div
-      class="modal-popup svelte-6yrjka"
+      class="modal-popup svelte-1ggh271"
       style="top: NaNpx;left: undefinedpx"
     >
       <h3
-        class="svelte-6yrjka"
+        class="svelte-1ggh271"
       >
         Assignee
       </h3>
