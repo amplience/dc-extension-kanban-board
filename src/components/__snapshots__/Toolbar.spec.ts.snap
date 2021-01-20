@@ -24,19 +24,33 @@ exports[`toolbar component should render a toolbar component 1`] = `
        
        
       <section
-        class="svelte-6yrjka"
+        class="svelte-1ggh271"
       >
         <div
-          class="assignee-filter svelte-6yrjka"
+          class="assignee-filter svelte-1ggh271"
         >
+          <div
+            class="filter-icon  svelte-1ggh271"
+            data-testid="filter-icon"
+          >
+            <div
+              class=" svelte-zpbvvv"
+              style="--icon-width: 20px; --icon-height: 20px;"
+            >
+              <object
+                src="ic-filter.svg/"
+              />
+            </div>
+          </div>
+           
           <span
-            class="svelte-6yrjka"
+            class="svelte-1ggh271"
           >
             Assignee
           </span>
            
           <div
-            class="assignee-names svelte-6yrjka"
+            class="assignee-names svelte-1ggh271"
           >
             <div
               class=" clickable  svelte-h28tab"
@@ -48,20 +62,6 @@ exports[`toolbar component should render a toolbar component 1`] = `
                 All
               </span>
                
-            </div>
-          </div>
-           
-          <div
-            class="filter-icon svelte-6yrjka"
-            data-testid="filter-icon"
-          >
-            <div
-              class=" svelte-zpbvvv"
-              style="--icon-width: 20px; --icon-height: 20px;"
-            >
-              <object
-                src="ic-filter.svg/"
-              />
             </div>
           </div>
         </div>

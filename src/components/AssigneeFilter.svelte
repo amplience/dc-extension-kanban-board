@@ -80,6 +80,10 @@
     flex-direction: row;
   }
 
+  .filter-icon.has-assignees :global(svg path) {
+    fill: #039be5;
+  }
+
   .modal-popup {
     padding: 10px 16px;
     background-color: #fff;
@@ -119,6 +123,12 @@
 {/if}
 <section bind:this={sectionElement}>
   <div class="assignee-filter">
+    <div
+      class="filter-icon {assignees.length ? 'has-assignees' : ''}"
+      data-testid="filter-icon"
+      on:click={showModal}>
+      <Icon icon={FilterIcon} width="20px" height="20px" />
+    </div>
     <span on:click={showModal}>Assignee</span>
     <div class="assignee-names">
       {#if assignees.length < 1}
@@ -133,9 +143,6 @@
             clickable={true} />
         {/each}
       {/if}
-    </div>
-    <div class="filter-icon" data-testid="filter-icon" on:click={showModal}>
-      <Icon icon={FilterIcon} width="20px" height="20px" />
     </div>
   </div>
   {#if isModalVisible}
