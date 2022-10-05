@@ -16,7 +16,7 @@
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
-    "dc-extensions-sdk": "^2.0.0",
+    "dc-extensions-sdk": "^2.2.0",
     "dc-management-sdk-js": "^1.9.0",
     "md5": "^2.3.0",
     "sirv-cli": "^1.0.6"
