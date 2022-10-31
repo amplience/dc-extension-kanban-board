@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/amplience/dc-extension-kanban-board/compare/v1.0.0...v1.1.0) (2022-10-26)
+
+
+### Features
+
+* fetch users Updated dc-extensions-sdk version ([8bf5f13](https://www.github.com/amplience/dc-extension-kanban-board/commit/8bf5f13f42787395faee37edbba1629f65561e12))
+* Updated package.lock ([5c925cb](https://www.github.com/amplience/dc-extension-kanban-board/commit/5c925cb242133048d290a8e0e0570c63fa683166))
+
 ## 1.0.0 (2021-02-15)
 
 
