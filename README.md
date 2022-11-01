@@ -94,3 +94,4 @@ Same as `npm start` (runs the app in development mode).
 Opens https://localhost:8080 to view it in the browser.
 
 To run the mode you will need to [generate a ssl certificate (snowpack.key and snowpack.crt)](https://www.snowpack.dev/#https%2Fhttp2)
+
