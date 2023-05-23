@@ -3,42 +3,42 @@
 exports[`header component should render a header component with default values 1`] = `
 <div>
   <header
-    class="svelte-1ahabjb"
+    class="svelte-1pkjfof"
   >
     <div
-      class="info svelte-1ahabjb"
+      class="info svelte-1pkjfof"
     >
       <div
         class="info__count"
       >
         <span
-          class="value svelte-1ahabjb"
+          class="value svelte-1pkjfof"
         >
           0
         </span>
          
         <span
-          class="label svelte-1ahabjb"
+          class="label svelte-1pkjfof"
         >
           content items
         </span>
       </div>
        
       <div
-        class="divider vertical svelte-1rcmn0v"
+        class="divider vertical svelte-mi6et7"
       />
        
       <div
-        class=" repo-folder-wrap svelte-1ahabjb"
+        class="repo-folder-wrap svelte-1pkjfof"
       >
         <span
-          class="label repo-folder svelte-1ahabjb"
+          class="label repo-folder svelte-1pkjfof"
         >
           Repo / folder
         </span>
          
         <span
-          class="value path svelte-1ahabjb"
+          class="value path svelte-1pkjfof"
           title="all"
         >
           all
@@ -47,7 +47,7 @@ exports[`header component should render a header component with default values 1
     </div>
      
     <div
-      class="divider horizontal svelte-1rcmn0v"
+      class="divider horizontal svelte-mi6et7"
     />
   </header>
 </div>
@@ -56,42 +56,42 @@ exports[`header component should render a header component with default values 1
 exports[`header component should render a header component with values 1`] = `
 <div>
   <header
-    class="svelte-1ahabjb"
+    class="svelte-1pkjfof"
   >
     <div
-      class="info svelte-1ahabjb"
+      class="info svelte-1pkjfof"
     >
       <div
         class="info__count"
       >
         <span
-          class="value svelte-1ahabjb"
+          class="value svelte-1pkjfof"
         >
           0
         </span>
          
         <span
-          class="label svelte-1ahabjb"
+          class="label svelte-1pkjfof"
         >
           content items
         </span>
       </div>
        
       <div
-        class="divider vertical svelte-1rcmn0v"
+        class="divider vertical svelte-mi6et7"
       />
        
       <div
-        class=" repo-folder-wrap svelte-1ahabjb"
+        class="repo-folder-wrap svelte-1pkjfof"
       >
         <span
-          class="label repo-folder svelte-1ahabjb"
+          class="label repo-folder svelte-1pkjfof"
         >
           Repo / folder
         </span>
          
         <span
-          class="value path svelte-1ahabjb"
+          class="value path svelte-1pkjfof"
           title="CONTENT_ITEMS_PATH"
         >
           CONTENT_ITEMS_PATH
@@ -100,7 +100,7 @@ exports[`header component should render a header component with values 1`] = `
     </div>
      
     <div
-      class="divider horizontal svelte-1rcmn0v"
+      class="divider horizontal svelte-mi6et7"
     />
   </header>
 </div>

@@ -3,16 +3,16 @@
 exports[`toolbar component should render a toolbar component 1`] = `
 <div>
   <div
-    class="toolbar svelte-d3be3"
+    class="toolbar svelte-1xjh5u3"
   >
     <div
-      class="inner svelte-d3be3"
+      class="inner svelte-1xjh5u3"
     >
       <div
-        class="sortInfo svelte-d3be3"
+        class="sortInfo svelte-1xjh5u3"
       >
         <span
-          class="label svelte-d3be3"
+          class="label svelte-1xjh5u3"
         >
           Sorted by
         </span>
@@ -24,13 +24,13 @@ exports[`toolbar component should render a toolbar component 1`] = `
        
        
       <section
-        class="svelte-1ggh271"
+        class="svelte-34g5ly"
       >
         <div
-          class="assignee-filter svelte-1ggh271"
+          class="assignee-filter svelte-34g5ly"
         >
           <div
-            class="filter-icon  svelte-1ggh271"
+            class="filter-icon  svelte-34g5ly"
             data-testid="filter-icon"
           >
             <div
@@ -44,13 +44,13 @@ exports[`toolbar component should render a toolbar component 1`] = `
           </div>
            
           <span
-            class="svelte-1ggh271"
+            class="svelte-34g5ly"
           >
             Assignee
           </span>
            
           <div
-            class="assignee-names svelte-1ggh271"
+            class="assignee-names svelte-34g5ly"
           >
             <div
               class=" clickable  svelte-h28tab"
@@ -70,7 +70,7 @@ exports[`toolbar component should render a toolbar component 1`] = `
     </div>
      
     <div
-      class="divider horizontal svelte-1rcmn0v"
+      class="divider horizontal svelte-mi6et7"
     />
   </div>
 </div>

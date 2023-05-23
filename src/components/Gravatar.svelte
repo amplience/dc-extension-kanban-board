@@ -19,8 +19,12 @@
     }
 
     gravatarUrl = `${GRAVATAR_URL}/${emailHash}${GRAVATAR_QUERY}`;
-    const res = await fetch(gravatarUrl);
-    if (!res.ok) {
+    if (process.browser) {
+      const res = await fetch(gravatarUrl);
+      if (!res.ok) {
+        gravatarUrl = null;
+      }
+    } else {
       gravatarUrl = null;
     }
 
