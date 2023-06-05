@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/amplience/dc-extension-kanban-board/compare/v1.1.0...v1.2.0) (2023-06-05)
+
+
+### Features
+
+* chore: use node 16.x as default ([0524b1f](0524b1f4dfdfe5008f1298ad75eda71a2e7ca5fc))
+
 ## [1.1.0](https://www.github.com/amplience/dc-extension-kanban-board/compare/v1.0.0...v1.1.0) (2022-10-26)
 
 
