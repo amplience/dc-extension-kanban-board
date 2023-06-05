@@ -3,10 +3,10 @@
 exports[`chip component should render a chip component 1`] = `
 <div>
   <div
-    class="chip  svelte-8agz7l"
+    class="chip  svelte-1yjwfb7"
   >
     <div
-      class="truncate svelte-4ya5ts"
+      class="truncate svelte-atm87y"
       title="LABEL"
     >
       LABEL

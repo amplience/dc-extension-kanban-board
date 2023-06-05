@@ -3,10 +3,10 @@
 exports[`count component should render a count component with count and total value of 1 1`] = `
 <div>
   <div
-    class="count svelte-16actsm"
+    class="count svelte-1aviz9u"
   >
     <span
-      class="bold svelte-16actsm"
+      class="bold svelte-1aviz9u"
     >
       1
     </span>
@@ -22,10 +22,10 @@ exports[`count component should render a count component with count and total va
 exports[`count component should render a count component with count greater than 1 1`] = `
 <div>
   <div
-    class="count svelte-16actsm"
+    class="count svelte-1aviz9u"
   >
     <span
-      class="bold svelte-16actsm"
+      class="bold svelte-1aviz9u"
     >
       2
     </span>
@@ -44,10 +44,10 @@ exports[`count component should render a count component with count greater than
 exports[`count component should render a count component with default values 1`] = `
 <div>
   <div
-    class="count svelte-16actsm"
+    class="count svelte-1aviz9u"
   >
     <span
-      class="bold svelte-16actsm"
+      class="bold svelte-1aviz9u"
     >
       0
     </span>

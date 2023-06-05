@@ -56,6 +56,13 @@ Sandbox permissions
 }
 ```
 
+## Dependency versions
+
+The Kanban Board dashboard extension has been tested with the following versions:
+
+- Node version `18.x`
+- NPM version `9.x`
+
 ## How to build
 
 Install the dependencies...
