@@ -3,16 +3,16 @@
 exports[`loader component should render a loader component 1`] = `
 <div>
   <div
-    class="spinner-container svelte-1rhu03n"
+    class="spinner-container svelte-1aj3o5d"
   >
     <div
-      class="spinner dot-0 svelte-1rhu03n"
+      class="spinner dot-0 svelte-1aj3o5d"
     />
     <div
-      class="spinner dot-1 svelte-1rhu03n"
+      class="spinner dot-1 svelte-1aj3o5d"
     />
     <div
-      class="spinner dot-2 svelte-1rhu03n"
+      class="spinner dot-2 svelte-1aj3o5d"
     />
   </div>
 </div>

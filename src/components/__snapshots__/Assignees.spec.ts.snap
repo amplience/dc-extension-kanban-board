@@ -3,7 +3,7 @@
 exports[`Assignees should not output any assignees if an empty array is passed 1`] = `
 <div>
   <div
-    class="assignees svelte-1ilxe5k"
+    class="assignees svelte-61hcvm"
     title=""
   />
 </div>
@@ -12,7 +12,7 @@ exports[`Assignees should not output any assignees if an empty array is passed 1
 exports[`Assignees should not output any assignees if not passed any users 1`] = `
 <div>
   <div
-    class="assignees svelte-1ilxe5k"
+    class="assignees svelte-61hcvm"
     title=""
   />
 </div>
@@ -21,11 +21,11 @@ exports[`Assignees should not output any assignees if not passed any users 1`] =
 exports[`Assignees should render a single assignee 1`] = `
 <div>
   <div
-    class="assignees svelte-1ilxe5k"
+    class="assignees svelte-61hcvm"
     title="Assigned to TEST USER"
   >
     <div
-      class="gravatar svelte-17a39iv"
+      class="gravatar svelte-ia86th"
     />
      
     
@@ -36,15 +36,15 @@ exports[`Assignees should render a single assignee 1`] = `
 exports[`Assignees should render multiple assignees 1`] = `
 <div>
   <div
-    class="assignees svelte-1ilxe5k"
+    class="assignees svelte-61hcvm"
     title="Assigned to TEST USER, ANOTHER USER"
   >
     <div
-      class="gravatar svelte-17a39iv"
+      class="gravatar svelte-ia86th"
     />
      
     <span
-      class="svelte-1ilxe5k"
+      class="svelte-61hcvm"
     >
       +
       1

@@ -4,13 +4,13 @@ exports[`AssigneeFilter should render the assignee filter 1`] = `
 <div>
    
   <section
-    class="svelte-1ggh271"
+    class="svelte-34g5ly"
   >
     <div
-      class="assignee-filter svelte-1ggh271"
+      class="assignee-filter svelte-34g5ly"
     >
       <div
-        class="filter-icon  svelte-1ggh271"
+        class="filter-icon  svelte-34g5ly"
         data-testid="filter-icon"
       >
         <div
@@ -24,13 +24,13 @@ exports[`AssigneeFilter should render the assignee filter 1`] = `
       </div>
        
       <span
-        class="svelte-1ggh271"
+        class="svelte-34g5ly"
       >
         Assignee
       </span>
        
       <div
-        class="assignee-names svelte-1ggh271"
+        class="assignee-names svelte-34g5ly"
       >
         <div
           class=" clickable  svelte-h28tab"
@@ -54,13 +54,13 @@ exports[`AssigneeFilter should render the assignee filter with selected assignee
 <div>
    
   <section
-    class="svelte-1ggh271"
+    class="svelte-34g5ly"
   >
     <div
-      class="assignee-filter svelte-1ggh271"
+      class="assignee-filter svelte-34g5ly"
     >
       <div
-        class="filter-icon has-assignees svelte-1ggh271"
+        class="filter-icon has-assignees svelte-34g5ly"
         data-testid="filter-icon"
       >
         <div
@@ -74,13 +74,13 @@ exports[`AssigneeFilter should render the assignee filter with selected assignee
       </div>
        
       <span
-        class="svelte-1ggh271"
+        class="svelte-34g5ly"
       >
         Assignee
       </span>
        
       <div
-        class="assignee-names svelte-1ggh271"
+        class="assignee-names svelte-34g5ly"
       >
         <div
           class=" clickable removeable svelte-h28tab"
@@ -147,13 +147,13 @@ exports[`AssigneeFilter should render the modal with a list of users 1`] = `
   />
    
   <section
-    class="svelte-1ggh271"
+    class="svelte-34g5ly"
   >
     <div
-      class="assignee-filter svelte-1ggh271"
+      class="assignee-filter svelte-34g5ly"
     >
       <div
-        class="filter-icon  svelte-1ggh271"
+        class="filter-icon  svelte-34g5ly"
         data-testid="filter-icon"
       >
         <div
@@ -167,13 +167,13 @@ exports[`AssigneeFilter should render the modal with a list of users 1`] = `
       </div>
        
       <span
-        class="svelte-1ggh271"
+        class="svelte-34g5ly"
       >
         Assignee
       </span>
        
       <div
-        class="assignee-names svelte-1ggh271"
+        class="assignee-names svelte-34g5ly"
       >
         <div
           class=" clickable  svelte-h28tab"
@@ -190,25 +190,17 @@ exports[`AssigneeFilter should render the modal with a list of users 1`] = `
     </div>
      
     <div
-      class="modal-popup svelte-1ggh271"
-      style="top: NaNpx;left: undefinedpx"
+      class="modal-popup svelte-34g5ly"
+      style="top: 0px;left: 0px"
     >
       <h3
-        class="svelte-1ggh271"
+        class="svelte-34g5ly"
       >
         Assignee
       </h3>
        
       <ul
-        class="
-      mdc-list
-      
-      
-      
-      
-      
-      
-    "
+        class="mdc-list      "
         role="group"
       >
         <li
@@ -358,13 +350,13 @@ exports[`AssigneeFilter should render the modal with a list of users with checkb
   />
    
   <section
-    class="svelte-1ggh271"
+    class="svelte-34g5ly"
   >
     <div
-      class="assignee-filter svelte-1ggh271"
+      class="assignee-filter svelte-34g5ly"
     >
       <div
-        class="filter-icon has-assignees svelte-1ggh271"
+        class="filter-icon has-assignees svelte-34g5ly"
         data-testid="filter-icon"
       >
         <div
@@ -378,13 +370,13 @@ exports[`AssigneeFilter should render the modal with a list of users with checkb
       </div>
        
       <span
-        class="svelte-1ggh271"
+        class="svelte-34g5ly"
       >
         Assignee
       </span>
        
       <div
-        class="assignee-names svelte-1ggh271"
+        class="assignee-names svelte-34g5ly"
       >
         <div
           class=" clickable removeable svelte-h28tab"
@@ -439,25 +431,17 @@ exports[`AssigneeFilter should render the modal with a list of users with checkb
     </div>
      
     <div
-      class="modal-popup svelte-1ggh271"
-      style="top: NaNpx;left: undefinedpx"
+      class="modal-popup svelte-34g5ly"
+      style="top: 0px;left: 0px"
     >
       <h3
-        class="svelte-1ggh271"
+        class="svelte-34g5ly"
       >
         Assignee
       </h3>
        
       <ul
-        class="
-      mdc-list
-      
-      
-      
-      
-      
-      
-    "
+        class="mdc-list      "
         role="group"
       >
         <li

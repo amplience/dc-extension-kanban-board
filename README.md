@@ -56,6 +56,13 @@ Sandbox permissions
 }
 ```
 
+## Dependency versions
+
+The Kanban Board dashboard extension has been tested with the following versions:
+
+- Node version `18.x`
+- NPM version `9.x`
+
 ## How to build
 
 Install the dependencies...
@@ -93,4 +100,5 @@ npm run start:secure
 Same as `npm start` (runs the app in development mode).
 Opens https://localhost:8080 to view it in the browser.
 
-To run the mode you will need to [generate a ssl certificate (snowpack.key and snowpack.crt)](https://www.snowpack.dev/#https%2Fhttp2).
+To run the mode you will need to [generate a ssl certificate (snowpack.key and snowpack.crt)](https://www.snowpack.dev/#https%2Fhttp2)
+
