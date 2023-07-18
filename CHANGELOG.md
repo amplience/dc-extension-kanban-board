@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/amplience/dc-extension-kanban-board/compare/v1.1.0...v1.2.0) (2023-07-18)
+
+
+### Features
+
+* rebrand ([#47](https://www.github.com/amplience/dc-extension-kanban-board/issues/47)) ([cd9eebf](https://www.github.com/amplience/dc-extension-kanban-board/commit/cd9eebf5e8178e21d7e32a489c32a7bb3d0e4161))
+* remove Amplience DC header logo from README ([89dce3d](https://www.github.com/amplience/dc-extension-kanban-board/commit/89dce3d701e51e1a60507dd84f249babd7716651))
+* remove DC header asset ([63ee18a](https://www.github.com/amplience/dc-extension-kanban-board/commit/63ee18a7e9d66e9c64a8886b4c506c0c84f73a8f))
+
 ## [1.2.0](https://www.github.com/amplience/dc-extension-kanban-board/compare/v1.1.0...v1.2.0) (2023-06-05)
 
 
