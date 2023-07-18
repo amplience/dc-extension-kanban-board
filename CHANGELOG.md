@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0](https://www.github.com/amplience/dc-extension-kanban-board/compare/v1.1.0...v1.2.0) (2023-07-18)
+## [1.3.0](https://www.github.com/amplience/dc-extension-kanban-board/compare/v1.2.0...v1.3.0) (2023-07-18)
 
 
 ### Features
