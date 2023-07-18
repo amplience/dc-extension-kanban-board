@@ -33,17 +33,13 @@
   onMount(async () => {
     try {
       $extensionClient = await initDcExtensionClient();
-      [
-        contentItemsPath,
-        statuses,
-        contentTypeLookup,
-        userList,
-      ] = await Promise.all([
-        contentRepositories.getContentItemPath($extensionClient),
-        workflowStates.fetchAndHydrate($extensionClient),
-        contentTypes.fetchAll($extensionClient),
-        userService.fetchAll($extensionClient),
-      ]);
+      [contentItemsPath, statuses, contentTypeLookup, userList] =
+        await Promise.all([
+          contentRepositories.getContentItemPath($extensionClient),
+          workflowStates.fetchAndHydrate($extensionClient),
+          contentTypes.fetchAll($extensionClient),
+          userService.fetchAll($extensionClient),
+        ]);
 
       $users = userList;
       $hub = $extensionClient.hub;
@@ -57,14 +53,12 @@
 
   $: (async () => {
     try {
-      const {
-        contentItems: facetedContentItems,
-        statusTotals,
-      } = await fetchByStatusId(
-        $extensionClient,
-        $extensionClient.statuses.map(({ id }) => id),
-        $contentItemFacets
-      );
+      const { contentItems: facetedContentItems, statusTotals } =
+        await fetchByStatusId(
+          $extensionClient,
+          $extensionClient.statuses.map(({ id }) => id),
+          $contentItemFacets
+        );
 
       $contentItems = facetedContentItems;
       $totalsPerStatus = statusTotals;
@@ -72,10 +66,11 @@
       error = 'Unable to load content items';
     }
   })();
+
 </script>
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+  @import './css/fonts';
 
   :global(body, html) {
     width: max-content;
@@ -89,6 +84,7 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
   }
+
 </style>
 
 {#if loading}
